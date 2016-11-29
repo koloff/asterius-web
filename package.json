@@ -1,0 +1,21 @@
+{
+  "name": "fitness",
+  "version": "1.0.0",
+  "description": "Generating optimal fitness programs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fitness",
+    "fit",
+    "muscle",
+    "healthy",
+    "weight"
+  ],
+  "author": "Koloff",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.2"
+  }
+}
