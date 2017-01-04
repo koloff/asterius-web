@@ -1,7 +1,5 @@
 import Muscle from './muscle';
 
-let sizes = Muscle.getPossibleSizes();
-
 /*
  * DISCLAIMER
  * some muscles are grouped based on function or type of exercises that train them
@@ -10,71 +8,79 @@ let sizes = Muscle.getPossibleSizes();
  */
 export default {
   shoulders: {
-    name: 'shoulders',
-    mrv: 18,
-    anteriorHead: new Muscle('shoulder_anterior_head', sizes.medium),
-    lateralHead: new Muscle('shoulder_lateral_head', sizes.medium),
-    posteriorHead: new Muscle('shoulder_posterior_head', sizes.medium)
+    name: 'Shoulders',
+    parts: {
+      anteriorHead: new Muscle('Deltoid anterior head', 'Front delts'),
+      lateralHead: new Muscle('Deltoid lateral head', 'Side delts'),
+      posteriorHead: new Muscle('Deltoid posterior head', 'Rear delts')
+    }
   },
 
   chest: {
-    name: 'chest',
-    mrv: 18,
-    clavicularHead: new Muscle('chest_clavicular_head', sizes.medium),
-    sternocostalHead: new Muscle('chest_sternocostal_head', sizes.medium)
+    name: 'Chest',
+    parts: {
+      clavicularHead: new Muscle('Pectoralis major clavicular head', 'Upper chest'),
+      sternalHead: new Muscle('Pectoralis major sternal head', 'Lower chest')
+    }
   },
 
   back: {
-    name: 'back',
-    mrv: 21,
-    trapeziusUpper: new Muscle('trapezius_upper', sizes.medium),
-    trapeziusLower: new Muscle('trapezius_lower', sizes.big),
-    latissimusDorsi: new Muscle('latissimus_dorsi', sizes.big),
-    teresMajor: new Muscle('teres_major', sizes.medium),
-    rotatorCuff: new Muscle('rotator_cuff', sizes.medium)
+    name: 'Back',
+    parts: {
+      upperTrapezius: new Muscle('Trapezius superior fibers', 'Upper traps'),
+      middleBack: new Muscle('Trapezius inferior fibers and rhomboid', 'Middle back'),
+      lats: new Muscle('Latissimus dorsi', 'Lats'),
+      rotatorCuff: new Muscle('Teres minor, Infraspinatus, Supraspinatus, Subscapularis', 'Rotator cuff')
+    }
   },
 
   abs: {
-    name: 'abs',
-    mrv: 10,
-    rectusAbdominis: new Muscle('rectus_abdominis', sizes.medium),
-    obliques: new Muscle('obliques', sizes.medium)
+    name: 'Abs',
+    parts: {
+      abs: new Muscle('Rectus abdominis', 'Abs'),
+      obliques: new Muscle('Abdominal obliques', 'Obliques')
+    }
   },
 
   biceps: {
-    name: 'biceps',
-    mrv: 15,
-    longHead: new Muscle('biceps_long_head', sizes.medium),
-    shortHead: new Muscle('biceps_short_head', sizes.medium)
+    name: 'Biceps',
+    parts: {
+      longHead: new Muscle('Biceps brachii long head', 'Biceps outer head'),
+      shortHead: new Muscle('Biceps brachii short head', 'Biceps inner head')
+    }
   },
 
   triceps: {
-    name: 'triceps',
-    mrv: 18,
-    longHead: new Muscle('triceps_long_head', sizes.medium),
-    lateralHead: new Muscle('triceps_lateral_head', sizes.medium)
+    name: 'Triceps',
+    parts: {
+      longHead: new Muscle('Triceps brachii long head', 'Triceps inner head'),
+      lateralHead: new Muscle('Triceps brachii lateral head', 'Triceps outer head')
+    }
   },
 
   forearms: {
-    name: 'forearms',
-    mrv: 8,
-    brachioradialis: new Muscle('brachioradialis', sizes.small),
-    flexors: new Muscle('flexors', sizes.small),
-    extensors: new Muscle('extensors', sizes.small)
+    name: 'Forearms',
+    parts: {
+      brachioradialis: new Muscle('Brachioradialis', 'Brachioradialis'),
+      flexors: new Muscle('Flexors muscle group', 'Flexors'),
+      extensors: new Muscle('Extensors muscle group', 'Extensors')
+    },
   },
 
   legs: {
-    name: 'legs',
-    mrv: 18,
-    quardriceps: new Muscle('quadriceps', sizes.big),
-    hamstrings: new Muscle('hamstrings', sizes.big),
-    glutes: new Muscle('glutes', sizes.big),
+    name: 'Legs',
+    parts: {
+      quardriceps: new Muscle('Quadriceps muscle group', 'Quads'),
+      hamstrings: new Muscle('Hamstrings muscle group', 'Hamstrings'),
+      glutes: new Muscle('Gluteus muscles group', 'Glutes')
+    }
   },
 
   calves: {
     name: 'calves',
-    mrv: 6,
-    calves: new Muscle('calves', sizes.medium)
+    parts: {
+      calves: new Muscle('Soleus, Gastrocnemius', 'Calves')
+    }
   }
 
 };

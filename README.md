@@ -1,6 +1,6 @@
 # Healthy
 
-> Lowering blood pressure with AI
+> Get jacked with our system
 
 ## Build Setup
 

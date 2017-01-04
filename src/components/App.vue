@@ -26,32 +26,57 @@
     </div>
 
 
-    <h2>how many minutes can you spend in the gym:</h2>
-    <div class="ui left icon input">
-      <input v-model="sessionMinutes" type="text" placeholder="Time in minutes">
-      <i class="time icon"></i>
-      <button @click="selectSessionMinutes()" class="ui button">go</button>
+    <!--<h2>how many minutes can you spend in the gym:</h2>-->
+    <!--<div class="ui left icon input">-->
+    <!--<input v-model="sessionMinutes" type="text" placeholder="Time in minutes">-->
+    <!--<i class="time icon"></i>-->
+    <!--<button @click="selectSessionMinutes()" class="ui button">go</button>-->
+    <!--</div>-->
+
+
+    <!--<h2>what is you fitness experience:</h2>-->
+    <!--untrained-->
+    <!--<div class="ui huge star rating"></div>-->
+    <!--advanced-->
+
+    <!--<br><br><br>-->
+    <!--<h1>-->
+    <!--&lt;!&ndash;chosen days{{chosenDays}}<br>&ndash;&gt;-->
+    <!--training level{{trainingLevel}}<br>-->
+    <!--maximumWeeklySets {{maximumWeeklySets}}-->
+    <!--</h1>-->
+
+    <div class="ui checkbox">
+      <input v-model="muscle_1" type="checkbox" name="example">
+      <label></label>
+    </div>
+    <br><br><br>
+
+    {{muscle_1}}
+
+
+    <div v-for="muscleGroup in mc">
+      <h1>{{muscleGroup.name}}</h1>
+      <div class="ui cards five doubling">
+        <muscle-mini-info v-for="muscle in muscleGroup.parts"
+                          :name="muscle.name"
+                          :bro-name="muscle.broName"
+        />
+      </div>
     </div>
 
-
-    <h2>what is you fitness experience:</h2>
-    untrained
-    <div class="ui huge star rating"></div>
-    advanced
-
-    <br><br><br>
-    <h1>
-      chosen days{{chosenDays}}<br>
-      training level{{trainingLevel}}<br>
-      maximumWeeklySets {{maximumWeeklySets}}
-    </h1>
 
     <!--<div v-for="muscle in mc">{{muscle.name}} {{muscle.mrv}}</div>-->
-    <div v-for="exercise in ec">
-      {{exercise.name}}<br>
-      <b>{{exercise.musclesUsed.primary}}</b><br>
-      {{exercise.musclesUsed.secondary}}<br><br>
-    </div>
+    <!--<div class="ui six cards doubling">-->
+    <!--<exercise-->
+    <!--v-for="exercise in ec"-->
+    <!--:name="exercise.name"-->
+    <!--:musclesUsed="exercise.musclesUsed"-->
+    <!--&gt;</exercise>-->
+    <!--</div>-->
+
+
+
   </div>
 </template>
 
@@ -59,16 +84,20 @@
 
   import _ from 'lodash';
   import mc from '../algorithm/muscle/muscles-collection';
-  import ec from '../algorithm/exercise/exercises-collection';
+  //  import ec from '../algorithm/exercise/exercises-collection';
   import * as volume from '../algorithm/volume';
+
+  import Exercise from './exercise/Exercise.vue';
+  import MuscleMiniInfo from './muscle/MuslceMiniInfo.vue';
 
   export default {
     name: 'App',
-    components: {},
+    components: {Exercise, MuscleMiniInfo},
     data() {
       return {
+        muscle_1: null,
         mc: mc,
-        ec: ec,
+        //        ec: ec,
         chosenDays: {
           monday: 0,
           tuesday: 0,

@@ -1,20 +1,15 @@
 export default class Muscle {
-  constructor(name, size) {
+  constructor(name, broName, mrv) {
     this.name = name;
-    this.size = size;
+    this.broName = broName;
+    this.mrv = mrv;
   }
 
-  static getPossibleSizes() {
-    return {
-      small: 'small',
-      medium: 'medium',
-      big: 'big'
-    }
-  };
 
   use(percentage) {
     return {
-      [this.name]: percentage
+      name: this.name,
+      percentage: percentage
     }
   }
 
