@@ -8,7 +8,11 @@ export default new VueRouter({
   routes: [
     {
       path: '/', component: require('./components/App.vue')
-    },{
+    },
+    {
+      path: '/tweaker', component: require('./components/Tweaker.vue')
+    },
+    {
       path: '/experiment', component: require('./components/Experiment.vue')
     }
   ]

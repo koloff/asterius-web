@@ -1,7 +1,6 @@
+<script src="../../algorithm/exercise/exercises-collection.js"></script>
 <template>
   <div class="ui card">
-
-    <img class="image" src="/images/avatar/large/steve.jpg">
 
     <div class="content">
       <div class="header">{{broName}}</div>

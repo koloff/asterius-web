@@ -10,9 +10,9 @@ export default {
   shoulders: {
     name: 'Shoulders',
     parts: {
-      anteriorHead: new Muscle('Deltoid anterior head', 'Front delts'),
-      lateralHead: new Muscle('Deltoid lateral head', 'Side delts'),
-      posteriorHead: new Muscle('Deltoid posterior head', 'Rear delts')
+      anteriorHead: new Muscle('Deltoid anterior head', 'Front delts', 4),
+      lateralHead: new Muscle('Deltoid lateral head', 'Side delts', 6),
+      posteriorHead: new Muscle('Deltoid posterior head', 'Rear delts', 4)
     }
   },
 
@@ -45,16 +45,16 @@ export default {
   biceps: {
     name: 'Biceps',
     parts: {
-      longHead: new Muscle('Biceps brachii long head', 'Biceps outer head'),
-      shortHead: new Muscle('Biceps brachii short head', 'Biceps inner head')
+      bicepsLongHead: new Muscle('Biceps brachii long head', 'Biceps outer head'),
+      bicepsShortHead: new Muscle('Biceps brachii short head', 'Biceps inner head')
     }
   },
 
   triceps: {
     name: 'Triceps',
     parts: {
-      longHead: new Muscle('Triceps brachii long head', 'Triceps inner head'),
-      lateralHead: new Muscle('Triceps brachii lateral head', 'Triceps outer head')
+      tricepsLongHead: new Muscle('Triceps brachii long head', 'Triceps inner head'),
+      tricepsShortHead: new Muscle('Triceps brachii lateral head', 'Triceps outer head')
     }
   },
 

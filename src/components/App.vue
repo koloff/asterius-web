@@ -46,35 +46,36 @@
     <!--maximumWeeklySets {{maximumWeeklySets}}-->
     <!--</h1>-->
 
-    <div class="ui checkbox">
-      <input v-model="muscle_1" type="checkbox" name="example">
-      <label></label>
-    </div>
-    <br><br><br>
 
-    {{muscle_1}}
+    <div class="ui segment">
+      <div v-for="(checkbox, key) in imageCheckboxes.upp" class="ui checkbox">
+        <input v-model="checkbox.checked" type="checkbox" name="example"/>
+        <label>{{checkbox.name}}</label>
+      </div>
 
-
-    <div v-for="muscleGroup in mc">
-      <h1>{{muscleGroup.name}}</h1>
-      <div class="ui cards five doubling">
-        <muscle-mini-info v-for="muscle in muscleGroup.parts"
-                          :name="muscle.name"
-                          :bro-name="muscle.broName"
-        />
+      <div>
+        <div class="ui cards five doubling">
+          <template v-for="muscleGroup in mc">
+            <muscle-mini-info
+              v-for="(muscle, key) in muscleGroup.parts"
+              v-if="isCheckedFromPictureByKey(key)"
+              :name="muscle.name"
+              :bro-name="muscle.broName"
+            />
+          </template>
+        </div>
       </div>
     </div>
 
-
-    <!--<div v-for="muscle in mc">{{muscle.name}} {{muscle.mrv}}</div>-->
-    <!--<div class="ui six cards doubling">-->
-    <!--<exercise-->
-    <!--v-for="exercise in ec"-->
-    <!--:name="exercise.name"-->
-    <!--:musclesUsed="exercise.musclesUsed"-->
-    <!--&gt;</exercise>-->
-    <!--</div>-->
-
+    <div class="ui four cards doubling">
+      <exercise
+        v-for="exercise in ec"
+        v-if="doesExerciseTrainCheckedMuscle(exercise)"
+        :name="exercise.name"
+        :type="exercise.type"
+        :musclesUsed="exercise.musclesUsed"
+      ></exercise>
+    </div>
 
 
   </div>
@@ -84,7 +85,7 @@
 
   import _ from 'lodash';
   import mc from '../algorithm/muscle/muscles-collection';
-  //  import ec from '../algorithm/exercise/exercises-collection';
+  import ec from '../algorithm/exercise/exercises-collection';
   import * as volume from '../algorithm/volume';
 
   import Exercise from './exercise/Exercise.vue';
@@ -95,9 +96,8 @@
     components: {Exercise, MuscleMiniInfo},
     data() {
       return {
-        muscle_1: null,
         mc: mc,
-        //        ec: ec,
+        ec: ec,
         chosenDays: {
           monday: 0,
           tuesday: 0,
@@ -106,6 +106,20 @@
           friday: 0,
           saturday: 0,
           sunday: 0
+        },
+        imageCheckboxes: {
+          lowerBody: [
+            {name: 'Quadriceps muscle group', left: 58.70967741935483, top: 57.078651685393254, checked: false},
+            {name: 'Soleus, Gastrocnemius', left: 74.19354838709677, top: 65.61797752808988, checked: false},
+            {name: 'Hamstrings muscle group', left: 50, top: 57.752808988764045, checked: false},
+            {name: 'Gluteus muscles group', left: 48.225806451612904, top: 28.98876404494382, checked: false},
+          ],
+          upperBodyFront: [
+            {name: 'Pectoralis major clavicular head', left: 36.868686868686865, top: 22.15568862275449, checked: false},
+            {name: 'Pectoralis major sternal head', left: 35.18518518518518, top: 39.12175648702595, checked: false},
+            {name: 'Deltoid anterior head', left: 76.43097643097643, top: 19.36127744510978, checked: false},
+          ],
+          upperBodyBack: []
         },
         sessionMinutes: 70,
         maximumWeeklySets: null
@@ -144,7 +158,25 @@
       selectSessionMinutes() {
         console.log(this.sessionMinutes);
         volume.calculateMaximumWeeklySets(3, this.sessionMinutes | 0, 3);
-      }
+      },
+
+      getMuscleByKey() {
+
+      },
+
+      isCheckedFromPictureByKey(key) {
+        return this.imageCheckboxes.lowerBody[key] && this.imageCheckboxes.lowerBody[key].checked ||
+          this.imageCheckboxes.upperBodyFront[key] && this.imageCheckboxes.upperBodyFront[key].checked ||
+          this.imageCheckboxes.upperBodyBack[key] && this.imageCheckboxes.upperBodyBack[key].checked
+      },
+
+      doesExerciseTrainCheckedMuscle(exercise) {
+        exercise.musclesUsed.forEach((muscle) => {
+          console.log(muscle);
+        });
+        return true;
+      },
+
     }
   }
 </script>

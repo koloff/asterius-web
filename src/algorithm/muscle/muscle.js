@@ -9,6 +9,7 @@ export default class Muscle {
   use(percentage) {
     return {
       name: this.name,
+      broName: this.broName,
       percentage: percentage
     }
   }
