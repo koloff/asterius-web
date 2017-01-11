@@ -1,12 +1,12 @@
 import _ from 'lodash';
+import {ec, getExercise} from '../algorithm/exercise/exercises-collection';
+
 export default {
   state: {
     exercises: []
   },
 
   getExercise(exName) {
-    console.log(exName);
-    console.log(_.find(this.state.exercises, {'name': exName}));
     return _.find(this.state.exercises, {'name': exName});
   },
 
@@ -16,7 +16,6 @@ export default {
 
   increaseExerciseSets(exName) {
     if (!this.isExerciseAdded(exName)) {
-      console.log('addd');
       this.state.exercises.push({name: exName, sets: 1})
     } else {
       this.getExercise(exName).sets++;
@@ -33,6 +32,24 @@ export default {
     } else if (ex) {
       this.getExercise(exName).sets--;
     }
+  },
+
+  calculateMRVPercentage(muscle) {
+
+    console.log(muscle);
+    // get current volume from selected exercises and sets
+
+    let currentVolume = 0;
+    let usedMuscle;
+    this.state.exercises.forEach((ex) => {
+      let fullEx = getExercise(ex.name);
+
+      usedMuscle = _.find(fullEx.musclesUsed, {name: muscle.name});
+      if (usedMuscle) currentVolume += (usedMuscle.percentage / 100) * ex.sets;
+
+    });
+
+    return (currentVolume / muscle.mrv) * 100;
   }
 
 

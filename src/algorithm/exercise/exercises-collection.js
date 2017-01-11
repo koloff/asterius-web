@@ -1,10 +1,18 @@
-import mc from '../muscle/muscles-collection'
+import _ from 'lodash';
+import {mc} from '../muscle/muscles-collection'
 import Exercise from './exercise'
 
 let types = Exercise.getPossibleTypes();
 
-export default {
 
+export function getExercise(exName) {
+  return _.chain(ec)
+    .values()
+    .find({name: exName})
+    .value();
+}
+
+export let ec = {
   // CHEST
 
   //bp - bench press

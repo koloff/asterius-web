@@ -20,7 +20,7 @@
       <div @click="reduceSets()" class="ui button ">
         <i class="icon minus"></i>
       </div>
-      <div class="ui button disabled" style="padding: 10px 0">
+      <div class="ui button disabled secondary" style="padding: 10px 0">
         {{setsCount}} sets
       </div>
       <div @click="increaseSets()" class="ui button">

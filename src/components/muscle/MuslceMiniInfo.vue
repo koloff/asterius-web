@@ -1,4 +1,3 @@
-<script src="../../algorithm/exercise/exercises-collection.js"></script>
 <template>
   <div class="ui card">
 

@@ -1,12 +1,32 @@
-import Muscle from './muscle';
-
 /*
  * DISCLAIMER
  * some muscles are grouped based on function or type of exercises that train them
  * some muscles are not included because they are trained together with some of the muscles below
  * muscle sizes are not accurate but this classification is enough for designing the training
  */
-export default {
+
+import _ from 'lodash';
+import Muscle from './muscle';
+
+
+
+export function getMuscle(muscleName) {
+  let muscleToReturn;
+  _.forOwn(mc, (item) => {
+    if (item.parts) {
+      let muscle = _.chain(item.parts).values().find({name: muscleName}).value();
+      if (muscle) {
+        console.log(muscle);
+        muscleToReturn = muscle;
+      }
+    }
+  });
+
+  return muscleToReturn;
+}
+
+export let mc = {
+
   shoulders: {
     name: 'Shoulders',
     parts: {
@@ -19,8 +39,8 @@ export default {
   chest: {
     name: 'Chest',
     parts: {
-      clavicularHead: new Muscle('Pectoralis major clavicular head', 'Upper chest'),
-      sternalHead: new Muscle('Pectoralis major sternal head', 'Lower chest')
+      clavicularHead: new Muscle('Pectoralis major clavicular head', 'Upper chest', 7),
+      sternalHead: new Muscle('Pectoralis major sternal head', 'Lower chest', 10)
     }
   },
 
@@ -72,13 +92,7 @@ export default {
     parts: {
       quardriceps: new Muscle('Quadriceps muscle group', 'Quads'),
       hamstrings: new Muscle('Hamstrings muscle group', 'Hamstrings'),
-      glutes: new Muscle('Gluteus muscles group', 'Glutes')
-    }
-  },
-
-  calves: {
-    name: 'calves',
-    parts: {
+      glutes: new Muscle('Gluteus muscles group', 'Glutes'),
       calves: new Muscle('Soleus, Gastrocnemius', 'Calves')
     }
   }
