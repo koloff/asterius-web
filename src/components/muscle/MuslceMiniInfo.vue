@@ -1,8 +1,10 @@
 <template>
   <div class="ui card">
-
     <div class="content">
-      <div class="header">{{broName}}</div>
+      <div class="header">
+        <img :src="image" class="ui image" :alt="name"/>
+        {{broName}}
+        </div>
       <div class="meta">
         <i>{{name}}</i>
       </div>
@@ -13,6 +15,6 @@
 <script>
   export default {
     name: 'MuscleMiniInfo',
-    props: ['name', 'bro-name']
+    props: ['name', 'bro-name','image']
   }
 </script>

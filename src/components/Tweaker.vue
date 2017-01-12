@@ -69,6 +69,7 @@
                 v-if="isCheckedFromPictureByName(muscle.name)"
                 :name="muscle.name"
                 :bro-name="muscle.broName"
+                :image="muscle.image"
               />
             </template>
           </div>
@@ -85,6 +86,7 @@
             :name="exercise.name"
             :type="exercise.type"
             :musclesUsed="exercise.musclesUsed"
+            :image="exercise.image"
           ></exercise>
         </div>
       </div>

@@ -1,9 +1,10 @@
 <template>
 
   <div class="item">
-    <img class="ui avatar image" src="../../assets/body-images/UpperBodyBack.jpg">
+    <img class="ui avatar tiny  image" :src="fullExercise.image">
     <div class="content">
-      <div class="header">{{exercise.name}}</div>
+      <div class="header">{{exercise.name}}
+      </div>
       {{exercise.sets}} sets
       <a @click="reduceSets()"><i class="ui icon minus grey"></i></a>
       <a @click="increaseSets()"><i class="ui icon plus green"></i></a>
@@ -14,9 +15,18 @@
 
 <script>
   import tweakerStore from '../../store/tweaker';
+  import {getExercise} from '../../algorithm/exercise/exercises-collection';
   export default {
     name: 'SelectedExerciseMini',
     props: ['exercise'],
+    data() {
+      return {
+        fullExercise: getExercise(this.exercise.name)
+      }
+    },
+    mounted() {
+
+    },
     methods: {
       reduceSets() {
         tweakerStore.reduceExerciseSets(this.exercise.name);

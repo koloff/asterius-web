@@ -43,7 +43,7 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         query: {
-          name: '[name].[ext]?[hash]'
+          name: '[hash].[ext]'
         }
       },
       {test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff'},

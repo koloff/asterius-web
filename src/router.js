@@ -16,7 +16,11 @@ export default new VueRouter({
       path: '/edit-profile', component: require('./components/EditProfile.vue')
     },
     {
+      path: '/program', component: require('./components/Program.vue')
+    },
+    {
       path: '/experiment', component: require('./components/Experiment.vue')
-    }
+    },
+
   ]
 });

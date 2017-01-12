@@ -29,7 +29,7 @@ export let mc = {
   shoulders: {
     name: 'Shoulders',
     parts: {
-      anteriorHead: new Muscle('Deltoid anterior head', 'Front delts', 4),
+      anteriorHead: new Muscle('Deltoid anterior head', 'Front delts', 4, require('../../assets/muscles/Shoulders/anteriorHead.jpg')),
       lateralHead: new Muscle('Deltoid lateral head', 'Side delts', 6),
       posteriorHead: new Muscle('Deltoid posterior head', 'Rear delts', 4)
     }
@@ -38,8 +38,8 @@ export let mc = {
   chest: {
     name: 'Chest',
     parts: {
-      clavicularHead: new Muscle('Pectoralis major clavicular head', 'Upper chest', 7),
-      sternalHead: new Muscle('Pectoralis major sternal head', 'Lower chest', 9)
+      clavicularHead: new Muscle('Pectoralis major clavicular head', 'Upper chest', 7, require('../../assets/muscles/Chest/clavicularHead.jpg')),
+      sternalHead: new Muscle('Pectoralis major sternal head', 'Lower chest', 9, require('../../assets/muscles/Chest/sternalHead.jpg'))
     }
   },
 

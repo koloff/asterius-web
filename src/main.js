@@ -2,9 +2,6 @@ import 'babel-polyfill';
 import Vue from 'vue';
 import Root from './Root.vue';
 
-
-window.Vue = Vue;
-
 import 'semantic-ui-css/semantic.css';
 import 'semantic-ui-css/semantic';
 import 'animate.css';
@@ -29,4 +26,6 @@ let vue = new Vue({
   render: h => h(Root)
 });
 
+
+window.Vue = Vue;
 window.vue = vue;

@@ -1,8 +1,10 @@
-<script src="../../algorithm/exercise/exercises-collection.js"></script>
 <template>
   <div class="card">
     <div class="content">
-      <div class="header">{{name}}</div>
+      <div class="header">
+        <img :src="image" class="ui image" :alt="name"/>
+        {{name}}
+      </div>
       <div class="description">
         <div class="ui inverted segment">
           <div
@@ -37,7 +39,7 @@
 
   export default {
     name: 'Exercise',
-    props: ['name', 'type', 'musclesUsed'],
+    props: ['name', 'type', 'musclesUsed', 'image'],
     data() {
       return {
         tweakerState: tweakerStore.state
@@ -47,6 +49,8 @@
       $('.progress').progress({
         showActivity: false
       });
+
+      console.log(this.image);
     },
     computed: {
       setsCount() {
@@ -58,6 +62,7 @@
       }
     },
     methods: {
+
       reduceSets() {
         console.log('assa');
         tweakerStore.reduceExerciseSets(this.name);

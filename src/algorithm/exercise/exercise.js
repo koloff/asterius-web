@@ -1,8 +1,10 @@
 import _ from 'lodash';
 
 export default class Exercise {
-  constructor(name, type, musclesUsed) {
+  constructor(name, mainMuscleGroup, image, type, musclesUsed) {
     this.name = name;
+    this.mainMuscleGroup = mainMuscleGroup;
+    this.image = image;
     this.type = type;
     this.musclesUsed = musclesUsed;
   }

@@ -13,7 +13,6 @@
     </h5>
 
 
-
   </div>
 
 </template>
@@ -55,7 +54,6 @@
           this.barColor = 'orange';
         }
 
-        console.log($(this.$el).find('.progress').progress('set percent', percentage));
         return percentage;
       }
     },
