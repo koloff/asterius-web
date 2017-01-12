@@ -1,18 +1,17 @@
 <template>
 
   <div class="column">
-    <div class="ui progress small" style="margin-bottom: 0">
+    <div class="ui progress small" :class="barColor" :data-percent="mrvPercentage" style="margin-bottom: 0">
       <div class="bar"></div>
     </div>
     <h5 class="ui header" style="margin-top: 2px">
-      <img src="../../assets/LowerBody.jpg">
+      <img src="../../assets/body-images/LowerBody.jpg">
       <div class="content">
         {{muscle.broName}}
         <div class="sub header"><i>{{muscle.name}}</i></div>
       </div>
     </h5>
 
-{{mrvPercentage}}
 
 
   </div>
@@ -25,13 +24,41 @@
   export default {
     name: 'SelectedVolumeBar',
     props: ['muscle'],
+    data() {
+      return {
+        barColor: ''
+      }
+    },
     mounted() {
+      $('.progress').progress({
+        showActivity: false,
+        limitValues: false
+      });
       tweakerStore.calculateMRVPercentage(this.muscle);
     },
     computed: {
       mrvPercentage() {
-        return tweakerStore.calculateMRVPercentage(this.muscle);
+        let percentage = tweakerStore.calculateMRVPercentage(this.muscle);
+
+        if (percentage >= 100) {
+          $(this.$el).find('.progress').progress('set error');
+          return percentage;
+        }
+
+        if (percentage < 25) {
+          this.barColor = 'gray';
+        } else if (percentage >= 25 && percentage < 50) {
+          this.barColor = 'olive';
+        } else if (percentage >= 50 && percentage < 90) {
+          this.barColor = 'green';
+        } else if (percentage >= 90 && percentage < 100) {
+          this.barColor = 'orange';
+        }
+
+        console.log($(this.$el).find('.progress').progress('set percent', percentage));
+        return percentage;
       }
-    }
+    },
+    methods: {}
   }
 </script>

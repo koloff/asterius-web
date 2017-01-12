@@ -1,12 +1,12 @@
 <template>
 
   <div class="item">
-    <img class="ui avatar image" src="../../assets/UpperBodyBack.jpg">
+    <img class="ui avatar image" src="../../assets/body-images/UpperBodyBack.jpg">
     <div class="content">
       <div class="header">{{exercise.name}}</div>
       {{exercise.sets}} sets
-      <a href="#" @click="reduceSets()"><i class="ui icon minus grey"></i></a>
-      <a href="#" @click="increaseSets()"><i class="ui icon plus green"></i></a>
+      <a @click="reduceSets()"><i class="ui icon minus grey"></i></a>
+      <a @click="increaseSets()"><i class="ui icon plus green"></i></a>
     </div>
   </div>
 

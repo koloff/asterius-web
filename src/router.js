@@ -13,6 +13,9 @@ export default new VueRouter({
       path: '/tweaker', component: require('./components/Tweaker.vue')
     },
     {
+      path: '/edit-profile', component: require('./components/EditProfile.vue')
+    },
+    {
       path: '/experiment', component: require('./components/Experiment.vue')
     }
   ]

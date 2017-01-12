@@ -1,34 +1,82 @@
 <template>
   <div>
 
-    <div class="ui grid two columns stackable">
-      <div class="column">
+    <h2 class="ui icon header inverted center aligned margin-bottom">
+      <i class="options icon"></i>
+      <div class="content">
+        Workout tweaker
+        <div class="sub header">Target your favourite muscles. Choose your favourite exercises.</div>
+      </div>
+    </h2>
 
-        <h2 class="ui header">
-          Find exercises
-          <div class="sub header">Manage your account settings and set e-mail preferences.</div>
-        </h2>
+    <div class="ui equal height grid stackable middle aligned segment">
+      <div class="row">
+        <div class="five wide column" style="padding: 1px">
+          <div class="father">
+            <img class="ui fluid image" @click="addCheckBox($event)" src="../assets/body-images/UpperBodyFront.jpg"
+                 height="250" alt="Upper Body Front">
 
-        <div class="ui segment">
-          <div v-for="(checkbox, key) in imageCheckboxes.upperBodyFront" class="ui checkbox">
-            <input v-model="checkbox.checked" type="checkbox" name="example"/>
-            <label>{{checkbox.name}}</label>
+            <div class="ui checkbox muscle-checkbox" v-for="checkbox in imageCheckboxes.upperBodyFront"
+                 :style="{top: `${checkbox.top}%`, left: `${checkbox.left}%`}">
+              <input v-model="checkbox.checked" type="checkbox"/><label></label>
+            </div>
+
           </div>
-
-          <div>
-            <div class="ui cards three doubling">
-              <template v-for="muscleGroup in mc">
-                <muscle-mini-info
-                  v-for="muscle in muscleGroup.parts"
-                  v-if="isCheckedFromPictureByName(muscle.name)"
-                  :name="muscle.name"
-                  :bro-name="muscle.broName"
-                />
-              </template>
+        </div>
+        <div class="six wide column" style="padding: 1px">
+          <div class="father">
+            <img class="ui fluid image" @click="addCheckBox($event)" src="../assets/body-images/UpperBodyBack.jpg"
+                 alt="Upper Body Back">
+            <div class="ui checkbox muscle-checkbox" v-for="checkbox in imageCheckboxes.upperBodyBack"
+                 :style="{top: `${checkbox.top}%`, left: `${checkbox.left}%`}">
+              <input v-model="checkbox.checked" type="checkbox"/><label></label>
             </div>
           </div>
         </div>
+        <div class="five wide  column" style="padding: 1px">
+          <div class="father">
+            <img class="ui fluid image" @click="addCheckBox($event)" src="../assets/body-images/LowerBody.jpg"
+                 alt="Lower Body Image">
+            <div class="ui checkbox muscle-checkbox" v-for="checkbox in imageCheckboxes.lowerBody"
+                 :style="{top: `${checkbox.top}%`, left: `${checkbox.left}%`}">
+              <input v-model="checkbox.checked" type="checkbox"/><label></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui grid two columns stackable">
+      <div class="column">
+        <h2 class="ui header inverted">
+          Find exercises
+          <div class="sub header">Choose exercises based on the muscles you want to train</div>
+        </h2>
 
+        <h4 class="ui dividing header inverted">
+          Selected muscles
+        </h4>
+
+        <div class="ui info message" v-if="checkedMuscles.length < 1" style="margin-bottom: 24px">
+          <div class="header">No selected muscles</div>
+          <p>Mark muscle from the images above to see which exercises train it</p>
+        </div>
+
+        <div>
+          <div class="ui cards three doubling">
+            <template v-for="muscleGroup in mc">
+              <muscle-mini-info
+                v-for="muscle in muscleGroup.parts"
+                v-if="isCheckedFromPictureByName(muscle.name)"
+                :name="muscle.name"
+                :bro-name="muscle.broName"
+              />
+            </template>
+          </div>
+        </div>
+
+        <h4 class="ui dividing header inverted">
+          Exercises
+        </h4>
 
         <div class="ui two cards stackable">
           <exercise
@@ -42,12 +90,16 @@
       </div>
 
       <div class="column">
-        <h2 class="ui header">
-          Account Settings
-          <div class="sub header">Manage your account settings and set e-mail preferences.</div>
+        <h2 class="ui header inverted">
+          Edit volume
+          <div class="sub header">Edit your weekly volume for each muscle based on the chosen exercises</div>
         </h2>
 
         <div class="ui segment">
+          <h3 class="ui header">
+            Your exercises
+            <div class="sub header">These are going to be split over the week by the generator</div>
+          </h3>
           <div class="ui horizontal list">
             <selected-exercise-mini
               v-for="exercise in tweakerState.exercises"
@@ -55,6 +107,12 @@
             ></selected-exercise-mini>
           </div>
         </div>
+
+        <h4 class="ui header inverted dividing">
+          Muscles weekly volume
+          <div class="sub header">Edit your exercises to tweak the volume. Do not exceed the MRV.</div>
+        </h4>
+
 
         <template
           v-for="group in mc">
@@ -114,7 +172,6 @@
         let arr = [];
 
         _.forEach(this.imageCheckboxes, (image) => {
-          console.log(image);
           image.forEach((muscle) => {
             if (muscle.checked) {
               arr.push(muscle.name);

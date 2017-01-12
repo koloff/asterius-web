@@ -1,25 +1,40 @@
 <template>
   <div>
-    {{muscleToSet}}
-    <div class="father">
-      <img @click="addCheckBox($event)" class="img" src="../assets/LowerBody.jpg" alt="Lower Body Image"
-           style="border: 1px solid #ff2db5">
-      <input v-model="checkbox.checked" v-for="checkbox in imageCheckboxes.lowerBody"
-             :style="{top: `${checkbox.top}%`, left: `${checkbox.left}%`}" type="checkbox" class="muscle-checkbox"/>
+
+    <div class="code">
     </div>
 
-    <div class="father">
-      <img @click="addCheckBox($event)" class="img" src="../assets/UpperBodyFront.jpg" alt="Upper Body Front"
-           style="border: 1px solid #ff2db5">
-      <input v-model="checkbox.checked" v-for="checkbox in imageCheckboxes.upperBodyFront"
-             :style="{top: `${checkbox.top}%`, left: `${checkbox.left}%`}" type="checkbox" class="muscle-checkbox"/>
-    </div>
 
-    <div class="father">
-      <img @click="addCheckBox($event)" class="img" src="../assets/UpperBodyBack.jpg" alt="Upper Body Back"
-           style="border: 1px solid #ff2db5">
-      <input v-model="checkbox.checked" v-for="checkbox in imageCheckboxes.upperBodyBack"
-             :style="{top: `${checkbox.top}%`, left: `${checkbox.left}%`}" type="checkbox" class="muscle-checkbox"/>
+    <div class="ui equal height grid stackable middle aligned segment">
+      <div class="row">
+        <div class="five wide column" style="padding: 1px">
+          <div class="father">
+            <img class="ui fluid image" @click="addCheckBox($event)" src="../assets/body-images/UpperBodyFront.jpg"
+                 height="250" alt="Upper Body Front">
+            <input v-model="checkbox.checked" v-for="checkbox in imageCheckboxes.upperBodyFront"
+                   :style="{top: `${checkbox.top}%`, left: `${checkbox.left}%`}" type="checkbox"
+                   class="muscle-checkbox"/>
+          </div>
+        </div>
+        <div class="six wide  column" style="padding: 1px">
+          <div class="father">
+            <img class="ui fluid image" @click="addCheckBox($event)" src="../assets/body-images/UpperBodyBack.jpg"
+                 alt="Upper Body Back">
+            <input v-model="checkbox.checked" v-for="checkbox in imageCheckboxes.upperBodyBack"
+                   :style="{top: `${checkbox.top}%`, left: `${checkbox.left}%`}" type="checkbox"
+                   class="muscle-checkbox"/>
+          </div>
+        </div>
+        <div class="five wide  column" style="padding: 1px">
+          <div class="father">
+            <img class="ui fluid image" @click="addCheckBox($event)" src="../assets/body-images/LowerBody.jpg"
+                 alt="Lower Body Image">
+            <input v-model="checkbox.checked" v-for="checkbox in imageCheckboxes.lowerBody"
+                   :style="{top: `${checkbox.top}%`, left: `${checkbox.left}%`}" type="checkbox"
+                   class="muscle-checkbox"/>
+          </div>
+        </div>
+      </div>
     </div>
 
 
@@ -28,8 +43,6 @@
       <button @click="setMuscle(muscle)" v-for="(muscle, key) in group.parts">{{key}}</button>
     </div>
 
-    <div class="code">
-    </div>
 
 
   </div>
@@ -68,15 +81,3 @@
     }
   }
 </script>
-
-
-<style>
-  .father {
-    position: relative;
-    display: inline-block
-  }
-
-  .muscle-checkbox {
-    position: absolute;
-  }
-</style>

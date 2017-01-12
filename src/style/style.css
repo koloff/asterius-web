@@ -1,3 +1,20 @@
+body {
+    background: url("../assets/background1.jpg") fixed no-repeat;
+}
+
+.margin-bottom {
+    margin-bottom: 30px !important;
+}
+
 .bar .small-margin {
     margin: 10px 0 10px 0 !important;
+}
+
+.father {
+    position: relative;
+    display: inline-block
+}
+
+.muscle-checkbox {
+    position: absolute !important;
 }
