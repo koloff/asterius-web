@@ -1,46 +1,38 @@
 <template>
   <div>
-    <div class="ui cards seven doubling">
-      <div class="ui card">
-        <div class="content">
-          <div class="header">Project Timeline</div>
+    <template
+      v-for="(week, key) in split"
+    >
+      <h1 class="ui header dividing inverted">
+        WEEK {{key[key.length - 1]}}
+        <div class="sub header">
+          {{week.caption}}
         </div>
-        <div class="content">
-          <h4 class="ui sub header">Activity</h4>
-          <div class="ui small feed">
-            <div class="event">
-              <div class="content">
-                <div class="summary">
-                  <a>Elliot Fu</a> added <a>Jenny Hess</a> to the project
-                </div>
-              </div>
-            </div>
-            <div class="event">
-              <div class="content">
-                <div class="summary">
-                  <a>Stevie Feliciano</a> was added as an <a>Administrator</a>
-                </div>
-              </div>
-            </div>
-            <div class="event">
-              <div class="content">
-                <div class="summary">
-                  <a>Helen Troy</a> added two pictures
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="extra content">
-          <button class="ui button">Join Project</button>
-        </div>
+      </h1>
+      <div class="ui cards seven stackable">
+        <workout-mini
+          v-for="(weekDay, key) in week.days"
+          :day="weekDay.day"
+          :type="weekDay.type"
+        >
+
+        </workout-mini>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script>
+  import WorkoutMini from './workout/WorkoutMini.vue';
+  import split from './split';
+
   export default {
-    name: 'Program'
+    name: 'Program',
+    components: {WorkoutMini},
+    data() {
+      return {
+        split: split
+      }
+    }
   }
 </script>

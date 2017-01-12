@@ -240,15 +240,16 @@ export let ec = {
   //
   // //LEGS
   //
-  // barbellSquat: new Exercise(
-  //   'Barbell squat',
-  //   'Legs',
-  //   types.compound, [
-  //     mc.legs.parts.quardriceps.use(60),
-  //     mc.legs.parts.glutes.use(20),
-  //     mc.legs.parts.hamstrings.use(10),
-  //     mc.legs.parts.calves.use(10)
-  //   ]),
+  barbellSquat: new Exercise(
+    'Barbell squat',
+    'Legs',
+    require('../../assets/exercises/Legs/Barbell Squat/2.jpg'),
+    types.compound, [
+      mc.legs.parts.quardriceps.use(60),
+      mc.legs.parts.glutes.use(20),
+      mc.legs.parts.hamstrings.use(10),
+      mc.legs.parts.calves.use(10)
+    ]),
   //
   // legExtension: new Exercise(
   //   'Leg extension',
