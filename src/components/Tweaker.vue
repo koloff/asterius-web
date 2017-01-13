@@ -1,6 +1,7 @@
 <template>
   <div>
 
+    <div class="ui divider hidden"></div>
     <h2 class="ui icon header inverted center aligned margin-bottom">
       <i class="options icon"></i>
       <div class="content">
@@ -13,7 +14,7 @@
       <div class="row">
         <div class="five wide column" style="padding: 1px">
           <div class="father">
-            <img class="ui fluid image" @click="addCheckBox($event)" src="../assets/body-images/UpperBodyFront.jpg"
+            <img class="ui fluid image" src="../assets/body-images/UpperBodyFront.jpg"
                  height="250" alt="Upper Body Front">
 
             <div class="ui checkbox muscle-checkbox" v-for="checkbox in imageCheckboxes.upperBodyFront"
@@ -25,7 +26,7 @@
         </div>
         <div class="six wide column" style="padding: 1px">
           <div class="father">
-            <img class="ui fluid image" @click="addCheckBox($event)" src="../assets/body-images/UpperBodyBack.jpg"
+            <img class="ui fluid image" src="../assets/body-images/UpperBodyBack.jpg"
                  alt="Upper Body Back">
             <div class="ui checkbox muscle-checkbox" v-for="checkbox in imageCheckboxes.upperBodyBack"
                  :style="{top: `${checkbox.top}%`, left: `${checkbox.left}%`}">
@@ -35,7 +36,7 @@
         </div>
         <div class="five wide  column" style="padding: 1px">
           <div class="father">
-            <img class="ui fluid image" @click="addCheckBox($event)" src="../assets/body-images/LowerBody.jpg"
+            <img class="ui fluid image" src="../assets/body-images/LowerBody.jpg"
                  alt="Lower Body Image">
             <div class="ui checkbox muscle-checkbox" v-for="checkbox in imageCheckboxes.lowerBody"
                  :style="{top: `${checkbox.top}%`, left: `${checkbox.left}%`}">
@@ -137,6 +138,14 @@
       </div>
     </div>
 
+
+    <div class="ui divider hidden"></div>
+    <router-link :to="'/program'" tag="button" class="ui green button large fluid">
+
+      <i class="ui icon flag checkered"></i>
+      Go
+    </router-link>
+    <div class="ui divider hidden"></div>
 
   </div>
 </template>

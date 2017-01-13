@@ -19,6 +19,9 @@ export default new VueRouter({
       path: '/program', component: require('./components/Program.vue')
     },
     {
+      path: '/program/:week/:day', component: require('./components/workout/WorkoutDetails.vue')
+    },
+    {
       path: '/experiment', component: require('./components/Experiment.vue')
     },
 

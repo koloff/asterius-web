@@ -7,10 +7,14 @@
     </div>
 
     <div class="content center aligned">
-      <img  :src="getImage()" class="ui image tiny circular" alt="">
+      <img :src="getImage()" class="ui image tiny circular" alt="">
       <h4 class="ui sub header">{{type}}</h4>
       <div class="extra content">
-        <button :class="{disabled: type === 'Rest', gray: type === 'Rest', primary: type !== 'Rest'}" class="ui button">GO</button>
+        <router-link :to="`/program/${week}/${day}`" tag="button" class="ui button large fluid"
+                     :class="{disabled: type === 'Rest', gray: type === 'Rest', green: type !== 'Rest'}">
+          <i class="ui icon flag checkered"></i>
+          GO
+        </router-link>
       </div>
     </div>
 
@@ -19,11 +23,14 @@
 </template>
 
 <script>
-  
+
   import {ec} from '../../algorithm/exercise/exercises-collection';
   export default {
     name: 'WorkoutMini',
-    props: ['day', 'type'],
+    props: ['week', 'day', 'type'],
+    mounted() {
+      $(this.$el).transition('pulse');
+    },
     methods: {
       getImage() {
         if (this.type === 'Push') {

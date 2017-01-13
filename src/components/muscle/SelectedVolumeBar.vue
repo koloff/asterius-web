@@ -5,13 +5,12 @@
       <div class="bar"></div>
     </div>
     <h5 class="ui header" style="margin-top: 2px">
-      <img src="../../assets/body-images/LowerBody.jpg">
+      <img :src="muscle.image" />
       <div class="content">
         {{muscle.broName}}
         <div class="sub header"><i>{{muscle.name}}</i></div>
       </div>
     </h5>
-
 
   </div>
 
@@ -29,7 +28,7 @@
       }
     },
     mounted() {
-      $('.progress').progress({
+      $(this.$el).find('.progress').progress({
         showActivity: false,
         limitValues: false
       });
@@ -53,7 +52,7 @@
         } else if (percentage >= 90 && percentage < 100) {
           this.barColor = 'orange';
         }
-
+        $(this.$el).find('.progress').progress('set percent', percentage);
         return percentage;
       }
     },

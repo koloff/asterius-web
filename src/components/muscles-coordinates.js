@@ -18,7 +18,7 @@ export default {
     {name: 'Biceps brachii long head', left: 81.28571428571428, top: 56.949152542372886, checked: false},
     {name: 'Biceps brachii short head', left: 75.14285714285714, top: 43.050847457627114, checked: false},
     {name: 'Trapezius superior fibers', left: 60.57142857142858, top: 5.101694915254238, checked: false},
-    {name: 'Pectoralis major sternal head', left: 35.18518518518518, top: 39.12175648702595, checked: false},
+    {name: 'Pectoralis major sternal head', left: 35.18518518518518, top: 39.12175648702595, checked: true},
     {name: 'Deltoid anterior head', left: 76.43097643097643, top: 19.36127744510978, checked: false},
     {name: 'Rectus abdominis', left: 48.505050505050505, top: 67.46506986027944, checked: false},
     {name: 'Abdominal obliques', left: 30.285714285714285, top: 63.33898305084746, checked: false},

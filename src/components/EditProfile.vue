@@ -211,13 +211,13 @@
     name: 'EditProfile',
     data() {
       return {
-        currentView: 'finish',
+        currentView: 'personalMetrics',
         animationEnded: true,
         chosenDays: {
           monday: 1,
-          tuesday: 1,
-          wednesday: 0,
-          thursday: 1,
+          tuesday: 0,
+          wednesday: 1,
+          thursday: 0,
           friday: 1,
           saturday: 0,
           sunday: 0

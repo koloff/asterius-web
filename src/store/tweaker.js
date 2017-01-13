@@ -15,11 +15,11 @@ export default {
       {name: "Rope Pushdown", sets: 3},
       {name: "Seated Triceps Press", sets: 3},
       //pull
-      {name: "Lat Pulldown", sets: 3},
+      {name: "Lat Pulldown Wide Grip", sets: 3},
       {name: "Cable Row", sets: 3},
       {name: "Straight Arm Pulldown", sets: 3},
       {name: "Dumbbell Shrugs", sets: 3},
-      {name: "Reverse Pec Dek", sets: 3},
+      {name: "Reverse Pec Deck", sets: 3},
       {name: "Barbell Curl", sets: 3},
       {name: "Overhead Cable Curl", sets: 3},
       {name: "Incline Dumbbell Curl", sets: 3},
