@@ -2,6 +2,10 @@ body {
     background: url("../assets/background1.jpg") fixed no-repeat;
 }
 
+.divider.big {
+    margin-bottom: 35px !important;
+}
+
 .margin-bottom {
     margin-bottom: 30px !important;
 }
@@ -18,3 +22,10 @@ body {
 .muscle-checkbox {
     position: absolute !important;
 }
+
+.choose-experience .button {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+}
+

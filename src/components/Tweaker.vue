@@ -10,7 +10,7 @@
       </div>
     </h2>
 
-    <div class="ui equal height grid stackable middle aligned segment">
+    <div class="ui equal height grid stackable middle aligned segment basic">
       <div class="row">
         <div class="five wide column" style="padding: 1px">
           <div class="father">

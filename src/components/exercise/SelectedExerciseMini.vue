@@ -1,7 +1,7 @@
 <template>
 
   <div class="item">
-    <img class="ui avatar tiny  image" :src="fullExercise.image">
+    <img class="ui avatar mini  image" :src="fullExercise.image">
     <div class="content">
       <div class="header">{{exercise.name}}
       </div>
