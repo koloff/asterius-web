@@ -237,8 +237,6 @@
     this.zones
 
       .bind('touchend.mapify', function(e) { // fast-click on iOS
-        console.log('touchend.mapify');
-
         if (_this.isDragging) {
           _this.isDragging = false;
           return;
@@ -252,10 +250,8 @@
 
 
       .bind('click.mapify', function(e) {
-        console.log('click.mapify');
         // Preventing the click event from being triggered by a human
         // The click event must be triggered on touchend for the fast-click
-        console.log(e);
         if (e.originalEvent && isMobile) {
           return (false);
         }
@@ -735,8 +731,9 @@
 
       this._clearMap();
       $.each(this.selectedAreas, (key, value) => {
-        if (this.selectedAreas[key]) {
-          this._drawHighlight($map.find(`[data-title=${key}]`)[0]);
+        let el = $map.find(`[data-title=${key}]`)[0]
+        if (this.selectedAreas[key] && el) {
+          this._drawHighlight(el);
         }
       });
 
