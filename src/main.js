@@ -7,12 +7,12 @@ import 'semantic-ui-css/semantic';
 import 'animate.css';
 import './style/style.css';
 
-import './lib/semantic-ui-range/range';
-import './lib/semantic-ui-range/range.css';
+import './lib/mapify/mapify';
+import './lib/mapify/jquery.mapify.css';
+
 
 // load js utils
 import './utils/index';
-
 // get routes
 import router from './router';
 

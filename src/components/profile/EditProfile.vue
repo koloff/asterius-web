@@ -35,7 +35,7 @@
     components: {Stats, PreferredMuscles},
     data() {
       return {
-        view: 'stats',
+        view: 'preferredMuscles',
       }
     },
     methods: {
