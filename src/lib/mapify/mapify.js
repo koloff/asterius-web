@@ -123,7 +123,6 @@
       this._mapWidth = parseInt($imageMap.attr('width'));
       this._mapHeight = parseInt($imageMap.attr('height'));
       if (!this._mapWidth || !this._mapHeight) {
-        window.alert('ERROR: The width and height attributes must be specified on your image.');
         return (false);
       }
 
@@ -250,6 +249,7 @@
 
 
       .bind('click.mapify', function(e) {
+        console.log(e);
         // Preventing the click event from being triggered by a human
         // The click event must be triggered on touchend for the fast-click
         if (e.originalEvent && isMobile) {

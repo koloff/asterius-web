@@ -1,6 +1,6 @@
 {
-  "name": "myheart",
-  "description": "Lowering blood pressure with AI",
+  "name": "asterius-web",
+  "description": "Generating fitness programs",
   "author": "Koloff",
   "private": true,
   "scripts": {

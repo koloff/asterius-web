@@ -1,6 +1,5 @@
-# Healthy
-
-> Get jacked with our system
+# asterius-web
+> Generating optimal fitness programs
 
 ## Build Setup
 

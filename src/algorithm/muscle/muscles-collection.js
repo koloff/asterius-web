@@ -8,6 +8,7 @@
 import _ from 'lodash';
 import Muscle from './muscle';
 
+exports.a = 5;
 
 export function getMuscle(muscleName) {
   let muscleToReturn;

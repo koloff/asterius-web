@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="ui divider hidden"></div>
     <h4 class="ui header inverted centered">What are your measurements?</h4>
     <div class="ui grid">
       <div class="eight wide column right aligned">
@@ -73,6 +74,8 @@
       <div class="ui button blue" :class="{basic: !chosenDays['sunday']}" @click="toggleDay('sunday')">S</div>
     </div>
 
+
+    <div class="ui divider hidden big"></div>
   </div>
 </template>
 

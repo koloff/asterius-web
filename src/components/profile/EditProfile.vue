@@ -2,7 +2,7 @@
   <div>
     <div class="ui divider hidden"></div>
     <h1 class="ui header inverted centered">ASTERIUS</h1>
-    <div class="ui divider hidden big"></div>
+    <div class="ui divider hidden"></div>
 
     <transition
       mode="out-in"
@@ -14,7 +14,6 @@
       <preferred-muscles v-if="view === 'preferredMuscles'"></preferred-muscles>
     </transition>
 
-    <div class="ui divider hidden big"></div>
     <div class="ui segment center aligned basic">
       <button :class="{disabled: view === 'stats'}" class="ui button huge blue" @click="previousStep()">
         Back

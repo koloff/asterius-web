@@ -1,7 +1,7 @@
 <template>
   <div>
 
-
+    <div class="ui divider" style="margin-top: 0 !important;"></div>
     <muscles-selector :selected-muscles="preferredMuscles"></muscles-selector>
 
   </div>
@@ -14,9 +14,12 @@
   export default {
     name: 'PreferredMuscles',
     components: {MusclesSelector},
+    mounted() {
+      console.log(a);
+    },
     data() {
       return {
-        preferredMuscles: ['obliques', 'test']
+        preferredMuscles: ['obliques']
       }
     }
   }
