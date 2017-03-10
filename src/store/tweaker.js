@@ -5,10 +5,8 @@ export default {
 
   // todo: to generate basic training add sets by percentage for each muscle group
   state: {
-    exercises: [
-
-      //push
-      {key: "dumbbell_bench_press", sets: [{reps: 8}, {reps: 8}, {reps: 8}]},
+    exercises: [   //push
+      {name: "Dumbbell Bench Press", sets: 3},
       {name: "Dumbbell Incline Bench Press", sets: 3},
       {name: "Low Cable Crossover", sets: 3},
       {name: "Cable Crossover", sets: 3},
@@ -16,11 +14,9 @@ export default {
       {name: "Skullcrushers", sets: 3},
       {name: "Rope Pushdown", sets: 3},
       {name: "Seated Triceps Press", sets: 3},
-
       //pull
       {name: "Lat Pulldown Wide Grip", sets: 3},
-      {name: "cable_row", sets: 1, reps: 10, weight: 30},
-      {name: "rest", duration: 30},
+      {name: "Cable Row", sets: 3},
       {name: "Straight Arm Pulldown", sets: 3},
       {name: "Dumbbell Shrugs", sets: 3},
       {name: "Reverse Pec Deck", sets: 3},
@@ -28,7 +24,6 @@ export default {
       {name: "Overhead Cable Curl", sets: 3},
       {name: "Incline Dumbbell Curl", sets: 3},
       //legs
-
       {name: "Barbell Squat", sets: 3},
       {name: "Leg Extensions", sets: 3},
       {name: "Leg Curls", sets: 3},

@@ -18,7 +18,12 @@
       <button :class="{disabled: view === 'stats'}" class="ui button huge blue" @click="previousStep()">
         Back
       </button>
-      <div class="ui button huge green" @click="nextStep()">
+
+      <router-link v-if="view=== 'preferredMuscles'" tag="button" :to="'/tweaker'" class="ui button huge green">
+        <i class="ui icon flag checkered"></i> Final touches
+      </router-link >
+
+      <div v-else class="ui button huge green" @click="nextStep()">
         Next
       </div>
     </div>
@@ -41,6 +46,8 @@
       nextStep() {
         if (this.view === 'stats') {
           this.view = 'preferredMuscles'
+        } else if (this.view === 'preferredMuscles') {
+          this.$router.go('/tweaker');
         }
       },
       previousStep() {

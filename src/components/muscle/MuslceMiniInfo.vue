@@ -4,7 +4,7 @@
       <div class="header">
         <img :src="image" class="ui image" :alt="name"/>
         {{broName}}
-        </div>
+      </div>
       <div class="meta">
         <i>{{name}}</i>
       </div>

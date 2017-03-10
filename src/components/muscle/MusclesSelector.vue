@@ -375,6 +375,12 @@
     margin-top: 4px !important;
   }
 
+  .selected {
+    stroke: rgba(0, 0, 0, 0.6);
+    stroke-width: 1;
+    stroke-linecap: round;
+  }
+
   .selected[data-group-id="abs"] {
     fill: rgba(0, 0, 200, 0.3) !important;
   }

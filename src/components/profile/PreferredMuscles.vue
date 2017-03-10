@@ -15,7 +15,6 @@
     name: 'PreferredMuscles',
     components: {MusclesSelector},
     mounted() {
-      console.log(a);
     },
     data() {
       return {

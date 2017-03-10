@@ -18,7 +18,6 @@
 
 <script>
   import tweakerStore from '../../store/tweaker';
-
   export default {
     name: 'SelectedVolumeBar',
     props: ['muscle'],
@@ -37,12 +36,10 @@
     computed: {
       mrvPercentage() {
         let percentage = tweakerStore.calculateMRVPercentage(this.muscle);
-
         if (percentage >= 100) {
           $(this.$el).find('.progress').progress('set error');
           return percentage;
         }
-
         if (percentage < 25) {
           this.barColor = 'gray';
         } else if (percentage >= 25 && percentage < 50) {

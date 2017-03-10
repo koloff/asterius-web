@@ -285,4 +285,3 @@ export let ec = {
       mc.legs.parts.calves.use(100)
     ])
 };
-

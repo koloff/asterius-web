@@ -10,7 +10,7 @@
       </div>
     </h2>
 
-    <div class="ui equal height grid stackable middle aligned segment basic">
+    <div class="ui equal height grid stackable middle aligned segment">
       <div class="row">
         <div class="five wide column" style="padding: 1px">
           <div class="father">
@@ -151,18 +151,15 @@
 </template>
 
 <script>
-
   import _ from 'lodash';
   import {mc} from '../algorithm/muscle/muscles-collection';
   import {ec} from '../algorithm/exercise/exercises-collection';
   import tweakerStore from '../store/tweaker';
   import musclesCoordinates from './muscles-coordinates';
-
   import Exercise from './exercise/Exercise.vue';
   import MuscleMiniInfo from './muscle/MuslceMiniInfo.vue';
   import SelectedVolumeBar from './muscle/SelectedVolumeBar.vue';
   import SelectedExerciseMini from './exercise/SelectedExerciseMini.vue';
-
   export default {
     name: 'App',
     components: {Exercise, MuscleMiniInfo, SelectedVolumeBar, SelectedExerciseMini},
@@ -175,13 +172,10 @@
       }
     },
     mounted() {
-
     },
-
     computed: {
       checkedMuscles() {
         let arr = [];
-
         _.forEach(this.imageCheckboxes, (image) => {
           image.forEach((muscle) => {
             if (muscle.checked) {
@@ -189,17 +183,13 @@
             }
           })
         });
-
         return arr;
       }
     },
-
     methods: {
-
       isCheckedFromPictureByName(name) {
         return this.checkedMuscles.indexOf(name) > -1
       },
-
       doesExerciseTrainCheckedMuscle(exercise) {
         let trains = false;
         exercise.musclesUsed.forEach((muscle) => {
@@ -209,8 +199,6 @@
         });
         return trains;
       },
-
     }
   }
 </script>
-
