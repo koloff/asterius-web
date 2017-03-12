@@ -447,6 +447,7 @@
       }
     }
 
+
     var polygon = this.svgMap.find('polygon:eq(' + $(zone).index() + ')')[0];
     $(polygon)
       .attr('points', zonePoints)

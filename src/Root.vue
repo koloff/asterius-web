@@ -1,6 +1,8 @@
 <template>
-  <div class="ui container">
-    <router-view></router-view>
+  <div>
+    <div class="ui container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 

@@ -1,16 +1,19 @@
 <template>
   <div>
 
-    <div class="ui segment center aligned basic" style="padding: 0">
+    <div class="ui basic  segment center aligned" style="padding: 0;">
 
       <div class="maps">
 
-        <div style="position: relative; top: 83px; left: 100px; margin-top: -70px; z-index: 999;">
 
-          <button class="circular ui icon button grey massive inverted">
-            <i class="icon refresh"></i>
-          </button>
-        </div>
+        <button class="ui inverted button icon" style="position: relative; top: 83px; left: 100px; margin-top: -70px; z-index: 999;">
+          <i class="ui refresh icon"></i>
+          Rotate</button>
+
+        <!--<button style="position: relative; top: 83px; left: 100px; margin-top: -70px; z-index: 999;"-->
+                <!--class="circular ui icon button grey massive inverted">-->
+          <!--<i class="icon refresh"></i>-->
+        <!--</button>-->
 
 
         <div>
@@ -144,18 +147,12 @@
           </map>
         </div>
 
+
       </div>
 
-      <div class="ui labels">
-        <div v-for="muscle in selectedMuscles" class="ui label">
-          {{muscle}}
-          <i class="delete icon" @click="switchSelectedRegion(muscle)"></i>
-        </div>
-      </div>
 
     </div>
 
-    <div class="ui divider"></div>
 
   </div>
 </template>
@@ -285,15 +282,6 @@
       }
     },
     mounted() {
-
-      //      let naturalWidthFront = $('.map-front')[0].naturalWidth;
-      //      let naturalHeightFront = $('.map-front')[0].naturalHeight;
-      //      $('.map-front').attr('width', naturalWidthFront).attr('height', naturalHeightFront);
-      //
-      //      let naturalWidthBack = $('.map-back')[0].naturalWidth;
-      //      let naturalHeightBack = $('.map-back')[0].naturalHeight;
-      //      $('.map-back').attr('width', naturalWidthBack).attr('height', naturalHeightBack);
-
 
       this.mapFront = $(`.map-front`).mapify({
         hoverClass: "selected",

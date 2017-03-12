@@ -1,7 +1,6 @@
 <template>
   <div>
 
-    <div class="ui divider" style="margin-top: 0 !important;"></div>
     <muscles-selector :selected-muscles="preferredMuscles"></muscles-selector>
 
   </div>

@@ -1,6 +1,11 @@
 <template>
   <div>
 
+    <div :class="{active: loading}" class="ui dimmer page">
+      <div class="ui text loader">Generating split</div>
+    </div>
+
+
     <div class="ui divider hidden"></div>
     <h2 class="ui icon header inverted center aligned margin-bottom">
       <i class="options icon"></i>
@@ -140,11 +145,12 @@
 
 
     <div class="ui divider hidden"></div>
-    <router-link :to="'/program'" tag="button" class="ui green button large fluid">
 
+    <button @click="generate()" class="ui green button large fluid">
       <i class="ui icon flag checkered"></i>
       Go
-    </router-link>
+    </button>
+
     <div class="ui divider hidden"></div>
 
   </div>
@@ -165,6 +171,7 @@
     components: {Exercise, MuscleMiniInfo, SelectedVolumeBar, SelectedExerciseMini},
     data() {
       return {
+        loading: false,
         mc: mc,
         ec: ec,
         tweakerState: tweakerStore.state,
@@ -199,6 +206,13 @@
         });
         return trains;
       },
+      generate() {
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+          this.$router.push('/program');
+        }, 2500);
+      }
     }
   }
 </script>

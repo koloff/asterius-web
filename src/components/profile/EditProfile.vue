@@ -1,27 +1,33 @@
 <template>
   <div>
+
+    <div :class="{active: loading}" class="ui dimmer page">
+      <div class="ui text loader">Loading</div>
+    </div>
+
     <div class="ui divider hidden"></div>
     <h1 class="ui header inverted centered">ASTERIUS</h1>
-    <div class="ui divider hidden"></div>
+
 
     <transition
       mode="out-in"
       name="custom-classes-transition"
-      enter-active-class="create-profile animated slideInRight"
-      leave-active-class="create-profile animated slideOutLeft"
+      enter-active-class="create-profile animated fadeIn"
+      leave-active-class="create-profile animated fadeOut"
     >
       <stats v-if="view === 'stats'"></stats>
       <preferred-muscles v-if="view === 'preferredMuscles'"></preferred-muscles>
     </transition>
+
 
     <div class="ui segment center aligned basic">
       <button :class="{disabled: view === 'stats'}" class="ui button huge blue" @click="previousStep()">
         Back
       </button>
 
-      <router-link v-if="view=== 'preferredMuscles'" tag="button" :to="'/tweaker'" class="ui button huge green">
+      <div v-if="view=== 'preferredMuscles'" class="ui button huge green" @click="nextStep()">
         <i class="ui icon flag checkered"></i> Final touches
-      </router-link >
+      </div>
 
       <div v-else class="ui button huge green" @click="nextStep()">
         Next
@@ -39,15 +45,20 @@
     components: {Stats, PreferredMuscles},
     data() {
       return {
+        loading: false,
         view: 'preferredMuscles',
       }
     },
     methods: {
       nextStep() {
         if (this.view === 'stats') {
-          this.view = 'preferredMuscles'
+          this.view = 'preferredMuscles';
         } else if (this.view === 'preferredMuscles') {
-          this.$router.go('/tweaker');
+          this.loading = true;
+          setTimeout(() => {
+            this.loading = false;
+            this.$router.push('tweaker');
+          }, 2000)
         }
       },
       previousStep() {
@@ -60,8 +71,8 @@
 </script>
 
 <style>
- .create-profile {
-  animation-duration: 0.4s;
- }
+  .create-profile {
+    animation-duration: 0.4s;
+  }
 </style>
 
