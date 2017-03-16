@@ -17,7 +17,7 @@
     },
     data() {
       return {
-        preferredMuscles: ['obliques']
+        preferredMuscles: []
       }
     }
   }

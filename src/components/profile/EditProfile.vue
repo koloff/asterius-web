@@ -1,10 +1,6 @@
 <template>
   <div>
 
-    <div :class="{active: loading}" class="ui dimmer page">
-      <div class="ui text loader">Loading</div>
-    </div>
-
     <div class="ui divider hidden"></div>
     <h1 class="ui header inverted centered">ASTERIUS</h1>
 
@@ -39,13 +35,13 @@
 <script>
   import Stats from './Stats.vue';
   import PreferredMuscles from './PreferredMuscles.vue';
+  import rootStore from '../../store/root';
 
   export default {
     name: 'EditProfile',
     components: {Stats, PreferredMuscles},
     data() {
       return {
-        loading: false,
         view: 'preferredMuscles',
       }
     },
@@ -54,11 +50,11 @@
         if (this.view === 'stats') {
           this.view = 'preferredMuscles';
         } else if (this.view === 'preferredMuscles') {
-          this.loading = true;
+          rootStore.setLoadingProfile(true);
           setTimeout(() => {
-            this.loading = false;
+            rootStore.setLoadingProfile(false);
             this.$router.push('tweaker');
-          }, 2000)
+          }, 300)
         }
       },
       previousStep() {

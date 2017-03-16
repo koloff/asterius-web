@@ -1,10 +1,6 @@
 <template>
   <div>
 
-    <div :class="{active: loading}" class="ui dimmer page">
-      <div class="ui text loader">Generating split</div>
-    </div>
-
 
     <div class="ui divider hidden"></div>
     <h2 class="ui icon header inverted center aligned margin-bottom">
@@ -166,12 +162,14 @@
   import MuscleMiniInfo from './muscle/MuslceMiniInfo.vue';
   import SelectedVolumeBar from './muscle/SelectedVolumeBar.vue';
   import SelectedExerciseMini from './exercise/SelectedExerciseMini.vue';
+
+  import rootStore from '../store/root';
+
   export default {
     name: 'App',
     components: {Exercise, MuscleMiniInfo, SelectedVolumeBar, SelectedExerciseMini},
     data() {
       return {
-        loading: false,
         mc: mc,
         ec: ec,
         tweakerState: tweakerStore.state,
@@ -207,9 +205,9 @@
         return trains;
       },
       generate() {
-        this.loading = true;
+        rootStore.setLoadingTweaker(true);
         setTimeout(() => {
-          this.loading = false;
+          rootStore.setLoadingTweaker(false);
           this.$router.push('/program');
         }, 2500);
       }
