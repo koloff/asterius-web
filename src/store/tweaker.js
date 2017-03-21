@@ -34,11 +34,6 @@ export default {
       {name: "Cable External Rotation", sets: 3}]
   },
 
-  demo() {
-    // let workout: {
-    //
-    // }
-  },
   getExercise(exName) {
     return _.find(this.state.exercises, {'name': exName});
   },

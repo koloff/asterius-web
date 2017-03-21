@@ -154,7 +154,7 @@
 
 <script>
   import _ from 'lodash';
-  import {mc} from '../algorithm/muscle/muscles-collection';
+  import {mc} from '../algorithm/muscle/muscles-collection-OLD';
   import {ec} from '../algorithm/exercise/exercises-collection';
   import tweakerStore from '../store/tweaker';
   import musclesCoordinates from './muscles-coordinates';
@@ -196,6 +196,7 @@
         return this.checkedMuscles.indexOf(name) > -1
       },
       doesExerciseTrainCheckedMuscle(exercise) {
+        console.log(exercise);
         let trains = false;
         exercise.musclesUsed.forEach((muscle) => {
           if (this.checkedMuscles.indexOf(muscle.name) > -1) {

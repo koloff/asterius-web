@@ -50,7 +50,7 @@
 
 
 <script>
-  import {mc} from '../algorithm/muscle/muscles-collection';
+  import {mc} from '../algorithm/muscle/muscles-collection-OLD';
   import _ from 'lodash';
 
   import musclesCoordinates from './muscles-coordinates';

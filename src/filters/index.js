@@ -1,3 +1,4 @@
 export default {
-  date: require('./date')
+  date: require('./date'),
+  uppercase: require('./uppercase')
 }

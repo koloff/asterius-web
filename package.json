@@ -1,7 +1,7 @@
 {
   "name": "asterius-web",
   "description": "Generating fitness programs",
-  "author": "Koloff",
+  "author": "Anton Kolov",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --hot",
@@ -9,12 +9,13 @@
   },
   "dependencies": {
     "animate.css": "^3.5.2",
+    "chart.js": "^2.5.0",
     "jquery": "^3.1.1",
     "jquery.scrollto": "^2.1.2",
     "lodash": "^4.15.0",
     "noty": "^2.3.8",
     "semantic-ui-css": "^2.2.4",
-    "superagent": "^2.2.0",
+    "superagent": "^2.3.0",
     "vue": "^2.0.0-beta.5",
     "vue-router": "^2.0.0-rc.3"
   },
