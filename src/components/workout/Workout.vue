@@ -4,20 +4,20 @@
 
     <exercise-circular
       :exercise-key="'dumbbellBenchPress'"
-      :maxWidth="190"
-      :maxHeight="190"
+      :setsCount="15"
+      :type="'tweaker'"
     ></exercise-circular>
 
     <exercise-circular
       :exercise-key="'lateralRaise'"
-      :maxWidth="190"
-      :maxHeight="190"
+      :setsCount="3"
+      :type="'workout'"
     ></exercise-circular>
 
     <exercise-circular
-      :exercise-key="'dumbbellShoulderPress'"
-      :maxWidth="190"
-      :maxHeight="190"
+      :exercise-key="'lateralRaise'"
+      :setsCount="1"
+      :type="'workout'"
     ></exercise-circular>
 
 

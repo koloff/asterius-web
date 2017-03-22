@@ -1,24 +1,49 @@
 <template>
-  <div class="ui segment exercise-segment">
+  <div class="ui segment secondary exercise-circlular">
+    <div class="exercise-circular-container">
 
 
-    <div class="exercise-data" style="display: table-row">
-      <div class="exercise-header" style="display: table-cell; border: 1px solid red;">
-        <h4 class="ui header">{{exercise.info.name | uppercase}}</h4>
+      <button class="ui icon button basic black exercise-details-button">
+        <i class="icon settings"></i>
+      </button>
+
+      <div v-if="type === 'tweaker'" class="ui mini basic icon buttons exercise-sets-buttons">
+        <button class="ui button"><i class="plus icon"></i></button>
+        <button class="ui button"><i class="minus icon"></i></button>
       </div>
 
-      <div class="ui statistic" style="display: table-cell;  border: 1px solid red">
-        <div class="value">
-          4
-        </div>
-        <div class="label">
-          SETS
+      <button v-if="type === 'workout'" class="mini ui button basic exercise-go-button">
+        START
+      </button>
+
+      <div class="exercise-data-container">
+        <div class="exercise-data-wrapper">
+          <div class="exercise-data">
+
+
+            <div class="exercise-header">
+              <h5 class="ui header">{{exercise.info.name | uppercase}}</h5>
+            </div>
+
+            <div class="exercise-statistics">
+              <div class="ui statistic small">
+                <div class="value">
+                  {{setsCount}}
+                </div>
+                <div class="label">
+                  SET{{`${setsCount > 1 ? 'S' : ''}`}}
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
+
+
+      <canvas class="exercise-canvas" :id="elementId"></canvas>
+
     </div>
-
-    <canvas :id="elementId"></canvas>
-
   </div>
 </template>
 
@@ -29,7 +54,7 @@
 
   export default {
     name: 'ExerciseCircular',
-    props: ['exerciseKey', 'maxWidth', 'maxHeight'],
+    props: ['exerciseKey', 'setsCount', 'type'],
     data() {
       return {
         elementId: Math.random(),
@@ -39,10 +64,7 @@
     },
     mounted() {
       // resize
-      $(this.$el).css({
-        maxWidth: this.maxWidth,
-        maxHeight: this.maxHeight
-      });
+
 
       // prepare the data for chart.js
       let labels = [];
@@ -55,10 +77,10 @@
         colors.push(muscleInfo.color);
       });
 
-      console.log(labels);
-      console.log(data);
 
-
+      Chart.Tooltip.positioners.cursor = function(chartElements, coordinates) {
+        return coordinates;
+      };
       let ctx = document.getElementById(this.elementId);
       let chart = new Chart(ctx, {
         type: 'doughnut',
@@ -77,9 +99,9 @@
           tooltips: {
             enabled: true,
             caretSize: 0,
+            position: 'cursor',
             callbacks: {
               label: function(tooltipItems, data) {
-                console.log(arguments);
                 return data.labels[tooltipItems.index];
               }
             }
@@ -95,18 +117,81 @@
 </script>
 
 <style>
-  .exercise-segment {
+  .exercise-circlular {
     display: inline-block;
-    padding: 4px !important;
+    width: 200px;
+    height: 200px;
+    padding: 3px !important;
+  }
+
+  .exercise-canvas {
+    z-index: 99;
+  }
+
+  .exercise-circular-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .exercise-data-container {
+    margin: auto;
+    width: 60%;
+    position: absolute;
+    text-align: center;
+  }
+
+  .exercise-data-wrapper {
+    display: inline-block;
+    margin-left: 50%;
+    transform: translateX(-50%);
   }
 
   .exercise-data {
-    border: 1px solid red;
-    position: absolute;
-    display: inline-block;
-    max-width: 70%;
-    max-height: 50px;
-    margin: 0 auto;
-    text-align: center;
+    display: flex;
+    position: relative;
   }
+
+  .exercise-header {
+    padding-right: 5px;
+    text-align: right;
+    margin: auto;
+    flex: 1;
+  }
+
+  .exercise-statistics {
+    border-left: 1px solid rgba(0, 0, 0, 0.4);
+    padding-left: 5px;
+    margin: auto;
+  }
+
+  .exercise-sets-buttons {
+    position: absolute;
+    z-index: 999;
+    bottom: 17%;
+  }
+  .exercise-sets-buttons .button {
+    text-align: center;
+    padding: 6px 4px 6px 10px !important;
+  }
+
+  .exercise-go-button {
+    position: absolute;
+    z-index: 999;
+    bottom: 18%;
+  }
+
+  .exercise-details-button {
+    position: absolute;
+    z-index: 999;
+    top: 17%;
+  }
+
+  .exercise-details-button .ui.basic.black.buttons .button, .ui.basic.black.button {
+    box-shadow: none !important;
+  }
+
+
 </style>

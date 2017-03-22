@@ -1,5 +1,5 @@
 <template>
-  <div class="ui segment secondary sets-selector" style="max-width: 500px; padding: 14px 10px 10px 14px">
+  <div class="ui segment secondary sets-selector">
 
 
     <span @click="focusOnTarget()" class="ui left corner label blue" style="cursor: pointer">
@@ -131,6 +131,8 @@
 
 <style>
   .sets-selector {
+    text-align: center;
+    padding: 14px 10px 10px 14px;
   }
 
   .selector-row {
