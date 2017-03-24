@@ -1,20 +1,25 @@
 <template>
-  <div class="ui segment secondary exercise-circlular">
+  <div
+    class="ui segment exercise-circular"
+    :class="{secondary: !isCurrent, blue: isCurrent}"
+  >
     <div class="exercise-circular-container">
 
 
-      <button class="ui icon button basic black exercise-details-button">
-        <i class="icon settings"></i>
-      </button>
+      <!--<button class="ui icon button basic black exercises-details-button">-->
+      <!--<i class="icon settings"></i>-->
+      <!--</button>-->
 
-      <div v-if="type === 'tweaker'" class="ui mini basic icon buttons exercise-sets-buttons">
-        <button class="ui button"><i class="plus icon"></i></button>
-        <button class="ui button"><i class="minus icon"></i></button>
-      </div>
 
-      <button v-if="type === 'workout'" class="mini ui button basic exercise-go-button">
-        START
-      </button>
+      <!--<div class="ui mini basic icon buttons exercises-sets-buttons">-->
+      <!--<button class="ui button"><i class="plus icon"></i></button>-->
+      <!--<button class="ui button"><i class="minus icon"></i></button>-->
+      <!--</div>-->
+
+
+      <!--this will show a select button or a +- buttons depending on the parent (workout/tweaker) -->
+      <slot></slot>
+
 
       <div class="exercise-data-container">
         <div class="exercise-data-wrapper">
@@ -54,7 +59,7 @@
 
   export default {
     name: 'ExerciseCircular',
-    props: ['exerciseKey', 'setsCount', 'type'],
+    props: ['exerciseKey', 'setsCount', 'isCurrent'],
     data() {
       return {
         elementId: Math.random(),
@@ -112,35 +117,39 @@
         }
       });
 
-    }
+    },
+    methods: {}
   }
 </script>
 
 <style>
-  .exercise-circlular {
+  .exercise-circular {
     display: inline-block;
     width: 200px;
     height: 200px;
+    margin: 0 !important;
     padding: 3px !important;
   }
 
   .exercise-canvas {
-    z-index: 99;
+    /*z-index: 99;*/
   }
 
   .exercise-circular-container {
-    display: flex;
     width: 100%;
     height: 100%;
+    display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .exercise-data-container {
-    margin: auto;
-    width: 60%;
+    /* There is a bug in firefox for flex inside flex.
+     * https://github.com/philipwalton/flexbugs#10-align-items-baseline-doesnt-work-with-nested-flex-containers
+     * TODO fix nested flexbox bug in firefox
+    */
     position: absolute;
-    text-align: center;
+    width: 60%;
   }
 
   .exercise-data-wrapper {
@@ -155,6 +164,7 @@
   }
 
   .exercise-header {
+    white-space: normal;
     padding-right: 5px;
     text-align: right;
     margin: auto;
@@ -172,6 +182,7 @@
     z-index: 999;
     bottom: 17%;
   }
+
   .exercise-sets-buttons .button {
     text-align: center;
     padding: 6px 4px 6px 10px !important;

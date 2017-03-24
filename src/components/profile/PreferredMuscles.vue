@@ -8,7 +8,7 @@
 
 <script>
   
-  import MusclesSelector from '../muscle/MusclesSelector.vue';
+  import MusclesSelector from '../muscles/MusclesSelector.vue';
 
   export default {
     name: 'PreferredMuscles',

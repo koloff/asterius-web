@@ -2,9 +2,9 @@
   <div class="ui segment secondary sets-selector">
 
 
-    <span @click="focusOnTarget()" class="ui left corner label blue" style="cursor: pointer">
-      <i class="crosshairs icon"></i>
-    </span>
+    <!--<span @click="focusOnTarget()" class="ui left corner label blue" style="cursor: pointer">-->
+      <!--<i class="crosshairs icon"></i>-->
+    <!--</span>-->
 
     <div class="sets-selector-container">
       <div v-for="row in grid" class="selector-row">
@@ -144,6 +144,8 @@
   }
 
   .sets-selector-container {
+    background: #fff;
+    border-radius: 5px;
     display: inline-block;
     border-radius: 4px;
     max-height: 200px;
@@ -155,12 +157,11 @@
   .set-cell {
     box-sizing: border-box;
     border: 1px solid black;
-    min-width: 45px;
-    width: 45px;
-    max-width: 45px;
-    min-height: 45px;
-    height: 45px;
-    max-height: 45px;
+    vertical-align: middle;
+    min-width: 47px;
+    min-height: 47px;
+    width: 47px;
+    height: 47px;
     cursor: pointer;
     text-align: center;
   }

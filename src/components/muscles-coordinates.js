@@ -1,7 +1,7 @@
 export default {
   lowerBody: [
-    {name: 'Quadriceps muscle group', left: 58.70967741935483, top: 57.078651685393254, checked: false},
-    {name: 'Hamstrings muscle group', left: 50, top: 57.752808988764045, checked: false},
+    {name: 'Quadriceps muscles group', left: 58.70967741935483, top: 57.078651685393254, checked: false},
+    {name: 'Hamstrings muscles group', left: 50, top: 57.752808988764045, checked: false},
     {name: 'Gluteus muscles group', left: 48.225806451612904, top: 28.98876404494382, checked: false},
     {name: 'Soleus, Gastrocnemius', left: 81.42857142857143, top: 63.75404530744336, checked: false},
   ],
@@ -13,8 +13,8 @@ export default {
       checked: true
     },
     {name: 'Brachioradialis', left: 90, top: 69.49152542372882, checked: false},
-    {name: 'Flexors muscle group', left: 17.42857142857143, top: 85.76271186440678, checked: false},
-    {name: 'Extensors muscle group', left: 90.28571428571428, top: 86.10169491525423, checked: false},
+    {name: 'Flexors muscles group', left: 17.42857142857143, top: 85.76271186440678, checked: false},
+    {name: 'Extensors muscles group', left: 90.28571428571428, top: 86.10169491525423, checked: false},
     {name: 'Biceps brachii long head', left: 81.28571428571428, top: 56.949152542372886, checked: false},
     {name: 'Biceps brachii short head', left: 75.14285714285714, top: 43.050847457627114, checked: false},
     {name: 'Trapezius superior fibers', left: 60.57142857142858, top: 5.101694915254238, checked: false},

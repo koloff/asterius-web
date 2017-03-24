@@ -154,14 +154,14 @@
 
 <script>
   import _ from 'lodash';
-  import {mc} from '../algorithm/muscle/muscles-collection-OLD';
-  import {ec} from '../algorithm/exercise/exercises-collection';
+  import {mc} from '../algorithm/muscles/muscles-collection-OLD';
+  import {ec} from '../algorithm/exercises/exercises-collection';
   import tweakerStore from '../store/tweaker';
   import musclesCoordinates from './muscles-coordinates';
-  import Exercise from './exercise/Exercise.vue';
-  import MuscleMiniInfo from './muscle/MuslceMiniInfo.vue';
-  import SelectedVolumeBar from './muscle/SelectedVolumeBar.vue';
-  import SelectedExerciseMini from './exercise/SelectedExerciseMini.vue';
+  import Exercise from './exercises/Exercise.vue';
+  import MuscleMiniInfo from './muscles/MuslceMiniInfo.vue';
+  import SelectedVolumeBar from './muscles/SelectedVolumeBar.vue';
+  import SelectedExerciseMini from './exercises/SelectedExerciseMini.vue';
 
   import rootStore from '../store/root';
 

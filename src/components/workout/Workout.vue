@@ -1,37 +1,23 @@
 <template>
   <div>
 
-
-    <exercise-circular
-      :exercise-key="'dumbbellBenchPress'"
-      :setsCount="15"
-      :type="'tweaker'"
-    ></exercise-circular>
-
-    <exercise-circular
-      :exercise-key="'lateralRaise'"
-      :setsCount="3"
-      :type="'workout'"
-    ></exercise-circular>
-
-    <exercise-circular
-      :exercise-key="'lateralRaise'"
-      :setsCount="1"
-      :type="'workout'"
-    ></exercise-circular>
-
-
+    <exercises-slider></exercises-slider>
+    <exercise-steps></exercise-steps>
     <sets-selector></sets-selector>
+
+
   </div>
 </template>
 
 <script>
 
-  import ExerciseCircular from '../exercise/ExerciseCircular.vue';
+  import ExercisesSlider from '../sliders/ExercisesSlider.vue';
+  import ExerciseSteps from './ExerciseSteps.vue';
   import SetsSelector from '../grids/SetsSelector.vue';
 
   export default {
     name: 'Workout',
-    components: {SetsSelector, ExerciseCircular}
+    components: {SetsSelector, ExerciseSteps, ExercisesSlider}
   }
 </script>
+

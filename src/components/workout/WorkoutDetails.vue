@@ -45,7 +45,7 @@
 <script>
 
   import split from '../split';
-  import {getExercise} from '../../algorithm/exercise/exercises-collection';
+  import {getExercise} from '../../algorithm/exercises/exercises-collection';
 
   export default {
     name: 'WorkoutDetails',

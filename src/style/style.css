@@ -1,6 +1,10 @@
 body {
     /*background: url("../assets/background1.jpg") fixed no-repeat;*/
-    /*background: #000;*/
+    background: #444;
+}
+
+.divider.small {
+    margin-bottom: 0px !important;
 }
 
 .divider.big {
@@ -30,3 +34,7 @@ body {
     text-align: center;
 }
 
+/*
+COMMENTED RESPONSIVE STEPS TODO FIX
+https://github.com/Semantic-Org/Semantic-UI/pull/3714
+Mobile (Default) */

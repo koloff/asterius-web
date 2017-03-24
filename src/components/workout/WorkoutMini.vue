@@ -24,7 +24,7 @@
 
 <script>
 
-  import {ec} from '../../algorithm/exercise/exercises-collection';
+  import {ec} from '../../algorithm/exercises/exercises-collection';
   export default {
     name: 'WorkoutMini',
     props: ['week', 'day', 'type'],

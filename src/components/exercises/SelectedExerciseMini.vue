@@ -15,7 +15,7 @@
 
 <script>
   import tweakerStore from '../../store/tweaker';
-  import {getExercise} from '../../algorithm/exercise/exercises-collection';
+  import {getExercise} from '../../algorithm/exercises/exercises-collection';
   export default {
     name: 'SelectedExerciseMini',
     props: ['exercise'],

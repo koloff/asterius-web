@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import {ec, getExercise} from '../algorithm/exercise/exercises-collection';
+import {ec, getExercise} from '../algorithm/exercises/exercises-collection';
 
 export default {
 
-  // todo: to generate basic training add sets by percentage for each muscle group
+  // todo: to generate basic training add sets by percentage for each muscles group
   state: {
     exercises: [   //push
       {name: "Dumbbell Bench Press", sets: 3},
