@@ -145,7 +145,6 @@
 
   .sets-selector-container {
     background: #fff;
-    border-radius: 5px;
     display: inline-block;
     border-radius: 4px;
     max-height: 200px;

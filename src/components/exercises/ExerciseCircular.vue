@@ -1,7 +1,7 @@
 <template>
   <div
     class="ui segment exercise-circular"
-    :class="{secondary: !isCurrent, blue: isCurrent}"
+    :class="{tertiary: !isCurrent, blue: isCurrent}"
   >
     <div class="exercise-circular-container">
 

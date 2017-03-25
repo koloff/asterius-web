@@ -3,10 +3,13 @@
     <div class="ui fluid steps tiny">
 
       <div
-        class="link step active"
-        v-for="step in currentExercise.steps">
+        class="link step"
+        v-for="(step, index) in currentExercise.steps"
+        :class="getClassNames(step, index)"
+        @click="setCurrentStep(index)"
+      >
         <div class="content">
-          <div class="title">SET</div>
+          <div class="title">{{index}}</div>
         </div>
       </div>
 
@@ -24,9 +27,24 @@
         workoutState: workoutStore.state
       }
     },
+    methods: {
+      getClassNames(step, index) {
+        return {
+          active: (index === this.workoutState.currentStep),
+          disabled: (index > workoutStore.getFirstNotDoneStep())
+        }
+      },
+
+      setCurrentStep(index) {
+        workoutStore.setCurrentStep(index);
+      }
+    },
     computed: {
       currentExercise() {
         return workoutStore.getCurrentExercise();
+      },
+      currentStep() {
+
       }
     }
   }

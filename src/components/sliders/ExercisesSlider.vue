@@ -4,10 +4,11 @@
       <div class="exercises-slider-content">
 
         <div class="exercises-slider-element"
-             v-for="exercise in workoutState.exercises"
+             v-for="(exercise, index) in workoutState.exercises"
         >
           <exercise-in-workout
             :exercise="exercise"
+            :exercise-index="index"
             :exercise-key="exercise.key"
             :sets-count="getSetsCount(exercise)"
             :set-as-current-cb="setAsCurrentCb"
@@ -38,8 +39,8 @@
       getSetsCount(exercise) {
         return workoutStore.getSetsCount(exercise);
       },
-      setAsCurrentCb(exercise, el) {
-        workoutStore.setAsCurrent(exercise);
+      setAsCurrentCb(exerciseIndex, el) {
+        workoutStore.setCurrentExercise(exerciseIndex);
 
         let $container = $('.exercises-slider-container');
         let $el = $(el);

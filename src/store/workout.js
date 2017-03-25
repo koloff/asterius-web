@@ -1,63 +1,42 @@
+import firebase from 'firebase';
 import _ from 'lodash';
+
 
 export default {
   state: {
+    currentStep: 0,
+    timer: {
+      seconds: 0,
+      state: 'stopped' // stopped, running, paused
+    },
+    workout: {}
+  },
 
-    exercises: [
-      {
-        current: true,
-        type: 'exercise',
-        key: 'dumbbellBenchPress',
-        steps: [
-          {
-            type: 'rest'
-          }, {
-            type: 'set'
-          }, {
-            type: 'rest'
-          }, {
-            type: 'set'
-          }, {
-            type: 'rest'
-          }, {
-            type: 'set'
-          }
-        ]
-      },
-      {
-        current: false,
-        type: 'exercise',
-        key: 'lateralRaise',
-        steps: [
-          {
-            type: 'rest'
-          }, {
-            type: 'set'
-          }, {
-            type: 'rest'
-          }, {
-            type: 'set'
-          }
-        ]
-      },
-      {
-        current: false,
-        type: 'exercise',
-        key: 'lateralRaise',
-        steps: [
-          {
-            type: 'rest'
-          }, {
-            type: 'set'
-          }
-        ]
-      }
-    ]
+  init() {
+  },
 
+
+  // firebase related
+  loadWorkout() {
+    this.workoutRef = firebase.database().ref().child(`workouts/pesho/id1`);
+
+    this.workoutRef.child('exercises').on('value', (ref) => {
+      this.state.exercises = ref.val();
+    });
+    this.workoutRef.child('currentExercise').on('value', (ref) => {
+      this.state.currentExercise = ref.val();
+    });
+
+    this.state.currentStep = this.getFirstNotDoneStep();
   },
 
   getCurrentExercise() {
-    return _.find(this.state.exercises, {current: true});
+    return this.state.exercises[this.state.currentExercise];
+  },
+
+  setCurrentExercise(index) {
+    this.workoutRef.child('/currentExercise').set(index);
+    this.state.currentStep = this.getFirstNotDoneStep();
   },
 
   getSetsCount(exercise) {
@@ -66,10 +45,19 @@ export default {
     }).length;
   },
 
-  setAsCurrent(exercise) {
-    let currentNow = this.getCurrentExercise();
-    currentNow.current = false;
-    exercise.current = true;
+
+  getCurrentStep() {
+    return this.getCurrentExercise().steps[this.state.currentStep];
   },
+
+  setCurrentStep(index) {
+    return this.state.currentStep = index;
+  },
+
+  getFirstNotDoneStep() {
+    let index = _.findIndex(this.getCurrentExercise().steps, (step) => !step.value);
+     console.log(index);
+    return index;
+  }
 
 }

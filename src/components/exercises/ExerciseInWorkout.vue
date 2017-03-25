@@ -7,7 +7,7 @@
     <button
       v-if="!isCurrent"
       class="mini ui button basic exercise-go-button"
-      @click="setAsCurrent(exercise)"
+      @click="setAsCurrent()"
     >
       SELECT
     </button>
@@ -16,19 +16,20 @@
 
 <script>
   import ExerciseCircular from './ExerciseCircular.vue';
+  import workoutStore from '../../store/workout';
 
   export default {
     name: 'ExerciseInWorkout',
-    props: ['exercise', 'exerciseKey', 'setsCount', 'setAsCurrentCb'],
+    props: ['exercise', 'exerciseIndex', 'exerciseKey', 'setsCount', 'setAsCurrentCb'],
     components: {ExerciseCircular},
     methods: {
-      setAsCurrent(exercise) {
-        this.setAsCurrentCb(exercise, this.$el);
+      setAsCurrent() {
+        this.setAsCurrentCb(this.exerciseIndex, this.$el);
       }
     },
     computed: {
       isCurrent() {
-        return this.exercise.current;
+        return this.exerciseIndex === workoutStore.state.currentExercise;
       }
     }
   }
