@@ -4,12 +4,11 @@ import _ from 'lodash';
 
 export default {
   state: {
-    currentStep: 0,
+    currentStepIndex: 0,
     timer: {
       seconds: 0,
       state: 'stopped' // stopped, running, paused
-    },
-    workout: {}
+    }
   },
 
   init() {
@@ -23,20 +22,20 @@ export default {
     this.workoutRef.child('exercises').on('value', (ref) => {
       this.state.exercises = ref.val();
     });
-    this.workoutRef.child('currentExercise').on('value', (ref) => {
-      this.state.currentExercise = ref.val();
+    this.workoutRef.child('currentExerciseIndex').on('value', (ref) => {
+      this.state.currentExerciseIndex = ref.val();
     });
 
-    this.state.currentStep = this.getFirstNotDoneStep();
+    this.state.currentStepIndex = this.getFirstNotDoneStep();
   },
 
   getCurrentExercise() {
-    return this.state.exercises[this.state.currentExercise];
+    return this.state.exercises[this.state.currentExerciseIndex];
   },
 
   setCurrentExercise(index) {
-    this.workoutRef.child('/currentExercise').set(index);
-    this.state.currentStep = this.getFirstNotDoneStep();
+    this.workoutRef.child('/currentExerciseIndex').set(index);
+    this.state.currentStepIndex = this.getFirstNotDoneStep();
   },
 
   getSetsCount(exercise) {
@@ -45,19 +44,75 @@ export default {
     }).length;
   },
 
-
   getCurrentStep() {
-    return this.getCurrentExercise().steps[this.state.currentStep];
+    return this.getCurrentExercise().steps[this.state.currentStepIndex];
   },
 
   setCurrentStep(index) {
-    return this.state.currentStep = index;
+    return this.state.currentStepIndex = index;
   },
 
   getFirstNotDoneStep() {
-    let index = _.findIndex(this.getCurrentExercise().steps, (step) => !step.value);
-     console.log(index);
-    return index;
+    let index = _.findIndex(this.getCurrentExercise().steps, (step) => !step.performedValue);
+    return (index >= 0) ? index : 999; // prevents -1 if all steps are done
+  },
+
+  nextStep() {
+    // todo
+  },
+
+  startTimer() {
+    this.state.timer.state = 'running';
+    this.timerInterval = setInterval(() => {
+      this.state.timer.seconds++;
+    }, 1000)
+  },
+
+  stopTimer() {
+    this.recordRest(this.state.timer.seconds);
+    this.state.timer.state = 'stopped';
+    clearInterval(this.timerInterval);
+  },
+
+  clearTimer() {
+    if (this.state.timer.state === 'running') {
+      this.stopTimer();
+    }
+    this.state.timer.seconds = 0;
+  },
+
+  recordSet(reps, weight) {
+    let currentExerciseIndex = this.state.currentExerciseIndex;
+    let currentStepIndex = this.state.currentStepIndex;
+
+    this.workoutRef.child(`/exercises/${currentExerciseIndex}/steps/${currentStepIndex}/performedValue`).set({
+      reps, weight
+    })
+  },
+
+  recordRest(seconds) {
+    let currentExerciseIndex = this.state.currentExerciseIndex;
+    let currentStepIndex = this.state.currentStepIndex;
+
+    this.workoutRef.child(`/exercises/${currentExerciseIndex}/steps/${currentStepIndex}/performedValue`).set({
+      seconds
+    })
+  },
+
+  getCurrentStepEstimatedValues() {
+    let currentExerciseIndex = this.state.currentExerciseIndex;
+    let currentStepIndex = this.state.currentStepIndex;
+    console.log(currentExerciseIndex, currentStepIndex);
+
+    return this.state.exercises[currentExerciseIndex].steps[currentStepIndex].estimatedValues;
+  },
+
+  getCurrentStepPerformedValue() {
+    let currentExerciseIndex = this.state.currentExerciseIndex;
+    let currentStepIndex = this.state.currentStepIndex;
+
+    return this.state.exercises[currentExerciseIndex].steps[currentStepIndex].performedValue;
   }
+
 
 }

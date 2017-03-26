@@ -29,7 +29,7 @@
     },
     computed: {
       isCurrent() {
-        return this.exerciseIndex === workoutStore.state.currentExercise;
+        return this.exerciseIndex === workoutStore.state.currentExerciseIndex;
       }
     }
   }

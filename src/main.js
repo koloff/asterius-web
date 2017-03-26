@@ -60,7 +60,7 @@ function seedFirebase() {
     workouts: {
       'pesho': {
         'id1': {
-          currentExercise: 0,
+          currentExerciseIndex: 0,
           date: '03/07/2017',
           exercises: [{
             type: 'exercise',
@@ -68,12 +68,40 @@ function seedFirebase() {
             steps: [
               {
                 type: 'rest',
-                value: {
-                  length: 90
+                performedValue: {
+                  seconds: 90
                 }
               }, {
                 type: 'set',
-                value: {
+                estimatedValues: [
+                  {
+                    type: 'target',
+                    cells: [
+                      {
+                        reps: 8,
+                        weight: 70
+                      }
+                    ]
+                  },
+                  {
+                    type: 'good',
+                    cells: [
+                      {
+                        reps: 7,
+                        weight: 72.5
+                      },
+                      {
+                        reps: 7,
+                        weight: 70
+                      }, {
+                        reps: 10,
+                        weight: 67.5
+                      },
+                    ]
+                  },
+
+                ],
+                performedValue: {
                   reps: 7,
                   weight: 72.5
                 }
@@ -89,15 +117,10 @@ function seedFirebase() {
               key: 'lateralRaise',
               steps: [{
                 type: 'rest',
-                value: {
-                  length: 90
-                }
+                performedValue: {}
               }, {
                 type: 'set',
-                value: {
-                  reps: 7,
-                  weight: 72.5
-                }
+                performedValue: {}
               },
                 {
                   type: 'rest'

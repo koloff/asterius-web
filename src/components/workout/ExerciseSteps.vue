@@ -9,7 +9,7 @@
         @click="setCurrentStep(index)"
       >
         <div class="content">
-          <div class="title">{{index}}</div>
+          <div class="title">{{getStepText(step, index)}}</div>
         </div>
       </div>
 
@@ -30,22 +30,34 @@
     methods: {
       getClassNames(step, index) {
         return {
-          active: (index === this.workoutState.currentStep),
+          active: (index === this.workoutState.currentStepIndex),
           disabled: (index > workoutStore.getFirstNotDoneStep())
         }
       },
-
       setCurrentStep(index) {
         workoutStore.setCurrentStep(index);
+      },
+      getStepText(step, index) {
+        if (step.performedValue) {
+          if (step.performedValue.reps) {
+            return `${step.performedValue.reps}x${step.performedValue.weight}`
+          } else if (step.performedValue.seconds || step.performedValue.seconds === 0) {
+            return `${step.performedValue.seconds}S`
+          }
+        } else {
+          if (step.type === 'set') {
+            return 'SET'
+          } else if (step.type === 'rest') {
+            return 'REST';
+          }
+        }
       }
     },
     computed: {
       currentExercise() {
         return workoutStore.getCurrentExercise();
       },
-      currentStep() {
 
-      }
     }
   }
 </script>
