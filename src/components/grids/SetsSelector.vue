@@ -1,7 +1,11 @@
 <template>
   <div class="ui segment secondary sets-selector">
 
-    <h2 class="ui header  centered" style="margin-bottom: 5px">SET</h2>
+    <h2 class="ui header  centered" style="margin-bottom: 5px">SET
+      <div class="sub header">
+        RECORD YOUR REPS AND WEIGHT:
+      </div>
+    </h2>
 
     <!--<span @click="focusOnTarget()" class="ui left corner label blue" style="cursor: pointer">-->
     <!--<i class="crosshairs icon"></i>-->

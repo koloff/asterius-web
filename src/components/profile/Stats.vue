@@ -1,15 +1,14 @@
 <template>
   <div>
-    <div class="ui divider hidden"></div>
-    <h4 class="ui header inverted centered">What are your measurements?</h4>
+    <h4 class="ui header">1. What are your measurements?</h4>
     <div class="ui grid">
       <div class="eight wide column right aligned">
 
-        <div class="ui inverted transparent input massive fluid">
+        <div class="ui transparent input massive fluid">
           <input v-model="height.value" style="text-align: right" type="text" placeholder="Height">
         </div>
         <h3 class="ui header grey" style="display: inline;">
-          <div class="ui simple dropdown inverted">
+          <div class="ui simple dropdown">
             {{height.type}}<i class="dropdown icon" style="margin-left: 3px;"></i>
             <div class="menu">
               <div @click="height.type = 'CM'" class="item">CM</div>
@@ -21,12 +20,12 @@
 
       <div class="eight wide column">
         <div class="eight wide column">
-          <div class="ui inverted transparent input massive fluid">
+          <div class="ui transparent input massive fluid">
             <input v-model="weight.value" type="text" placeholder="Weight" style="display: inline;">
           </div>
 
           <h3 class="ui header grey" style="display: inline;">
-            <div class="ui simple dropdown inverted">
+            <div class="ui simple dropdown">
               {{weight.type}}<i class="dropdown icon" style="margin-left: 3px;"></i>
               <div class="menu">
                 <div @click="weight.type = 'KG'" class="item">KG</div>
@@ -41,9 +40,9 @@
 
     <div class="ui divider hidden"></div>
 
-    <h4 class="ui header inverted  centered">What is your fitness experience?
+    <h4 class="ui header">2. What is your fitness experience?
     </h4>
-    <div class="ui buttons inverted four choose-experience">
+    <div class="ui buttons four choose-experience">
       <button class="ui green button" :class="{basic: chosenExperience !== 'untrained'}"
               @click="chosenExperience = 'untrained'">Untrained
       </button>
@@ -61,10 +60,10 @@
     <div class="ui divider hidden"></div>
 
     <!--todo: check on mobile-->
-    <h4 class="ui header inverted  centered">
-      What days in the week you can train?
+    <h4 class="ui header">
+      3. What days in the week you can train?
     </h4>
-    <div class="ui buttons inverted  seven choose-week-days">
+    <div class="ui buttons seven choose-week-days">
       <div class="ui button blue" :class="{basic: !chosenDays['monday']}" @click="toggleDay('monday')">M</div>
       <div class="ui button blue" :class="{basic: !chosenDays['tuesday']}" @click="toggleDay('tuesday')">T</div>
       <div class="ui button blue" :class="{basic: !chosenDays['wednesday']}" @click="toggleDay('wednesday')">W</div>
@@ -73,9 +72,6 @@
       <div class="ui button blue" :class="{basic: !chosenDays['saturday']}" @click="toggleDay('saturday')">S</div>
       <div class="ui button blue" :class="{basic: !chosenDays['sunday']}" @click="toggleDay('sunday')">S</div>
     </div>
-
-
-    <div class="ui divider hidden big"></div>
   </div>
 </template>
 

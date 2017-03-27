@@ -1,79 +1,107 @@
 import _ from 'lodash';
-import {ec, getExercise} from '../algorithm/exercises/exercises-collection';
+import musclesStore from './muscles';
+import exercisesStore from './exercises';
 
 export default {
 
-  // todo: to generate basic training add sets by percentage for each muscles group
   state: {
-    exercises: [   //push
-      {name: "Dumbbell Bench Press", sets: 3},
-      {name: "Dumbbell Incline Bench Press", sets: 3},
-      {name: "Low Cable Crossover", sets: 3},
-      {name: "Cable Crossover", sets: 3},
-      {name: "Dumbbell Shoulder Press", sets: 3},
-      {name: "Skullcrushers", sets: 3},
-      {name: "Rope Pushdown", sets: 3},
-      {name: "Seated Triceps Press", sets: 3},
-      //pull
-      {name: "Lat Pulldown Wide Grip", sets: 3},
-      {name: "Cable Row", sets: 3},
-      {name: "Straight Arm Pulldown", sets: 3},
-      {name: "Dumbbell Shrugs", sets: 3},
-      {name: "Reverse Pec Deck", sets: 3},
-      {name: "Barbell Curl", sets: 3},
-      {name: "Overhead Cable Curl", sets: 3},
-      {name: "Incline Dumbbell Curl", sets: 3},
-      //legs
-      {name: "Barbell Squat", sets: 3},
-      {name: "Leg Extensions", sets: 3},
-      {name: "Leg Curls", sets: 3},
-      {name: "Smith Machine Calf Raise", sets: 3},
-      {name: "Lateral Raises", sets: 3},
-      {name: "Crunches", sets: 3},
-      {name: "Twisted Crunches", sets: 3},
-      {name: "Cable External Rotation", sets: 3}]
+    exercises: []
   },
 
-  getExercise(exName) {
-    return _.find(this.state.exercises, {'name': exName});
+  init() {
+    // load exercises
+    this.state.exercises = _.clone(exercisesStore.state.ec.exercises);
+    this.state.muscles = _.clone(musclesStore.state.mc.muscles);
+
+    this.loadMuscles();
+    this.loadSelectedExercises();
   },
 
-  isExerciseAdded(exName) {
-    return !!this.getExercise(exName);
+  loadMuscles() {
+    this.state.muscles.forEach((muscle) => {
+      muscle.selected = false;
+    });
   },
 
-  increaseExerciseSets(exName) {
-    if (!this.isExerciseAdded(exName)) {
-      this.state.exercises.push({name: exName, sets: 1})
+
+  loadSelectedExercises() {
+    let selectedExercises = [
+      {key: 'dumbbellBenchPress', sets: 3}
+    ];
+
+    this.state.exercises.forEach((exercise) => {
+      exercise.sets = 0;
+    });
+
+    this.state.exercises.forEach((exercise) => {
+      selectedExercises.forEach((selectedExercise) => {
+        if (exercise.key === selectedExercise.key) {
+          exercise.sets = selectedExercise.sets;
+        }
+      })
+    });
+
+  },
+
+
+  shouldExerciseShow(exKey) {
+    console.log(this.state.muscles);
+    let exercise = this.getExercise(exKey);
+    let usedMusclesArr = Object.keys(exercise.musclesUsed);
+
+    let notFound = true;
+    let muscleSelected = false;
+    this.state.muscles.forEach((muscle) => {
+      if (usedMusclesArr.indexOf(muscle.key) < 0) {
+        notFound = false;
+      }
+      if (muscle.selected) {
+        muscleSelected = true;
+      }
+    });
+
+    return notFound || muscleSelected;
+  },
+
+  getExercise(exKey) {
+    return _.find(this.state.exercises, {key: exKey});
+  },
+
+  isExerciseAdded(exKey) {
+    return !!this.getExercise(exKey);
+  },
+
+  increaseExerciseSets(exKey) {
+    if (!this.isExerciseAdded(exKey)) {
+      this.state.exercises.push({name: exKey, sets: 1})
     } else {
-      this.getExercise(exName).sets++;
+      this.getExercise(exKey).sets++;
     }
   },
 
-  reduceExerciseSets(exName) {
-    let ex = this.getExercise(exName);
+  reduceExerciseSets(exKey) {
+    let ex = this.getExercise(exKey);
     if (ex && ex.sets <= 1) {
       let index = this.state.exercises.indexOf(ex);
       if (index !== -1) {
         this.state.exercises.splice(index, 1);
       }
     } else if (ex) {
-      this.getExercise(exName).sets--;
+      this.getExercise(exKey).sets--;
     }
   },
 
-  calculateMRVPercentage(muscle) {
+  calculateMrvPercentage(muscle) {
 
     // get current volume from selected exercises and sets
-
     let currentVolume = 0;
     let usedMuscle;
+
     this.state.exercises.forEach((ex) => {
       let fullEx = getExercise(ex.name);
 
       usedMuscle = _.find(fullEx.musclesUsed, {name: muscle.name});
       if (usedMuscle) currentVolume += (usedMuscle.percentage / 100) * ex.sets;
-
     });
 
     return (currentVolume / muscle.mrv) * 100;

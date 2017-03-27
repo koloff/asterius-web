@@ -65,83 +65,138 @@ function seedFirebase() {
           exercises: [{
             type: 'exercise',
             key: 'dumbbellBenchPress',
-            steps: [
-              {
-                type: 'rest',
-                performedValue: {
-                  seconds: 90
-                }
-              }, {
-                type: 'set',
-                estimatedValues: [
-                  {
-                    type: 'target',
-                    cells: [
-                      {
-                        reps: 8,
-                        weight: 70
-                      }
-                    ]
-                  },
-                  {
-                    type: 'good',
-                    cells: [
-                      {
-                        reps: 7,
-                        weight: 72.5
-                      },
-                      {
-                        reps: 7,
-                        weight: 70
-                      }, {
-                        reps: 10,
-                        weight: 67.5
-                      },
-                    ]
-                  },
+            steps: [{
+              type: 'set',
+              estimatedValues: [
+                {
+                  type: 'target',
+                  cells: [
+                    {
+                      reps: 8,
+                      weight: 70
+                    }
+                  ]
+                },
+                {
+                  type: 'good',
+                  cells: [
+                    {
+                      reps: 7,
+                      weight: 72.5
+                    },
+                    {
+                      reps: 7,
+                      weight: 70
+                    }, {
+                      reps: 10,
+                      weight: 67.5
+                    },
+                  ]
+                },
 
-                ],
-                performedValue: {
-                  reps: 7,
-                  weight: 72.5
-                }
-              }, {
-                type: 'rest'
-              }, {
-                type: 'set'
-              }
-            ]
+              ],
+            }, {
+              type: 'rest',
+            },{
+              type: 'set',
+              estimatedValues: [
+                {
+                  type: 'target',
+                  cells: [
+                    {
+                      reps: 8,
+                      weight: 70
+                    }
+                  ]
+                },
+                {
+                  type: 'good',
+                  cells: [
+                    {
+                      reps: 7,
+                      weight: 72.5
+                    },
+                    {
+                      reps: 7,
+                      weight: 70
+                    }, {
+                      reps: 10,
+                      weight: 67.5
+                    },
+                  ]
+                },
+
+              ],
+            }, {
+              type: 'rest',
+            },{
+              type: 'set',
+              estimatedValues: [
+                {
+                  type: 'target',
+                  cells: [
+                    {
+                      reps: 8,
+                      weight: 70
+                    }
+                  ]
+                },
+                {
+                  type: 'good',
+                  cells: [
+                    {
+                      reps: 7,
+                      weight: 72.5
+                    },
+                    {
+                      reps: 7,
+                      weight: 70
+                    }, {
+                      reps: 10,
+                      weight: 67.5
+                    },
+                  ]
+                },
+
+              ],
+            }, {
+              type: 'rest',
+            }]
           },
             {
               type: 'exercise',
               key: 'lateralRaise',
               steps: [{
-                type: 'rest',
-                performedValue: {}
-              }, {
-                type: 'set',
-                performedValue: {}
+                type: 'set'
+              },{
+                type: 'rest'
+              },{
+                type: 'set'
+              },{
+                type: 'rest'
               },
-                {
-                  type: 'rest'
-                }, {
-                  type: 'set'
-                }, {
-                  type: 'rest'
-                }, {
-                  type: 'set'
-                }
+              ]
+            },
+            {
+              type: 'exercise',
+              key: 'cableCrossover',
+              steps: [{
+                type: 'set'
+              },{
+                type: 'rest'
+              },{
+                type: 'set'
+              },{
+                type: 'rest'
+              }
               ]
             },
             {
               type: 'exercise',
               key: 'lateralRaise',
-              steps: [
-                {
-                  type: 'rest'
-                }, {
-                  type: 'set'
-                }
+              steps: [{
+                type: 'set'
+              }
               ]
             }
           ]

@@ -1,11 +1,13 @@
 <template>
   <div>
 
-    <exercises-slider></exercises-slider>
-    <h3 class="ui header inverted">
+    <h1 class="ui header inverted">WORKOUT</h1>
+
+    <exercises-slider-in-workout></exercises-slider-in-workout>
+    <h3 class="ui header">
       {{currentExerciseName | uppercase}}
       <div class="sub header">LAST SESSION: 26.03.17 <br>
-        90S &nbsp;&nbsp; 7x10 &nbsp;&nbsp; 60S &nbsp;&nbsp; 10x7.5
+        7x70 &nbsp;&nbsp; 150S &nbsp;&nbsp; 9x65 &nbsp;&nbsp; 120S &nbsp;&nbsp; 12x60 &nbsp;&nbsp; 90S
       </div>
     </h3>
 
@@ -19,14 +21,26 @@
       v-if="currentStep.type === 'rest'"
     ></timer>
 
-
     <button
-      class="ui button green"
+      v-if="!isCurrentStepFinal"
+      class="ui button big green fluid icon"
       :class="{disabled: !currentStep.performedValue}"
       @click="nextStep()"
     >
+      <i class="ui icon angle double right"></i>
       NEXT
     </button>
+
+    <button
+      v-if="isCurrentStepFinal"
+      class="ui button big green fluid icon"
+      :class="{disabled: !currentStep.performedValue}"
+      @click="finishWorkout()"
+    >
+      <i class="ui icon flag checkered"></i>
+      FINISH
+    </button>
+
   </div>
 </template>
 
@@ -34,14 +48,14 @@
   import exercisesStore from '../../store/exercises';
   import workoutStore from '../../store/workout';
 
-  import ExercisesSlider from '../sliders/ExercisesSlider.vue';
+  import ExercisesSliderInWorkout from '../sliders/ExercisesSliderInWorkout.vue';
   import ExerciseSteps from './ExerciseSteps.vue';
   import SetsSelector from '../grids/SetsSelector.vue';
   import Timer from './Timer.vue';
 
   export default {
     name: 'Workout',
-    components: {SetsSelector, ExerciseSteps, ExercisesSlider, Timer},
+    components: {SetsSelector, ExerciseSteps, ExercisesSliderInWorkout, Timer},
     data() {
       return {
         workoutState: workoutStore.state
@@ -57,7 +71,16 @@
       currentStep() {
         return workoutStore.getCurrentStep()
       },
+      isCurrentStepFinal() {
+        return workoutStore.isCurrentStepFinal();
+      }
+    },
+    methods: {
       nextStep() {
+        workoutStore.nextStep();
+      },
+
+      finishWorkout() {
 
       }
     }

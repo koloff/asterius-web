@@ -1,6 +1,7 @@
 <template>
   <div>
 
+    <h4 class="ui header centered">{{'What muscles would you like to focus on?'}}</h4>
     <muscles-selector :selected-muscles="preferredMuscles"></muscles-selector>
 
   </div>

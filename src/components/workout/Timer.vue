@@ -1,14 +1,21 @@
 <template>
-  <div class="ui segment secondary  center aligned">
+  <div class="ui segment secondary center aligned">
 
-    <h2 class="ui header dividing centered" style="margin-bottom: 0">REST</h2>
+    <h2 class="ui header centered" style="margin-bottom: 0">
+      REST
+      <div class="sub header">
+        STOP THE TIMER AND RECORD YOUR REST:
+      </div>
+    </h2>
 
     <div class="ui statistic large">
-      <div v-if="workoutState.timer.state === 'running'" class="value">
+      <div class="value"
+           v-if="workoutState.timer.state === 'running' || !inputSeconds"
+      >
         {{workoutState.timer.seconds}}
       </div>
-      <div v-if="currentStep.performedValue" class="ui input massive">
-        <input v-model="inputSeconds.seconds" @input="inputChanged" type="text" placeholder="Search..."
+      <div v-if="currentStep.performedValue" class="ui input massive fluid" style="min-width: 100px">
+        <input v-model="inputSeconds.seconds" @input="inputChanged" type="text"
                style="text-align: center">
       </div>
       <div class="label">
@@ -23,6 +30,14 @@
       @click="stopTimer()">
       <i class="ui icon stop"></i>
       STOP
+    </button>
+
+    <button
+      class="ui button primary icon"
+      v-if="workoutState.timer.state === 'stopped' && !inputSeconds"
+      @click="startTimer()">
+      <i class="ui icon play"></i>
+      START
     </button>
 
 
@@ -48,7 +63,6 @@
       }
     },
     methods: {
-
       inputChanged(ev) {
         workoutStore.recordRest(this.inputSeconds.seconds);
       },

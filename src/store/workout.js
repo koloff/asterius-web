@@ -8,7 +8,10 @@ export default {
     timer: {
       seconds: 0,
       state: 'stopped' // stopped, running, paused
-    }
+    },
+    //firebase
+    currentExerciseIndex: 0,
+    exercises: {}
   },
 
   init() {
@@ -19,23 +22,33 @@ export default {
   loadWorkout() {
     this.workoutRef = firebase.database().ref().child(`workouts/pesho/id1`);
 
-    this.workoutRef.child('exercises').on('value', (ref) => {
+    this.workoutRef.child('/exercises').on('value', (ref) => {
       this.state.exercises = ref.val();
     });
-    this.workoutRef.child('currentExerciseIndex').on('value', (ref) => {
-      this.state.currentExerciseIndex = ref.val();
+    this.workoutRef.child('/currentExerciseIndex').once('value', (ref) => {
+      this.setCurrentExercise(0);
     });
-
-    this.state.currentStepIndex = this.getFirstNotDoneStep();
   },
 
   getCurrentExercise() {
     return this.state.exercises[this.state.currentExerciseIndex];
   },
 
+  getFirstNotPerformedStepIndex() {
+    let index = _.findIndex(this.getCurrentExercise().steps, (step) => !step.performedValue);
+    return index;
+  },
+
   setCurrentExercise(index) {
+    this.state.currentExerciseIndex = index;
     this.workoutRef.child('/currentExerciseIndex').set(index);
-    this.state.currentStepIndex = this.getFirstNotDoneStep();
+
+    let firstNotPerformedStepIndex = this.getFirstNotPerformedStepIndex();
+    if (firstNotPerformedStepIndex > -1) {
+      this.setCurrentStep(firstNotPerformedStepIndex)
+    } else {
+      this.setCurrentStep(this.getCurrentExercise().steps.length - 1);
+    }
   },
 
   getSetsCount(exercise) {
@@ -52,13 +65,23 @@ export default {
     return this.state.currentStepIndex = index;
   },
 
-  getFirstNotDoneStep() {
-    let index = _.findIndex(this.getCurrentExercise().steps, (step) => !step.performedValue);
-    return (index >= 0) ? index : 999; // prevents -1 if all steps are done
+  isCurrentStepFinal() {
+    return this.state.currentExerciseIndex >= this.state.exercises.length - 1
+      && this.state.currentStepIndex >= this.getCurrentExercise().steps.length - 1;
+
   },
 
   nextStep() {
-    // todo
+    let currentExercise = this.getCurrentExercise();
+    if (this.state.currentStepIndex < currentExercise.steps.length - 1) {
+      this.state.currentStepIndex++;
+      let currentStep = this.getCurrentStep();
+      if (currentStep.type === 'rest') {
+        this.startTimer();
+      }
+    } else {
+      this.setCurrentExercise(this.state.currentExerciseIndex + 1);
+    }
   },
 
   startTimer() {
@@ -71,6 +94,7 @@ export default {
   stopTimer() {
     this.recordRest(this.state.timer.seconds);
     this.state.timer.state = 'stopped';
+    this.state.timer.seconds = 0;
     clearInterval(this.timerInterval);
   },
 
@@ -102,15 +126,12 @@ export default {
   getCurrentStepEstimatedValues() {
     let currentExerciseIndex = this.state.currentExerciseIndex;
     let currentStepIndex = this.state.currentStepIndex;
-    console.log(currentExerciseIndex, currentStepIndex);
-
     return this.state.exercises[currentExerciseIndex].steps[currentStepIndex].estimatedValues;
   },
 
   getCurrentStepPerformedValue() {
     let currentExerciseIndex = this.state.currentExerciseIndex;
     let currentStepIndex = this.state.currentStepIndex;
-
     return this.state.exercises[currentExerciseIndex].steps[currentStepIndex].performedValue;
   }
 

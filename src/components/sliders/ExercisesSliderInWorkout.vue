@@ -1,10 +1,15 @@
 <template>
   <div class="ui segment secondary exercises-slider">
+
+    <!--in order to sync the computed-->
+    <div v-show="false">{{currentExercise}}</div>
+
     <div class="exercises-slider-container">
       <div class="exercises-slider-content">
 
         <div class="exercises-slider-element"
              v-for="(exercise, index) in workoutState.exercises"
+             :class="`exercise-in-workout-${index}`"
         >
           <exercise-in-workout
             :exercise="exercise"
@@ -26,7 +31,7 @@
   import workoutStore from '../../store/workout';
 
   export default {
-    name: 'ExercisesSlider',
+    name: 'ExercisesSliderInWorkout',
     components: {ExerciseInWorkout},
     data() {
       return {
@@ -35,15 +40,10 @@
     },
     mounted() {
     },
-    methods: {
-      getSetsCount(exercise) {
-        return workoutStore.getSetsCount(exercise);
-      },
-      setAsCurrentCb(exerciseIndex, el) {
-        workoutStore.setCurrentExercise(exerciseIndex);
-
+    computed: {
+      currentExercise() {
         let $container = $('.exercises-slider-container');
-        let $el = $(el);
+        let $el = $(`.exercise-in-workout-${this.workoutState.currentExerciseIndex}`);
 
         $container.scrollTo($el, 300, {
           offset: function() {
@@ -54,20 +54,17 @@
           }
         });
 
+
+        return workoutStore.getCurrentExercise();
+      }
+    },
+    methods: {
+      getSetsCount(exercise) {
+        return workoutStore.getSetsCount(exercise);
+      },
+      setAsCurrentCb(exerciseIndex) {
+        workoutStore.setCurrentExercise(exerciseIndex);
       }
     }
   }
 </script>
-
-<style>
-  .exercises-slider-container {
-    overflow: auto;
-    padding: 10px;
-    white-space: nowrap;
-  }
-
-  .exercises-slider-container .exercises-slider-element {
-    display: inline-block;
-    margin-right: 10px !important;
-  }
-</style>

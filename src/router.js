@@ -6,12 +6,12 @@ Vue.use(VueRouter);
 export default new VueRouter({
   mode: 'history',
   routes: [
-    // {
-    //   path: '/tweaker', component: require('./components/Tweaker.vue')
-    // },
-    // {
-    //   path: '/create', component: require('./components/profile/EditProfile.vue')
-    // },
+    {
+      path: '/tweaker', component: require('./components/Tweaker.vue')
+    },
+    {
+      path: '/profile', component: require('./components/profile/EditProfile.vue')
+    },
     // {
     //   path: '/program', component: require('./components/Program.vue')
     // },

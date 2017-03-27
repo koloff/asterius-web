@@ -1,19 +1,23 @@
 <template>
   <div>
 
-    <div class="ui divider hidden"></div>
-    <h1 class="ui header inverted centered">ASTERIUS</h1>
+    <div class="ui divider small hidden"></div>
+    <h1 class="ui header">PROFILE</h1>
 
 
-    <transition
-      mode="out-in"
-      name="custom-classes-transition"
-      enter-active-class="create-profile animated fadeIn"
-      leave-active-class="create-profile animated fadeOut"
-    >
-      <stats v-if="view === 'stats'"></stats>
-      <preferred-muscles v-if="view === 'preferredMuscles'"></preferred-muscles>
-    </transition>
+    <div class="ui grid stackable segment">
+      <div class="ui column six wide centered">
+          <transition
+            mode="out-in"
+            name="custom-classes-transition"
+            enter-active-class="create-profile animated fadeIn"
+            leave-active-class="create-profile animated fadeOut"
+          >
+            <stats v-if="view === 'stats'"></stats>
+            <preferred-muscles v-if="view === 'preferredMuscles'"></preferred-muscles>
+          </transition>
+        </div>
+    </div>
 
 
     <div class="ui segment center aligned basic">
@@ -54,7 +58,7 @@
           setTimeout(() => {
             rootStore.setLoadingProfile(false);
             this.$router.push('tweaker');
-          }, 300)
+          }, 1000)
         }
       },
       previousStep() {

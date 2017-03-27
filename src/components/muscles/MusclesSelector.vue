@@ -3,10 +3,10 @@
 
     <div class="ui basic  segment center aligned" style="padding: 0;">
 
-      <div class="maps">
+      <div class="maps" style="margin-top: -40px">
 
 
-        <button class="ui inverted button icon" style="position: relative; top: 83px; left: 100px; margin-top: -70px; z-index: 999;">
+        <button class="ui button basic icon" style="position: relative; top: 83px; left: 100px; z-index: 999;">
           <i class="ui refresh icon"></i>
           Rotate</button>
 

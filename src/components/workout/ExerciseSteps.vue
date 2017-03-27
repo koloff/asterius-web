@@ -29,9 +29,10 @@
     },
     methods: {
       getClassNames(step, index) {
+        let firstNotPerformedStepIndex = workoutStore.getFirstNotPerformedStepIndex();
         return {
           active: (index === this.workoutState.currentStepIndex),
-          disabled: (index > workoutStore.getFirstNotDoneStep())
+          disabled: (index > firstNotPerformedStepIndex && firstNotPerformedStepIndex >= 0)
         }
       },
       setCurrentStep(index) {

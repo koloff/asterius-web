@@ -6,7 +6,7 @@
   >
     <button
       v-if="!isCurrent"
-      class="mini ui button basic exercise-go-button"
+      class="mini ui button basic exercise-select-button"
       @click="setAsCurrent()"
     >
       SELECT
@@ -19,7 +19,7 @@
   import workoutStore from '../../store/workout';
 
   export default {
-    name: 'ExerciseInWorkout',
+    name: 'ExerciseInTweaker',
     props: ['exercise', 'exerciseIndex', 'exerciseKey', 'setsCount', 'setAsCurrentCb'],
     components: {ExerciseCircular},
     methods: {
@@ -34,3 +34,11 @@
     }
   }
 </script>
+
+<style>
+  .exercise-select-button {
+    position: absolute;
+    z-index: 999;
+    bottom: 18%;
+  }
+</style>

@@ -1,10 +1,37 @@
 body {
     /*background: url("../assets/background1.jpg") fixed no-repeat;*/
-    background: #444;
+    /*background: #444;*/
+}
+
+.header-menu {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    border-bottom: 1px solid rgba(255,255,255, 0.5) !important;
+    border-radius: 0 !important;
+}
+
+.app {
+    margin-top: 1px;
+    display: flex;
+    padding-top: 55px;
+    min-height: 100vh;
+    flex-direction: column;
+
+}
+
+.app-content {
+    flex: 1;
+}
+
+.bottom-footer {
+    margin-top: 15px !important;
+    border-top: 1px solid rgba(255,255,255, 0.5) !important;
 }
 
 .divider.small {
-    margin-bottom: 0px !important;
+    margin-bottom: 0 !important;
 }
 
 .divider.big {
@@ -34,6 +61,17 @@ body {
     text-align: center;
 }
 
+
+.exercises-slider-container {
+    overflow: auto;
+    padding: 10px;
+    white-space: nowrap;
+}
+
+.exercises-slider-container .exercises-slider-element {
+    display: inline-block;
+    margin-right: 10px !important;
+}
 /*
 COMMENTED RESPONSIVE STEPS TODO FIX
 https://github.com/Semantic-Org/Semantic-UI/pull/3714

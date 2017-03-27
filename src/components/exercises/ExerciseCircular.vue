@@ -11,12 +11,6 @@
       <!--</button>-->
 
 
-      <!--<div class="ui mini basic icon buttons exercises-sets-buttons">-->
-      <!--<button class="ui button"><i class="plus icon"></i></button>-->
-      <!--<button class="ui button"><i class="minus icon"></i></button>-->
-      <!--</div>-->
-
-
       <!--this will show a select button or a +- buttons depending on the parent (workout/tweaker) -->
       <slot></slot>
 
@@ -175,23 +169,6 @@
     border-left: 1px solid rgba(0, 0, 0, 0.4);
     padding-left: 5px;
     margin: auto;
-  }
-
-  .exercise-sets-buttons {
-    position: absolute;
-    z-index: 999;
-    bottom: 17%;
-  }
-
-  .exercise-sets-buttons .button {
-    text-align: center;
-    padding: 6px 4px 6px 10px !important;
-  }
-
-  .exercise-go-button {
-    position: absolute;
-    z-index: 999;
-    bottom: 18%;
   }
 
   .exercise-details-button {
