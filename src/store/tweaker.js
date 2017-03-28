@@ -5,7 +5,8 @@ import exercisesStore from './exercises';
 export default {
 
   state: {
-    exercises: []
+    exercises: [],
+    muscles: []
   },
 
   init() {
@@ -44,64 +45,65 @@ export default {
   },
 
 
+  getExercise(key) {
+    return _.find(this.state.exercises, {key: key});
+  },
+
   shouldExerciseShow(exKey) {
-    console.log(this.state.muscles);
     let exercise = this.getExercise(exKey);
     let usedMusclesArr = Object.keys(exercise.musclesUsed);
 
-    let notFound = true;
     let muscleSelected = false;
+    let trainsSelectedMuscle = true;
+
     this.state.muscles.forEach((muscle) => {
-      if (usedMusclesArr.indexOf(muscle.key) < 0) {
-        notFound = false;
-      }
       if (muscle.selected) {
         muscleSelected = true;
+        if (usedMusclesArr.indexOf(muscle.key) < 0) {
+          trainsSelectedMuscle = false;
+        }
       }
     });
 
-    return notFound || muscleSelected;
+    let isIncluded = exercise.sets > 0;
+
+    return (muscleSelected && trainsSelectedMuscle) || (!muscleSelected && isIncluded);
   },
 
-  getExercise(exKey) {
-    return _.find(this.state.exercises, {key: exKey});
-  },
+  appropriateExercisesCount() {
+    let count = 0;
+    this.state.exercises.forEach((exercise) => {
+      if (this.shouldExerciseShow(exercise.key)) {
+        count++;
+      }
+    });
 
-  isExerciseAdded(exKey) {
-    return !!this.getExercise(exKey);
+    return count;
   },
 
   increaseExerciseSets(exKey) {
-    if (!this.isExerciseAdded(exKey)) {
-      this.state.exercises.push({name: exKey, sets: 1})
-    } else {
-      this.getExercise(exKey).sets++;
-    }
+    let exercise = this.getExercise(exKey);
+    exercise.sets++;
   },
 
   reduceExerciseSets(exKey) {
-    let ex = this.getExercise(exKey);
-    if (ex && ex.sets <= 1) {
-      let index = this.state.exercises.indexOf(ex);
-      if (index !== -1) {
-        this.state.exercises.splice(index, 1);
-      }
-    } else if (ex) {
-      this.getExercise(exKey).sets--;
+    let exercise = this.getExercise(exKey);
+    if (exercise.sets >= 1) {
+      exercise.sets--;
     }
   },
 
   calculateMrvPercentage(muscle) {
-
     // get current volume from selected exercises and sets
     let currentVolume = 0;
     let usedMuscle;
 
-    this.state.exercises.forEach((ex) => {
-      let fullEx = getExercise(ex.name);
-
-      usedMuscle = _.find(fullEx.musclesUsed, {name: muscle.name});
-      if (usedMuscle) currentVolume += (usedMuscle.percentage / 100) * ex.sets;
+    this.state.exercises.forEach((exercise) => {
+      _.forOwn(exercise.musclesUsed, (percentage, key) => {
+        if (muscle.key === key) {
+          currentVolume += exercise.sets * (percentage / 100);
+        }
+      })
     });
 
     return (currentVolume / muscle.mrv) * 100;

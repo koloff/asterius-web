@@ -27,14 +27,24 @@
 
   export default {
     name: 'ExerciseInTweaker',
-    props: ['exerciseKey', 'setsCount'],
+    props: ['exerciseKey'],
+    data() {
+      return {
+        tweakerState: tweakerStore.state
+      }
+    },
     components: {ExerciseCircular},
+    computed: {
+      setsCount() {
+        return tweakerStore.getExercise(this.exerciseKey).sets;
+      }
+    },
     methods: {
       increaseSets() {
-        console.log('increase', this.exerciseKey);
+        tweakerStore.increaseExerciseSets(this.exerciseKey);
       },
       reduceSets() {
-        console.log('reduce', this.exerciseKey);
+        tweakerStore.reduceExerciseSets(this.exerciseKey);
       }
     }
   }

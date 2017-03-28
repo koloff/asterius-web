@@ -1,7 +1,7 @@
 <template>
   <div
-    class="ui segment exercise-circular"
-    :class="{tertiary: !isCurrent, blue: isCurrent}"
+    class="ui segment circular exercise-circular"
+    :class="{secondary: !isCurrent}"
   >
     <div class="exercise-circular-container">
 
@@ -119,10 +119,8 @@
 <style>
   .exercise-circular {
     display: inline-block;
-    width: 200px;
-    height: 200px;
+    padding: 4px !important;
     margin: 0 !important;
-    padding: 3px !important;
   }
 
   .exercise-canvas {
@@ -130,8 +128,8 @@
   }
 
   .exercise-circular-container {
-    width: 100%;
-    height: 100%;
+    width: 200px;
+    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -10,6 +10,7 @@ import './style/style.css';
 import './lib/mapify/mapify';
 import './lib/mapify/jquery.mapify.css';
 
+
 // load firebase
 require('./config/firebase');
 
@@ -23,6 +24,7 @@ import router from './router';
 import './filters/index';
 
 // init stores
+import authStore from './store/auth';
 import musclesStore from './store/muscles';
 import exercisesStore from './store/exercises';
 import workoutStore from './store/workout';
@@ -31,6 +33,7 @@ import workoutStore from './store/workout';
 
     // wait for the stores to fetch the needed data async
     await Promise.all([
+      authStore.init(),
       musclesStore.init(),
       exercisesStore.init(),
       workoutStore.init()

@@ -1,6 +1,6 @@
 import request from 'superagent';
 
-let apiUrl = 'http://localhost:3377';
+window.apiUrl = 'http://localhost:3377';
 
 export async function get(path, query) {
   return new Promise((resolve, reject) => {

@@ -1,14 +1,9 @@
 export default {
   state: {
-    loadingTweaker: false,
-    loadingProfile: false
+    loading: false
   },
 
-  setLoadingTweaker(value) {
-    this.state.loadingTweaker = value;
-  },
-
-  setLoadingProfile(value) {
-    this.state.loadingProfile = value;
+  setLoading(value) {
+    this.state.loading = value;
   }
 }

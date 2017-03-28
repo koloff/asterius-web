@@ -7,11 +7,18 @@ export default new VueRouter({
   mode: 'history',
   routes: [
     {
-      path: '/tweaker', component: require('./components/Tweaker.vue')
+      path: '/authenticate', component: require('./components/authenticate/AuthView.vue')
     },
     {
-      path: '/profile', component: require('./components/profile/EditProfile.vue')
+      path: '/tweaker', component: require('./components/profile/EditProfile.vue')
     },
+    {
+      path: '/stats', component: require('./components/profile/EditProfile.vue')
+    },
+    {
+      path: '/muscles', component: require('./components/profile/EditProfile.vue')
+    },
+
     // {
     //   path: '/program', component: require('./components/Program.vue')
     // },

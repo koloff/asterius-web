@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="{active: rootState.loadingProfile}" class="ui dimmer page">
+    <div :class="{active: rootState.loading}" class="ui dimmer page">
       <div class="ui text loader">Loading</div>
     </div>
 
