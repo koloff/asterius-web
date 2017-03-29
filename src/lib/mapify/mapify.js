@@ -249,7 +249,6 @@
 
 
       .bind('click.mapify', function(e) {
-        console.log(e);
         // Preventing the click event from being triggered by a human
         // The click event must be triggered on touchend for the fast-click
         if (e.originalEvent && isMobile) {
@@ -281,7 +280,6 @@
       // })
 
       .bind('touchmove.mapify', function() {
-        console.log('touchmove.mapify');
         // prevent from triggering a click when a touch-move event occurred
         _this.zones.removeClass('mapify-clickable mapify-hilightable');
 

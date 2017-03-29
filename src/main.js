@@ -24,20 +24,19 @@ import router from './router';
 import './filters/index';
 
 // init stores
+import rootStore from './store/root';
 import authStore from './store/auth';
 import musclesStore from './store/muscles';
 import exercisesStore from './store/exercises';
-import workoutStore from './store/workout';
+
 (async() => {
   try {
-
     // wait for the stores to fetch the needed data async
     await Promise.all([
-      authStore.init(),
       musclesStore.init(),
-      exercisesStore.init(),
-      workoutStore.init()
+      exercisesStore.init()
     ]);
+    await authStore.init();
 
     // init the app
     let vue = new Vue({
@@ -56,161 +55,183 @@ import workoutStore from './store/workout';
 
 import firebase from 'firebase';
 
+// TEST DATA
 function seedFirebase() {
   let db = firebase.database().ref();
 
   db.set({
-    workouts: {
+    userParameters: {
+      'pesho': {}
+    },
+    weeklyExercises: {
       'pesho': {
-        'id1': {
-          currentExerciseIndex: 0,
-          date: '03/07/2017',
-          exercises: [{
-            type: 'exercise',
-            key: 'dumbbellBenchPress',
-            steps: [{
-              type: 'set',
-              estimatedValues: [
-                {
-                  type: 'target',
-                  cells: [
-                    {
-                      reps: 8,
-                      weight: 70
-                    }
-                  ]
-                },
-                {
-                  type: 'good',
-                  cells: [
-                    {
-                      reps: 7,
-                      weight: 72.5
-                    },
-                    {
-                      reps: 7,
-                      weight: 70
-                    }, {
-                      reps: 10,
-                      weight: 67.5
-                    },
-                  ]
-                },
-
-              ],
-            }, {
-              type: 'rest',
-            },{
-              type: 'set',
-              estimatedValues: [
-                {
-                  type: 'target',
-                  cells: [
-                    {
-                      reps: 8,
-                      weight: 70
-                    }
-                  ]
-                },
-                {
-                  type: 'good',
-                  cells: [
-                    {
-                      reps: 7,
-                      weight: 72.5
-                    },
-                    {
-                      reps: 7,
-                      weight: 70
-                    }, {
-                      reps: 10,
-                      weight: 67.5
-                    },
-                  ]
-                },
-
-              ],
-            }, {
-              type: 'rest',
-            },{
-              type: 'set',
-              estimatedValues: [
-                {
-                  type: 'target',
-                  cells: [
-                    {
-                      reps: 8,
-                      weight: 70
-                    }
-                  ]
-                },
-                {
-                  type: 'good',
-                  cells: [
-                    {
-                      reps: 7,
-                      weight: 72.5
-                    },
-                    {
-                      reps: 7,
-                      weight: 70
-                    }, {
-                      reps: 10,
-                      weight: 67.5
-                    },
-                  ]
-                },
-
-              ],
-            }, {
-              type: 'rest',
-            }]
-          },
-            {
-              type: 'exercise',
-              key: 'lateralRaise',
-              steps: [{
-                type: 'set'
-              },{
-                type: 'rest'
-              },{
-                type: 'set'
-              },{
-                type: 'rest'
-              },
-              ]
-            },
-            {
-              type: 'exercise',
-              key: 'cableCrossover',
-              steps: [{
-                type: 'set'
-              },{
-                type: 'rest'
-              },{
-                type: 'set'
-              },{
-                type: 'rest'
-              }
-              ]
-            },
-            {
-              type: 'exercise',
-              key: 'lateralRaise',
-              steps: [{
-                type: 'set'
-              }
-              ]
-            }
-          ]
-
+        exercises: {
+          dumbbellBenchPress: 3
         }
       }
-    }
+    },
+    weeklySplits: {
+      'pesho': {}
+    },
+    workouts: {
+      'pesho': {
+        workouts: {
+          'pesho': {
+            'id1': {
+              currentExerciseIndex: 0,
+              date: '03/07/2017',
+              exercises: [{
+                type: 'exercise',
+                key: 'dumbbellBenchPress',
+                steps: [{
+                  type: 'set',
+                  estimatedValues: [
+                    {
+                      type: 'target',
+                      cells: [
+                        {
+                          reps: 8,
+                          weight: 70
+                        }
+                      ]
+                    },
+                    {
+                      type: 'good',
+                      cells: [
+                        {
+                          reps: 7,
+                          weight: 72.5
+                        },
+                        {
+                          reps: 7,
+                          weight: 70
+                        }, {
+                          reps: 10,
+                          weight: 67.5
+                        },
+                      ]
+                    },
+
+                  ],
+                }, {
+                  type: 'rest',
+                }, {
+                  type: 'set',
+                  estimatedValues: [
+                    {
+                      type: 'target',
+                      cells: [
+                        {
+                          reps: 8,
+                          weight: 70
+                        }
+                      ]
+                    },
+                    {
+                      type: 'good',
+                      cells: [
+                        {
+                          reps: 7,
+                          weight: 72.5
+                        },
+                        {
+                          reps: 7,
+                          weight: 70
+                        }, {
+                          reps: 10,
+                          weight: 67.5
+                        },
+                      ]
+                    },
+
+                  ],
+                }, {
+                  type: 'rest',
+                }, {
+                  type: 'set',
+                  estimatedValues: [
+                    {
+                      type: 'target',
+                      cells: [
+                        {
+                          reps: 8,
+                          weight: 70
+                        }
+                      ]
+                    },
+                    {
+                      type: 'good',
+                      cells: [
+                        {
+                          reps: 7,
+                          weight: 72.5
+                        },
+                        {
+                          reps: 7,
+                          weight: 70
+                        }, {
+                          reps: 10,
+                          weight: 67.5
+                        },
+                      ]
+                    },
+
+                  ],
+                }, {
+                  type: 'rest',
+                }]
+              },
+                {
+                  type: 'exercise',
+                  key: 'lateralRaise',
+                  steps: [{
+                    type: 'set'
+                  }, {
+                    type: 'rest'
+                  }, {
+                    type: 'set'
+                  }, {
+                    type: 'rest'
+                  },
+                  ]
+                },
+                {
+                  type: 'exercise',
+                  key: 'cableCrossover',
+                  steps: [{
+                    type: 'set'
+                  }, {
+                    type: 'rest'
+                  }, {
+                    type: 'set'
+                  }, {
+                    type: 'rest'
+                  }
+                  ]
+                },
+                {
+                  type: 'exercise',
+                  key: 'lateralRaise',
+                  steps: [{
+                    type: 'set'
+                  }
+                  ]
+                }
+              ]
+
+            }
+          }
+        }
+      }
+    },
+    users: {
+      'pesho': {}
+    },
+
   }).then((err, res) => {
     console.log(arguments);
   })
 
 }
 
-seedFirebase();
+// seedFirebase();

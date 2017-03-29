@@ -2,87 +2,132 @@
   <div>
 
     <div class="ui divider small hidden"></div>
-    <h1 class="ui header" v-if="view !== '/tweaker'">PROFILE</h1>
+
+    <div class="ui grid stackable">
+      <div class="column five wide">
+        <div class="ui fluid vertical steps">
+
+          <router-link to="/parameters" tag="div" class="step link"
+                       :class="{active: view === '/parameters'}"
+          >
+            <i class="child icon"></i>
+            <div class="content">
+              <div class="title">Stats</div>
+              <div class="description">Your fitness level and training days</div>
+            </div>
+          </router-link>
+
+          <router-link to="/muscles" tag="div" class="step link"
+                       :class="{active: view === '/muscles', disabled: !userParametersState.hasParameters}"
+          >
+            <i class="star icon"></i>
+            <div class="content">
+              <div class="title">Muscles</div>
+              <div class="description">What muscles you prefer to train</div>
+            </div>
+          </router-link>
+
+          <router-link to="/tweaker" tag="div" class="step link"
+                       :class="{active: view === '/tweaker', disabled: !userParametersState.hasParameters}">
+            <i class="options icon"></i>
+            <div class="content">
+              <div class="title">Tweaker</div>
+              <div class="description">Generate and tweak weekly exercises</div>
+            </div>
+          </router-link>
+
+        </div>
+      </div>
+      <div class="column eleven wide">
+        <div class="ui segment" v-if="view !== '/tweaker'">
+          <div class="ui column centered">
+            <transition
+              mode="out-in"
+              name="custom-classes-transition"
+              enter-active-class="create-profile animated fadeIn"
+              leave-active-class="create-profile animated fadeOut"
+            >
+              <parameters v-if="view === '/parameters'"></parameters>
+              <preferred-muscles v-if="view === '/muscles'"></preferred-muscles>
+            </transition>
+          </div>
+        </div>
+
+        <tweaker v-if="view === '/tweaker'"></tweaker>
 
 
-    <div class="ui grid stackable segment" v-if="view !== '/tweaker'">
-      <div class="ui column six wide centered">
-        <transition
-          mode="out-in"
-          name="custom-classes-transition"
-          enter-active-class="create-profile animated fadeIn"
-          leave-active-class="create-profile animated fadeOut"
-        >
-          <stats v-if="view === '/stats'"></stats>
-          <preferred-muscles v-if="view === '/muscles'"></preferred-muscles>
-        </transition>
+        <div class="ui segment center aligned basic">
+          <div v-if="view !== '/parameters'" class="ui button blue" @click="previousStep()">
+            <i class="ui icon angle double left"></i>
+            BACK
+          </div>
+
+          <div class="ui button green" @click="nextStep()">
+            SAVE
+            <i class="ui icon angle double right"></i>
+          </div>
+
+        </div>
       </div>
     </div>
 
-    <tweaker v-if="view === '/tweaker'"></tweaker>
 
-
-    <div class="ui segment center aligned basic">
-      <div v-if="view === '/stats'" class="ui button green" @click="nextStep()">
-        Choose preferred muscles
-        <i class="ui icon angle double right"></i>
-      </div>
-
-      <div v-if="view === '/muscles'" class="ui button blue" @click="previousStep()">
-        <i class="ui icon angle double left"></i>
-        Stats
-      </div>
-
-      <div v-if="view === '/muscles'" class="ui button green" @click="nextStep()">
-        Generate exercises
-        <i class="ui icon angle double right"></i>
-      </div>
-
-      <div v-if="view === '/tweaker'" class="ui button blue" @click="previousStep()">
-        <i class="ui icon angle double left"></i>
-        Preferred muscles
-      </div>
-
-      <div v-if="view === '/tweaker'" class="ui button green" @click="nextStep()">
-        Generate split
-        <i class="ui icon angle double right"></i>
-      </div>
-
-
-    </div>
   </div>
 </template>
 
 <script>
-  import Stats from './Stats.vue';
+  import Parameters from './parameters.vue';
   import PreferredMuscles from './PreferredMuscles.vue';
   import Tweaker from '../tweaker/Tweaker.vue';
+
+  import notifier from '../../utils/notifier';
+
   import rootStore from '../../store/root';
+  import userParametersStore from '../../store/user-parameters';
+  import preferredMusclesStore from '../../store/preferred-muscles';
+
 
   export default {
     name: 'EditProfile',
-    components: {Stats, PreferredMuscles, Tweaker},
+    components: {Parameters, PreferredMuscles, Tweaker},
     data() {
-      return {}
+      return {
+        userParametersState: userParametersStore.state,
+        preferredMusclesState: preferredMusclesStore.state,
+        view: ''
+      }
+    },
+     beforeCreate() {
+      userParametersStore.init();
+      preferredMusclesStore.init();
     },
     methods: {
-      nextStep() {
+      async nextStep() {
         console.log(this.$route.path);
-        if (this.view === '/stats') {
-          this.$router.push('/muscles')
+        if (this.view === '/parameters') {
+
+          try {
+            await userParametersStore.updateParameters();
+            this.$router.push('/muscles')
+          } catch (err) {
+            notifier('error', 'Please provide correct data!')
+          }
+
         } else if (this.view === '/muscles') {
-          rootStore.setLoading(true);
-          setTimeout(() => {
-            rootStore.setLoading(false);
-            this.$router.push('/tweaker')
-          }, 1000)
+          try {
+            await preferredMusclesStore.updatePreferredMuscles();
+            this.$router.push('/tweaker'); // todo in tweaker load new exercises if change
+          } catch (err) {
+            console.log(err);
+            notifier('error', 'Please provide correct data!')
+          }
         } else if (this.view === '/tweaker') {
           console.log('next');
         }
       },
       previousStep() {
         if (this.view === '/muscles') {
-          this.$router.push('/stats')
+          this.$router.push('/parameters')
         } else if (this.view === '/tweaker') {
           this.$router.push('/muscles')
         }
@@ -92,6 +137,16 @@
       view() {
         let route = this.$route.path;
         return route;
+      },
+      headerText() {
+        switch (this.view) {
+          case '/parameters':
+            return '1. Stats';
+          case '/muscles':
+            return '2. Preferred muscles';
+          case '/tweaker':
+            return '3. Tweak weekly volume';
+        }
       }
     }
   }

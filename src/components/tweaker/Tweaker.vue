@@ -1,12 +1,11 @@
 <template>
   <div>
-
-    <h1>Your weekly volume</h1>
-
-
+    <h4 class="ui header">Exercises that you are going to perform in one week:</h4>
     <exercises-slider-in-tweaker>
     </exercises-slider-in-tweaker>
 
+
+    <h4 class="ui header">Choose target muscles:</h4>
     <div class="ui segment secondary tweaker-muscles-container">
       <muscle-in-tweaker
         v-for="muscle in tweakerState.muscles"

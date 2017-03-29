@@ -1,19 +1,25 @@
 import firebase from 'firebase';
 
+import rootStore from './root';
+
 export default {
   state: {
     uid: ''
   },
 
 
-  init() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.state.uid = user.uid;
-      } else {
-        this.state.uid = '';
-      }
-    });
+  async init() {
+    return new Promise((resolve, reject) => {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.state.uid = user.uid;
+          return resolve(true);
+        } else {
+          this.state.uid = '';
+          return resolve(false);
+        }
+      });
+    })
   },
 
 

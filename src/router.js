@@ -13,7 +13,7 @@ export default new VueRouter({
       path: '/tweaker', component: require('./components/profile/EditProfile.vue')
     },
     {
-      path: '/stats', component: require('./components/profile/EditProfile.vue')
+      path: '/parameters', component: require('./components/profile/EditProfile.vue')
     },
     {
       path: '/muscles', component: require('./components/profile/EditProfile.vue')

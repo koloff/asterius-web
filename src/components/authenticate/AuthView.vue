@@ -2,14 +2,9 @@
   <div>
     <div class="ui divider hidden"></div>
 
-    <div class="ui segment basic">
-      <h2 class="ui center aligned header ">
-        AUTHENTICATE
-      </h2>
-    </div>
 
-
-    <div class="ui segment secondary">
+    <h1 class="ui header centered">ASTERIUS</h1>
+    <div class="ui segment">
       <div class="ui grid stackable">
         <div class="column seven wide">
           <login></login>

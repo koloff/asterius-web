@@ -11,27 +11,28 @@
         PROGRESS
       </a>
       <div class="ui dropdown item">
-        PROFILE
+        GENERATE
         <div class="menu">
-          <router-link to="/stats" tag="a" class="item">
+          <router-link to="/parameters" tag="a" class="item">
             <i class="ui icon child"></i>
-            STATS
+            PARAMETERS
           </router-link>
-          <router-link to="/muscles" tag="a" class="item">
+          <router-link to="/muscles" tag="a" class="item" :class="{disabled: !userParametersState.hasParameters}">
             <i class="ui icon star"></i>
             MUSCLES
           </router-link>
-          <router-link to="/tweaker" tag="a" class="item">
+          <router-link to="/tweaker" tag="a" class="item" :class="{disabled: !userParametersState.hasParameters}">
             <i class="ui icon options"></i>
             TWEAKER
           </router-link>
-          <a class="item" @click="logout()">
-            <i class="ui icon sign out"></i>
-            LOGOUT
-          </a>
         </div>
         <i class="dropdown icon"></i>
       </div>
+
+      <a class="item" @click="logout()">
+        <i class="ui icon sign out"></i>
+        LOGOUT
+      </a>
     </div>
 
     <div class="ui container" v-show="!authState.uid">
@@ -48,11 +49,14 @@
   import notifier from './utils/notifier';
   import authStore from './store/auth';
 
+  import userParametersStore from './store/user-parameters';
+
   export default {
     name: 'HeaderMenu',
     data() {
       return {
-        authState: authStore.state
+        authState: authStore.state,
+        userParametersState: userParametersStore.state
       }
     },
     mounted() {
