@@ -3,7 +3,6 @@
     <div :class="{active: rootState.loading}" class="ui dimmer page">
       <div class="ui text loader">Loading</div>
     </div>
-
     <div class="app">
       <header-menu></header-menu>
 

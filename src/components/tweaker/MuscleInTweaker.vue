@@ -50,7 +50,6 @@
     },
     computed: {
       mrvPercentage() {
-        console.log(this.muscle);
         let percentage = tweakerStore.calculateMrvPercentage(this.muscle);
         if (percentage >= 100) {
           $(this.$el).find('.progress').progress('set error');

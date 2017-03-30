@@ -58,7 +58,7 @@
   }
 
   .exercise-sets-buttons .button {
-    text-align: center;
-    padding: 6px 4px 6px 10px !important;
+    text-align: center !important;
+    padding: 6px 6px 6px 6px !important;
   }
 </style>

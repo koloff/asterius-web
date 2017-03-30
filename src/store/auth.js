@@ -1,10 +1,10 @@
 import firebase from 'firebase';
 
-import rootStore from './root';
 
 export default {
   state: {
-    uid: ''
+    uid: '',
+    idToken: ''
   },
 
 
@@ -12,11 +12,19 @@ export default {
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          this.state.uid = user.uid;
-          return resolve(true);
+          firebase.auth().currentUser.getToken(/* forceRefresh */ true).then((idToken) => {
+            this.state.uid = user.uid;
+            this.state.idToken = idToken;
+            console.log('resolved');
+            return resolve();
+          }).catch(function(error) {
+            console.log(error);
+            return reject(error);
+          });
         } else {
           this.state.uid = '';
-          return resolve(false);
+          this.state.idToken = '';
+          return resolve();
         }
       });
     })
@@ -24,11 +32,9 @@ export default {
 
 
   async login(email, password) {
-    console.log(arguments);
     return new Promise((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(email, password)
         .then((user) => {
-          this.state.uid = user.uid;
           return resolve(user);
         })
         .catch((error) => {
@@ -38,7 +44,6 @@ export default {
   },
 
   logout(){
-    this.state.uid = '';
     firebase.auth().signOut();
   },
 
@@ -46,7 +51,6 @@ export default {
     return new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((user) => {
-          this.state.uid = user.uid;
           return resolve(user);
         })
         .catch((error) => {

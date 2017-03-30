@@ -30,6 +30,8 @@
     components: {
       Login,
       Register
+    },
+    mounted() {
     }
   }
 </script>

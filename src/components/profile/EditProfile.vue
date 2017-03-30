@@ -86,6 +86,8 @@
   import userParametersStore from '../../store/user-parameters';
   import preferredMusclesStore from '../../store/preferred-muscles';
 
+  import * as http from '../../http/index';
+
 
   export default {
     name: 'EditProfile',
@@ -97,9 +99,7 @@
         view: ''
       }
     },
-     beforeCreate() {
-      userParametersStore.init();
-      preferredMusclesStore.init();
+    beforeCreate() {
     },
     methods: {
       async nextStep() {
@@ -116,7 +116,9 @@
         } else if (this.view === '/muscles') {
           try {
             await preferredMusclesStore.updatePreferredMuscles();
-            this.$router.push('/tweaker'); // todo in tweaker load new exercises if change
+            let result =  await http.getAuthorized('/algorithm/generate-exercises');
+            console.log(result);
+            this.$router.push('/tweaker');
           } catch (err) {
             console.log(err);
             notifier('error', 'Please provide correct data!')

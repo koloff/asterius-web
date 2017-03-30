@@ -1,6 +1,5 @@
 import request from 'superagent';
-
-window.apiUrl = 'http://localhost:3377';
+import authStore from '../store/auth';
 
 export async function get(path, query) {
   return new Promise((resolve, reject) => {
@@ -15,4 +14,24 @@ export async function get(path, query) {
         return resolve(res.body);
       });
   });
+}
+
+export async function getAuthorized(path, query) {
+  return new Promise((resolve, reject) => {
+    let userIdToken = authStore.state.idToken;
+    if (!userIdToken) {
+      return reject();
+    }
+    request
+      .get(`${apiUrl}/api${path}`)
+      .query(query)
+      .set('X-Access-Token', userIdToken)
+      .end((err, res) => {
+        if (err) {
+          return reject(res.body);
+        }
+
+        return resolve(res.body);
+      });
+  })
 }

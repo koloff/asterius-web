@@ -7,6 +7,9 @@ export default new VueRouter({
   mode: 'history',
   routes: [
     {
+      path: '/', component: require('./components/Home.vue')
+    },
+    {
       path: '/authenticate', component: require('./components/authenticate/AuthView.vue')
     },
     {

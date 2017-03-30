@@ -10,6 +10,14 @@ import './style/style.css';
 import './lib/mapify/mapify';
 import './lib/mapify/jquery.mapify.css';
 
+// env related
+if (process.env.NODE_ENV !== 'production') {
+  // Vue.config.debug = true;
+  window.apiUrl = 'http://localhost:3377';
+} else {
+  window.apiUrl = 'https://asterius-a8808.appspot.com';
+}
+
 
 // load firebase
 require('./config/firebase');
@@ -37,6 +45,7 @@ import exercisesStore from './store/exercises';
       exercisesStore.init()
     ]);
     await authStore.init();
+    rootStore.initProfileRelatedStores();
 
     // init the app
     let vue = new Vue({
