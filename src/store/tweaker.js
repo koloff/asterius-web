@@ -1,12 +1,20 @@
 import _ from 'lodash';
 import musclesStore from './muscles';
 import exercisesStore from './exercises';
+import selectedExercisesStore from './selected-exercises';
 
 export default {
 
   state: {
     exercises: [],
     muscles: []
+  },
+
+  setDefaultState() {
+    this.state = {
+      exercises: [],
+      muscles: []
+    };
   },
 
   init() {
@@ -26,9 +34,7 @@ export default {
 
 
   loadSelectedExercises() {
-    let selectedExercises = [
-      {key: 'dumbbellBenchPress', sets: 3}
-    ];
+    let selectedExercises = selectedExercisesStore.state.selectedExercises;
 
     this.state.exercises.forEach((exercise) => {
       exercise.sets = 0;
@@ -41,13 +47,22 @@ export default {
         }
       })
     });
-
   },
 
+  getSelectedExercises() {
+    let arr = [];
+    this.state.exercises.forEach((exercise) => {
+      if (exercise.sets) {
+        arr.push({
+          key: exercise.key,
+          sets: exercise.sets
+        })
+      }
+    });
 
-  getExercise(key) {
-    return _.find(this.state.exercises, {key: key});
+    return arr;
   },
+
 
   shouldExerciseShow(exKey) {
     let exercise = this.getExercise(exKey);
@@ -81,6 +96,11 @@ export default {
     return count;
   },
 
+
+  getExercise(key) {
+    return _.find(this.state.exercises, {key: key});
+  },
+
   increaseExerciseSets(exKey) {
     let exercise = this.getExercise(exKey);
     exercise.sets++;
@@ -108,6 +128,4 @@ export default {
 
     return (currentVolume / muscle.mrv) * 100;
   }
-
-
 }

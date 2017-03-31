@@ -1,6 +1,7 @@
 <template>
   <div class="ui segment secondary exercises-slider"
        style="height: 270px;display: flex; align-items:center; justify-content: center;">
+
     <div class="ui message info"
          v-if="!appropriateExerciseExists"
     >

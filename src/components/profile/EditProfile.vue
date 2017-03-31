@@ -32,7 +32,7 @@
             <i class="options icon"></i>
             <div class="content">
               <div class="title">Tweaker</div>
-              <div class="description">Generate and tweak weekly exercises</div>
+              <div class="description">Edit selected weekly exercises</div>
             </div>
           </router-link>
 
@@ -85,6 +85,7 @@
   import rootStore from '../../store/root';
   import userParametersStore from '../../store/user-parameters';
   import preferredMusclesStore from '../../store/preferred-muscles';
+  import selectedExercisesStore from '../../store/selected-exercises';
 
   import * as http from '../../http/index';
 
@@ -114,17 +115,27 @@
           }
 
         } else if (this.view === '/muscles') {
+          rootStore.setLoading(true);
           try {
             await preferredMusclesStore.updatePreferredMuscles();
-            let result =  await http.getAuthorized('/algorithm/generate-exercises');
-            console.log(result);
+            await http.getAuthorized('/algorithm/generate-exercises');
             this.$router.push('/tweaker');
           } catch (err) {
             console.log(err);
             notifier('error', 'Please provide correct data!')
           }
+          rootStore.setLoading(false);
         } else if (this.view === '/tweaker') {
-          console.log('next');
+          rootStore.setLoading(true);
+          try {
+            await selectedExercisesStore.updateSelectedExercises();
+            await http.getAuthorized('/algorithm/generate-split');
+          } catch (err) {
+            console.log(err);
+            notifier('error', 'There was an error!')
+          }
+          rootStore.setLoading(false);
+          notifier('success', 'Your split was generated!')
         }
       },
       previousStep() {
@@ -137,8 +148,7 @@
     },
     computed: {
       view() {
-        let route = this.$route.path;
-        return route;
+        return this.$route.path;
       },
       headerText() {
         switch (this.view) {

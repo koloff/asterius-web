@@ -23,8 +23,29 @@ export default {
     }
   },
 
+  setDefaultState() {
+    this.state = {
+      hasParameters: false,
+
+      measuringUnit: 'metric',
+      weight: null,
+      height: null,
+      experience: '',
+      days: {
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false,
+        sunday: false
+      }
+    };
+  },
+
   async init() {
     return new Promise((resolve, reject) => {
+      console.log(authStore.state.uid);
       this.userParametersRef = firebase.database().ref().child(`userParameters`).child(authStore.state.uid);
 
       this.userParametersRef.on('value', (snap) => {

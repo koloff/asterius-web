@@ -17,9 +17,11 @@ export async function get(path, query) {
 }
 
 export async function getAuthorized(path, query) {
+  console.log('requestign');
   return new Promise((resolve, reject) => {
     let userIdToken = authStore.state.idToken;
     if (!userIdToken) {
+      console.log('no token');
       return reject();
     }
     request

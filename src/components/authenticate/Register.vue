@@ -88,7 +88,7 @@
         try {
           await authStore.register(this.email, this.password);
           notifier('success', 'Registered successfully!');
-          this.$router.push('/profile');
+          this.$router.push('/parameters');
         } catch (err) {
 
           this.fields.email.error = '';

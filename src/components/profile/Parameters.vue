@@ -91,7 +91,6 @@
     },
     mounted() {
       $('.dropdown').dropdown();
-      userParametersStore.init();
     },
     methods: {
       toggleDay(day) {

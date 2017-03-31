@@ -1,13 +1,20 @@
 import _ from 'lodash';
-
 import authStore from './auth';
 import firebase from 'firebase';
 
 
 export default {
+
   state: {
     hasPreferredMuscles: false,
     preferredMuscles: []
+  },
+
+  setDefaultState() {
+    this.state ={
+      hasPreferredMuscles: false,
+      preferredMuscles: []
+    };
   },
 
   async init() {

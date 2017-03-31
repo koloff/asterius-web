@@ -34,10 +34,7 @@
       }
     },
     beforeCreate() {
-      // loads exercises and muscles in state
       tweakerStore.init();
-    },
-    mounted() {
     },
     computed: {},
     methods: {

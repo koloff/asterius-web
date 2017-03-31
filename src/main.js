@@ -39,14 +39,7 @@ import exercisesStore from './store/exercises';
 
 (async() => {
   try {
-    // wait for the stores to fetch the needed data async
-    await Promise.all([
-      musclesStore.init(),
-      exercisesStore.init()
-    ]);
     await authStore.init();
-    rootStore.initProfileRelatedStores();
-
     // init the app
     let vue = new Vue({
       router,
@@ -56,7 +49,6 @@ import exercisesStore from './store/exercises';
 
     window.Vue = Vue;
     window.vue = vue;
-
   } catch (err) {
     console.error(err);
   }

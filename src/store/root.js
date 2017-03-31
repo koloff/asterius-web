@@ -1,19 +1,37 @@
+import musclesStore from './muscles';
+import exercisesStore from './exercises';
 import userParametersStore from './user-parameters';
 import preferredMusclesStore from './preferred-muscles';
-import workoutStore from './workout';
+import selectedExercisesStore from './selected-exercises';
 
 export default {
   state: {
     loading: false
   },
 
-  initProfileRelatedStores() {
-    userParametersStore.init();
-    preferredMusclesStore.init();
-    workoutStore.init();
+  async initCollectionStores() {
+    return await Promise.all([
+      musclesStore.init(),
+      exercisesStore.init()
+    ])
   },
 
-  setLoading(value) {
+  async initProfileRelatedStores(){
+    console.log('init user related');
+    return await Promise.all([
+      userParametersStore.init(),
+      preferredMusclesStore.init(),
+      selectedExercisesStore.init()
+    ])
+  },
+
+  resetProfileRelatedStores() {
+    userParametersStore.setDefaultState();
+    preferredMusclesStore.setDefaultState();
+    selectedExercisesStore.setDefaultState();
+  },
+
+  setLoading(value){
     this.state.loading = value;
   }
 }

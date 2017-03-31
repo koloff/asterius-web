@@ -1,5 +1,7 @@
+import _ from 'lodash';
 import firebase from 'firebase';
 
+import rootStore from './root';
 
 export default {
   state: {
@@ -7,23 +9,31 @@ export default {
     idToken: ''
   },
 
+  setDefaultState() {
+    this.state = {
+      uid: '',
+      idToken: ''
+    };
+  },
 
-  async init() {
+  async init(){
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          firebase.auth().currentUser.getToken(/* forceRefresh */ true).then((idToken) => {
+          firebase.auth().currentUser.getToken(/* forceRefresh */ true).then(async(idToken) => {
             this.state.uid = user.uid;
             this.state.idToken = idToken;
-            console.log('resolved');
+            await Promise.all([
+              rootStore.initCollectionStores(),
+              rootStore.initProfileRelatedStores(),
+            ]);
             return resolve();
           }).catch(function(error) {
             console.log(error);
             return reject(error);
           });
         } else {
-          this.state.uid = '';
-          this.state.idToken = '';
+          this.setDefaultState();
           return resolve();
         }
       });
@@ -31,7 +41,7 @@ export default {
   },
 
 
-  async login(email, password) {
+  async login(email, password){
     return new Promise((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(email, password)
         .then((user) => {
@@ -43,11 +53,11 @@ export default {
     });
   },
 
-  logout(){
+  logout() {
     firebase.auth().signOut();
   },
 
-  async register(email, password) {
+  async  register(email, password){
     return new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((user) => {

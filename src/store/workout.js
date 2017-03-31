@@ -14,7 +14,17 @@ export default {
     exercises: {}
   },
 
-  init() {
+  setDefaultState() {
+    this.state = {
+      currentStepIndex: 0,
+      timer: {
+        seconds: 0,
+        state: 'stopped' // stopped, running, paused
+      },
+      //firebase
+      currentExerciseIndex: 0,
+      exercises: {}
+    }
   },
 
 

@@ -6,10 +6,10 @@
         <i class="ui icon checked calendar"></i>
         PROGRAM
       </a>
-      <a class="item">
-        <i class="ui icon signal"></i>
-        PROGRESS
-      </a>
+      <!--<a class="item">-->
+        <!--<i class="ui icon signal"></i>-->
+        <!--PROGRESS-->
+      <!--</a>-->
       <div class="ui dropdown item">
         GENERATE
         <div class="menu">
