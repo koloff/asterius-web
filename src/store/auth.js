@@ -10,10 +10,8 @@ export default {
   },
 
   setDefaultState() {
-    this.state = {
-      uid: '',
-      idToken: ''
-    };
+    this.state.uid = '';
+    this.state.idToken = '';
   },
 
   async init(){
@@ -28,8 +26,9 @@ export default {
               rootStore.initProfileRelatedStores(),
             ]);
             return resolve();
-          }).catch(function(error) {
+          }).catch((error) => {
             console.log(error);
+            this.setDefaultState();
             return reject(error);
           });
         } else {
@@ -54,7 +53,9 @@ export default {
   },
 
   logout() {
-    firebase.auth().signOut();
+    firebase.auth().signOut().then(() => {
+      this.setDefaultState();
+    });
   },
 
   async  register(email, password){

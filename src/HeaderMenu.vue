@@ -65,14 +65,14 @@
     methods: {
       logout() {
         authStore.logout();
+
         this.$router.push('/authenticate');
         notifier('success', 'You logged out!')
       }
     },
     computed: {
       loggedIn() {
-        let uid = this.authState.uid;
-        return uid;
+        return this.authState.uid;
       }
     }
   }
