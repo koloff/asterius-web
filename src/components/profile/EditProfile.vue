@@ -118,7 +118,7 @@
           rootStore.setLoading(true);
           try {
             await preferredMusclesStore.updatePreferredMuscles();
-            await http.getAuthorized('/algorithm/generate-exercises');
+            await http.getAuthorized('/algorithm/generate-split');
             this.$router.push('/tweaker');
           } catch (err) {
             console.log(err);

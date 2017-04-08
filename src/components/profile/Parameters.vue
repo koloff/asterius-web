@@ -41,7 +41,7 @@
     <div class="ui divider hidden"></div>
 
     <h4 class="ui header dividing">What is your fitness experience?</h4>
-    <div class="ui buttons four choose-experience">
+    <div class="ui buttons four">
       <button class="ui button" :class="{basic: userParametersState.experience !== 'untrained'}"
               @click="userParametersState.experience = 'untrained'">Untrained
       </button>
@@ -60,21 +60,18 @@
 
     <!--todo: check on mobile-->
     <h4 class="ui header dividing">
-      What days in the week you can train?
+      How many days a week on average can you train?
     </h4>
-    <div class="ui buttons seven choose-week-days">
-      <div class="ui button" :class="{basic: !userParametersState.days['monday']}" @click="toggleDay('monday')">M</div>
-      <div class="ui button" :class="{basic: !userParametersState.days['tuesday']}" @click="toggleDay('tuesday')">T
-      </div>
-      <div class="ui button" :class="{basic: !userParametersState.days['wednesday']}" @click="toggleDay('wednesday')">
-        W
-      </div>
-      <div class="ui button" :class="{basic: !userParametersState.days['thursday']}" @click="toggleDay('thursday')">T
-      </div>
-      <div class="ui button" :class="{basic: !userParametersState.days['friday']}" @click="toggleDay('friday')">F</div>
-      <div class="ui button" :class="{basic: !userParametersState.days['saturday']}" @click="toggleDay('saturday')">S
-      </div>
-      <div class="ui button" :class="{basic: !userParametersState.days['sunday']}" @click="toggleDay('sunday')">S</div>
+    <div class="ui buttons four">
+      <button class="ui button" :class="{basic: userParametersState.days !== '1-2'}"
+              @click="userParametersState.days = '1-2'">1 or 2 days
+      </button>
+      <button class="ui button " :class="{basic: userParametersState.days !== '3-4'}"
+              @click="userParametersState.days = '3-4'">3 or 4 days
+      </button>
+      <button class="ui button " :class="{basic: userParametersState.days !== '5-6'}"
+              @click="userParametersState.days = '5-6'">5 or 6 days
+      </button>
     </div>
   </div>
 </template>
@@ -93,12 +90,6 @@
       $('.dropdown').dropdown();
     },
     methods: {
-      toggleDay(day) {
-        this.userParametersState.days[day] = !this.userParametersState.days[day];
-      },
-      update() {
-        userParametersStore.updateParameters();
-      }
     },
     computed: {
       state() {

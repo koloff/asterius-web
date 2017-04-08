@@ -12,15 +12,7 @@ export default {
     weight: null,
     height: null,
     experience: '',
-    days: {
-      monday: false,
-      tuesday: false,
-      wednesday: false,
-      thursday: false,
-      friday: false,
-      saturday: false,
-      sunday: false
-    }
+    days: '1-2'
   },
 
   setDefaultState() {
@@ -31,15 +23,7 @@ export default {
       weight: null,
       height: null,
       experience: '',
-      days: {
-        monday: false,
-        tuesday: false,
-        wednesday: false,
-        thursday: false,
-        friday: false,
-        saturday: false,
-        sunday: false
-      }
+      days: ''
     };
   },
 
@@ -54,13 +38,7 @@ export default {
 
         if (this.state.hasParameters) {
           // set the state
-          this.state.measuringUnit = value.measuringUnit;
-          this.state.weight = value.weight;
-          this.state.height = value.height;
-          this.state.experience = value.experience;
-          value.days.forEach((day) => {
-            this.state.days[day] = true;
-          })
+          this.state = value;
         }
 
         return resolve();
@@ -71,15 +49,8 @@ export default {
   async updateParameters() {
     return new Promise((resolve, reject) => {
 
-      // check validity
-      let days = [];
-      _.forOwn(this.state.days, (day, key) => {
-        if (day) {
-          days.push(key);
-        }
-      });
 
-      if (this.state.weight === null || this.state.height === null || days.length <= 0 || !this.state.experience) {
+      if (this.state.weight === null || this.state.height === null || !this.state.days || !this.state.experience) {
         return reject(false);
       }
 
@@ -88,7 +59,6 @@ export default {
 
 
       let options = _.clone(this.state);
-      options.days = days;
 
       this.userParametersRef.set(options)
         .then(() => {
