@@ -27,19 +27,19 @@
             </div>
           </router-link>
 
-          <router-link to="/tweaker" tag="div" class="step link"
-                       :class="{active: view === '/tweaker', disabled: !userParametersState.hasParameters}">
+          <router-link to="/split" tag="div" class="step link"
+                       :class="{active: view === '/split', disabled: !userParametersState.hasParameters}">
             <i class="options icon"></i>
             <div class="content">
-              <div class="title">Tweaker</div>
-              <div class="description">Edit selected weekly exercises</div>
+              <div class="title">Split</div>
+              <div class="description">View and edit generated workouts</div>
             </div>
           </router-link>
 
         </div>
       </div>
       <div class="column eleven wide">
-        <div class="ui segment" v-if="view !== '/tweaker'">
+        <div class="ui segment" v-if="view !== '/split'">
           <div class="ui column centered">
             <transition
               mode="out-in"
@@ -53,7 +53,7 @@
           </div>
         </div>
 
-        <tweaker v-if="view === '/tweaker'"></tweaker>
+        <split v-if="view === '/split'"></split>
 
 
         <div class="ui segment center aligned basic">
@@ -78,7 +78,7 @@
 <script>
   import Parameters from './parameters.vue';
   import PreferredMuscles from './PreferredMuscles.vue';
-  import Tweaker from '../tweaker/Tweaker.vue';
+  import Split from './Split.vue';
 
   import notifier from '../../utils/notifier';
 
@@ -92,7 +92,7 @@
 
   export default {
     name: 'EditProfile',
-    components: {Parameters, PreferredMuscles, Tweaker},
+    components: {Parameters, PreferredMuscles, Split},
     data() {
       return {
         userParametersState: userParametersStore.state,
@@ -119,29 +119,20 @@
           try {
             await preferredMusclesStore.updatePreferredMuscles();
             await http.getAuthorized('/algorithm/generate-split');
-            this.$router.push('/tweaker');
+            this.$router.push('/split');
           } catch (err) {
             console.log(err);
             notifier('error', 'Please provide correct data!')
           }
           rootStore.setLoading(false);
-        } else if (this.view === '/tweaker') {
-          rootStore.setLoading(true);
-          try {
-            await selectedExercisesStore.updateSelectedExercises();
-            await http.getAuthorized('/algorithm/generate-split');
-          } catch (err) {
-            console.log(err);
-            notifier('error', 'There was an error!')
-          }
-          rootStore.setLoading(false);
-          notifier('success', 'Your split was generated!')
+        } else if (this.view === '/split') {
+          this.$router.push('/program');
         }
       },
       previousStep() {
         if (this.view === '/muscles') {
           this.$router.push('/parameters')
-        } else if (this.view === '/tweaker') {
+        } else if (this.view === '/split') {
           this.$router.push('/muscles')
         }
       }
@@ -156,7 +147,7 @@
             return '1. Stats';
           case '/muscles':
             return '2. Preferred muscles';
-          case '/tweaker':
+          case '/split':
             return '3. Tweak weekly volume';
         }
       }

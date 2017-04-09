@@ -13,7 +13,7 @@ export default new VueRouter({
       path: '/authenticate', component: require('./components/authenticate/AuthView.vue')
     },
     {
-      path: '/tweaker', component: require('./components/profile/EditProfile.vue')
+      path: '/split', component: require('./components/profile/EditProfile.vue')
     },
     {
       path: '/parameters', component: require('./components/profile/EditProfile.vue')
@@ -22,11 +22,11 @@ export default new VueRouter({
       path: '/muscles', component: require('./components/profile/EditProfile.vue')
     },
 
-    // {
-    //   path: '/program', component: require('./components/Program.vue')
-    // },
     {
-      path: '/workout', component: require('./components/workout/Workout.vue')
+      path: '/program', component: require('./components/program/Program.vue')
+    },
+    {
+      path: '/workout/:type', component: require('./components/workout/Workout.vue')
     },
     // {
     //   path: '/program/:week/:day', component: require('./components/workout/WorkoutDetails.vue')

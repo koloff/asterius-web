@@ -83,7 +83,7 @@
     name: 'Parameters',
     data() {
       return {
-        userParametersState: userParametersStore.state
+        userParametersState: userParametersStore.state.userParameters
       }
     },
     mounted() {

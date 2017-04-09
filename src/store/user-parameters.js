@@ -7,23 +7,25 @@ import firebase from 'firebase';
 export default {
   state: {
     hasParameters: false,
-
-    measuringUnit: 'metric',
-    weight: null,
-    height: null,
-    experience: '',
-    days: '1-2'
-  },
-
-  setDefaultState() {
-    this.state = {
-      hasParameters: false,
-
+    userParameters: {
       measuringUnit: 'metric',
       weight: null,
       height: null,
       experience: '',
       days: ''
+    }
+  },
+
+  setDefaultState() {
+    this.state = {
+      hasParameters: false,
+      userParameters: {
+        measuringUnit: 'metric',
+        weight: null,
+        height: null,
+        experience: '',
+        days: ''
+      }
     };
   },
 
@@ -35,10 +37,12 @@ export default {
       this.userParametersRef.on('value', (snap) => {
         let value = snap.val();
         this.state.hasParameters = !!value;
+        console.log(this);
+        console.log(this.state.hasParameters);
 
         if (this.state.hasParameters) {
           // set the state
-          this.state = value;
+          this.state.userParameters = value;
         }
 
         return resolve();
@@ -50,18 +54,20 @@ export default {
     return new Promise((resolve, reject) => {
 
 
-      if (this.state.weight === null || this.state.height === null || !this.state.days || !this.state.experience) {
+      if (this.state.userParameters.weight === null || this.state.userParameters.height === null || !this.state.userParameters.days || !this.state.userParameters.experience) {
         return reject(false);
       }
 
-      this.state.weight = parseFloat(this.state.weight);
-      this.state.height = parseFloat(this.state.height);
+      this.state.userParameters.weight = parseFloat(this.state.userParameters.weight);
+      this.state.userParameters.height = parseFloat(this.state.userParameters.height);
 
 
-      let options = _.clone(this.state);
+      let options = _.clone(this.state.userParameters);
+      delete options.hasParameters;
 
       this.userParametersRef.set(options)
         .then(() => {
+          this.state.hasParameters = true;
           return resolve(true);
         })
         .catch((err) => {

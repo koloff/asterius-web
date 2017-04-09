@@ -2,6 +2,7 @@
   <div class="ui segment secondary exercises-slider"
        style="height: 270px;display: flex; align-items:center; justify-content: center;">
 
+    <div v-if="false">{{tweakerState}}</div>
     <div class="ui message info"
          v-if="!appropriateExerciseExists"
     >
@@ -46,6 +47,7 @@
     computed: {
       exercisesToShow() {
         let arr = [];
+        console.log(this.tweakerState.exercises);
         this.tweakerState.exercises.forEach((exercise) => {
           if (tweakerStore.shouldExerciseShow(exercise.key)) {
             arr.push(exercise)

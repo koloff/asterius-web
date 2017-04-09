@@ -1,5 +1,8 @@
-import firebase from 'firebase';
 import _ from 'lodash';
+import firebase from 'firebase';
+
+import splitStore from './split';
+import authStore from './auth';
 
 
 export default {
@@ -23,16 +26,126 @@ export default {
       },
       //firebase
       currentExerciseIndex: 0,
-      exercises: {}
+      exercises: []
     }
   },
 
 
   // firebase related
-  loadWorkout() {
-    this.workoutRef = firebase.database().ref().child(`workouts/pesho/id1`);
+  loadWorkout(type) {
+    // todo
+    console.log(type);
+    this.workoutRef = firebase.database().ref().child(`workouts/${authStore.state.uid}/type`);
 
-    this.workoutRef.child('/exercises').on('value', (ref) => {
+    let exercises = {};
+    console.log(splitStore.state.split);
+    splitStore.state.split[type].forEach((exercise) => {
+
+      exercises.push({
+        type: 'exercise',
+        key: exercise.key,
+        steps: [{
+          type: 'set',
+          estimatedValues: [
+            {
+              type: 'target',
+              cells: [
+                {
+                  reps: 8,
+                  weight: 70
+                }
+              ]
+            },
+            {
+              type: 'good',
+              cells: [
+                {
+                  reps: 7,
+                  weight: 72.5
+                },
+                {
+                  reps: 7,
+                  weight: 70
+                }, {
+                  reps: 10,
+                  weight: 67.5
+                },
+              ]
+            },
+
+          ],
+        }, {
+          type: 'rest',
+        }, {
+          type: 'set',
+          estimatedValues: [
+            {
+              type: 'target',
+              cells: [
+                {
+                  reps: 8,
+                  weight: 70
+                }
+              ]
+            },
+            {
+              type: 'good',
+              cells: [
+                {
+                  reps: 7,
+                  weight: 72.5
+                },
+                {
+                  reps: 7,
+                  weight: 70
+                }, {
+                  reps: 10,
+                  weight: 67.5
+                },
+              ]
+            },
+
+          ],
+        }, {
+          type: 'rest',
+        }, {
+          type: 'set',
+          estimatedValues: [
+            {
+              type: 'target',
+              cells: [
+                {
+                  reps: 8,
+                  weight: 70
+                }
+              ]
+            },
+            {
+              type: 'good',
+              cells: [
+                {
+                  reps: 7,
+                  weight: 72.5
+                },
+                {
+                  reps: 7,
+                  weight: 70
+                }, {
+                  reps: 10,
+                  weight: 67.5
+                },
+              ]
+            },
+
+          ],
+        }, {
+          type: 'rest',
+        }]
+      });
+    });
+    this.workoutRef.child('/exercises').set(exercises);
+
+    this.workoutRef.child('/exercises').once('value', (ref) => {
       this.state.exercises = ref.val();
     });
     this.workoutRef.child('/currentExerciseIndex').once('value', (ref) => {

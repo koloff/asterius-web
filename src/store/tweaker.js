@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import musclesStore from './muscles';
 import exercisesStore from './exercises';
-import selectedExercisesStore from './selected-exercises';
+import splitStore from './split';
 
 export default {
 
@@ -23,7 +23,7 @@ export default {
     this.state.muscles = _.clone(musclesStore.state.mc.muscles);
 
     this.loadMuscles();
-    this.loadSelectedExercises();
+    this.loadSelectedExercises(splitStore.state.split[splitStore.state.currentWorkout]);
   },
 
   loadMuscles() {
@@ -33,8 +33,8 @@ export default {
   },
 
 
-  loadSelectedExercises() {
-    let selectedExercises = selectedExercisesStore.state.selectedExercises;
+  loadSelectedExercises(selectedExercises) {
+    console.log(selectedExercises);
 
     this.state.exercises.forEach((exercise) => {
       exercise.sets = 0;

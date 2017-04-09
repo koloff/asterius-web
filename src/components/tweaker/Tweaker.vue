@@ -1,3 +1,4 @@
+<script src="../../store/split.js"></script>
 <template>
   <div>
     <h4 class="ui header">Exercises that you are going to perform in one week:</h4>
@@ -28,24 +29,16 @@
   export default {
     name: 'App',
     components: {ExercisesSliderInTweaker, MuscleInTweaker},
+    props: [],
     data() {
       return {
         tweakerState: tweakerStore.state,
       }
     },
     beforeCreate() {
-      tweakerStore.init();
     },
     computed: {},
-    methods: {
-      generate() {
-        rootStore.setLoadingTweaker(true);
-        setTimeout(() => {
-          rootStore.setLoadingTweaker(false);
-          this.$router.push('/program');
-        }, 2500);
-      }
-    }
+    methods: {}
   }
 </script>
 

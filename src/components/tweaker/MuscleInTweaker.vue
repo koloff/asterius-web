@@ -1,3 +1,4 @@
+<script src="../../store/split.js"></script>
 <template>
   <div class="ui segment muscle-in-tweaker"
        @click="switchMuscle()"
@@ -70,6 +71,8 @@
     },
     methods: {
       switchMuscle() {
+        console.log('switch muscle');
+        console.log(this.muscle);
         this.muscle.selected = !this.muscle.selected;
       },
       getBorderStyle() {

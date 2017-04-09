@@ -62,7 +62,7 @@
       }
     },
     beforeCreate() {
-      workoutStore.loadWorkout();
+      workoutStore.loadWorkout(this.$route.params.type);
     },
     computed: {
       currentExerciseName() {

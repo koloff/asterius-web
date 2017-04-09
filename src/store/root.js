@@ -2,7 +2,7 @@ import musclesStore from './muscles';
 import exercisesStore from './exercises';
 import userParametersStore from './user-parameters';
 import preferredMusclesStore from './preferred-muscles';
-import selectedExercisesStore from './selected-exercises';
+import splitStore from './split';
 
 export default {
   state: {
@@ -21,14 +21,14 @@ export default {
     return await Promise.all([
       userParametersStore.init(),
       preferredMusclesStore.init(),
-      selectedExercisesStore.init()
+      splitStore.init()
     ])
   },
 
   resetProfileRelatedStores() {
     userParametersStore.setDefaultState();
     preferredMusclesStore.setDefaultState();
-    selectedExercisesStore.setDefaultState();
+    splitStore.setDefaultState()
   },
 
   setLoading(value){
