@@ -35,9 +35,9 @@ export default {
   loadWorkout(type) {
     // todo
     console.log(type);
-    this.workoutRef = firebase.database().ref().child(`workouts/${authStore.state.uid}/type`);
+    this.workoutRef = firebase.database().ref().child(`workouts/${authStore.state.uid}/${type}`);
 
-    let exercises = {};
+    let exercises = [];
     console.log(splitStore.state.split);
     splitStore.state.split[type].forEach((exercise) => {
 
@@ -145,7 +145,7 @@ export default {
     });
     this.workoutRef.child('/exercises').set(exercises);
 
-    this.workoutRef.child('/exercises').once('value', (ref) => {
+    this.workoutRef.child('/exercises').on('value', (ref) => {
       this.state.exercises = ref.val();
     });
     this.workoutRef.child('/currentExerciseIndex').once('value', (ref) => {

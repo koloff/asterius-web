@@ -2,10 +2,10 @@
   <div class="ui inverted menu header-menu">
 
     <div class="ui container" v-show="loggedIn">
-      <a class="item">
+      <router-link :to="'/program'" :tag="a" class="item">
         <i class="ui icon checked calendar"></i>
         PROGRAM
-      </a>
+      </router-link>
       <!--<a class="item">-->
         <!--<i class="ui icon signal"></i>-->
         <!--PROGRESS-->

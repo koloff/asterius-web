@@ -1,6 +1,6 @@
 <template>
   <div class="set-steps">
-    <div class="ui fluid steps tiny">
+    <div class="ui fluid steps tiny unstackable padless">
 
       <div
         class="link step"
@@ -77,4 +77,18 @@
     padding: 14px 3px !important;
   }
 
+
+  .ui.unstackable.steps {
+    flex-direction: row;
+  }
+
+  .ui.unstackable.steps .step {
+    width: auto !important;
+  }
+
+  @media only screen and (max-width: (@largestMobileScreen)) {
+    .ui.unstackable.padless.steps .step {
+      padding: @verticalPadding 0 !important;
+    }
+  }
 </style>

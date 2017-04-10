@@ -124,7 +124,7 @@
   }
 
   .exercise-canvas {
-    /*z-index: 99;*/
+    z-index: 99;
   }
 
   .exercise-circular-container {

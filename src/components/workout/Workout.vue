@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <h1 class="ui header inverted">WORKOUT</h1>
+    <h1 class="ui header">WORKOUT {{type}}</h1>
 
     <exercises-slider-in-workout></exercises-slider-in-workout>
     <h3 class="ui header">
@@ -58,7 +58,8 @@
     components: {SetsSelector, ExerciseSteps, ExercisesSliderInWorkout, Timer},
     data() {
       return {
-        workoutState: workoutStore.state
+        workoutState: workoutStore.state,
+        type: this.$route.params.type
       }
     },
     beforeCreate() {
