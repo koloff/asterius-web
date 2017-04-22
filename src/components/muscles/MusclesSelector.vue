@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div class="muscles-selector">
+
+    <div v-show="false">{{selectedMuscles}} {{updateSelected}}</div>
+
     <div class="ui basic segment center aligned" style="padding: 0;">
 
       <div class="maps" style="margin-top: -40px">
@@ -9,11 +12,6 @@
           <i class="ui refresh icon"></i>
           Rotate
         </button>
-
-        <!--<button style="position: relative; top: 83px; left: 100px; margin-top: -70px; z-index: 999;"-->
-        <!--class="circular ui icon button grey massive inverted">-->
-        <!--<i class="icon refresh"></i>-->
-        <!--</button>-->
 
 
         <div>
@@ -103,13 +101,13 @@
             <area data-group-id="bicepsShortHead" title="bicepsShortHeadFrontRight" shape="poly"
                   coords="218,169.04000854492188,215,172.04000854492188,212,174.04000854492188,209,177.04000854492188,206,179.04000854492188,206,181.04000854492188,206,186.04000854492188,207,192.04000854492188,209,201.04000854492188,211,207.04000854492188,214,215.04000854492188,220,224.04000854492188,224,229.04000854492188,230,231.04000854492188,235,233.04000854492188,237,234.04000854492188,240,234.04000854492188,241,232.04000854492188,240,229.04000854492188,238,224.04000854492188,235,217.04000854492188,232,208.04000854492188,229,202.04000854492188,226,191.04000854492188,223,183.04000854492188,221,176.04000854492188"
             />
-            <area data-group-id="foreamsExtensors" title="foreamsExtensorsFrontLeft" shape="poly"
+            <area data-group-id="forearmsExtensors" title="forearmsExtensorsFrontLeft" shape="poly"
                   coords="17,250.04000854492188,16,256.0400085449219,14,265.0400085449219,14,270.0400085449219,14,275.0400085449219,14,279.0400085449219,16,288.0400085449219,18,294.0400085449219,22,299.0400085449219,28,306.0400085449219,32,311.0400085449219,36,314.0400085449219,35,310.0400085449219,32,307.0400085449219,30,293.0400085449219,30,287.0400085449219,29,277.0400085449219,28,270.0400085449219,24,263.0400085449219,21,257.0400085449219"
             />
-            <area data-group-id="foreamsFlexors" title="foreamsFlexorsFrontRight" shape="poly"
+            <area data-group-id="forearmsFlexors" title="forearmsFlexorsFrontRight" shape="poly"
                   coords="47,225.04000854492188,47,229.04000854492188,46,238.04000854492188,45,244.04000854492188,44,252.04000854492188,43,257.0400085449219,40,262.0400085449219,36,267.0400085449219,35,271.0400085449219,34,277.0400085449219,34,280.0400085449219,34,290.0400085449219,33,296.0400085449219,33,301.0400085449219,36,299.0400085449219,37,295.0400085449219,39,287.0400085449219,41,283.0400085449219,44,279.0400085449219,48,276.0400085449219,51,272.0400085449219,55,265.0400085449219,58,255.04000854492188,59,249.04000854492188,59,242.04000854492188,60,238.04000854492188,60,235.04000854492188,61,232.04000854492188,63,227.04000854492188,62,225.04000854492188,57,225.04000854492188,53,226.04000854492188"
             />
-            <area data-group-id="foreamsExtensors" title="foreamsExtensorsFrontRight" shape="poly"
+            <area data-group-id="forearmsExtensors" title="forearmsExtensorsFrontRight" shape="poly"
                   coords="272,251.04000854492188,270,260.0400085449219,266,268.0400085449219,262,276.0400085449219,260,281.0400085449219,258,285.0400085449219,258,290.0400085449219,257,297.0400085449219,256,302.0400085449219,254,309.0400085449219,253,312.0400085449219,259,309.0400085449219,262,308.0400085449219,267,304.0400085449219,270,299.0400085449219,272,293.0400085449219,274,280.0400085449219,275,270.0400085449219,275,260.03997802734375"
             />
             <area data-group-id="legsQuadriceps" title="legsQuadricepsLeft" shape="poly"
@@ -118,7 +116,7 @@
             <area data-group-id="legsQuadriceps" title="legsQuadricepsRight" shape="poly"
                   coords="186,286.03997802734375,183,293.03997802734375,180,298.03997802734375,179,302.03997802734375,177,306.03997802734375,174,310.03997802734375,171,316.03997802734375,169,320.03997802734375,167,324.03997802734375,166,328.03997802734375,165,333.03997802734375,166,342.03997802734375,163,346.03997802734375,161,351.03997802734375,159,357.03997802734375,157,362.03997802734375,154,374.03997802734375,152,381.03997802734375,150,390.03997802734375,151,398.03997802734375,151,404.03997802734375,151,412.03997802734375,154,419.03997802734375,158,425.03997802734375,162,430.03997802734375,168,434.03997802734375,172,436.03997802734375,175,432.03997802734375,178,427.03997802734375,179,424.03997802734375,182,420.03997802734375,183,414.03997802734375,185,407.03997802734375,185,401.03997802734375,184,396.03997802734375,188,396.03997802734375,189,400.03997802734375,189,408.03997802734375,189,413.03997802734375,190,421.03997802734375,193,424.03997802734375,199,426.03997802734375,207,419.03997802734375,213,408.03997802734375,217,394.03997802734375,218,380.03997802734375,218,371.03997802734375,216,356.03997802734375,213,346.03997802734375,209,339.03997802734375,207,335.03997802734375,204,329.03997802734375,201,324.03997802734375,199,319.03997802734375,197,314.03997802734375,197,310.03997802734375,195,305.03997802734375,190,297.03997802734375,188,290.03997802734375"
             />
-            <area data-group-id="foreamsFlexors" title="foreamsFlexorsFrontRight" shape="poly"
+            <area data-group-id="forearmsFlexors" title="forearmsFlexorsFrontRight" shape="poly"
                   coords="228,231.03997802734375,230,238.03997802734375,231,242.03997802734375,230,248.03997802734375,229,253.03997802734375,229,258.03997802734375,231,265.03997802734375,235,270.03997802734375,239,272.03997802734375,242,276.03997802734375,244,280.03997802734375,246,289.03997802734375,252,303.03997802734375,252,295.03997802734375,252,289.03997802734375,251,282.03997802734375,249,275.03997802734375,245,267.03997802734375,243,261.03997802734375,243,254.03997802734375,242,245.03997802734375,242,241.03997802734375,239,239.03997802734375,237,234.03997802734375,233,233.03997802734375"
             />
             <area data-group-id="legsGlutes" title="legsGlutesFrontLeft" shape="poly"
@@ -149,10 +147,7 @@
 
 
       </div>
-
-
     </div>
-
 
   </div>
 </template>
@@ -239,13 +234,13 @@
           },
           {
             selected: false,
-            name: 'foreamsFlexors',
-            areas: ['foreamsFlexorsFrontLeft', 'foreamsFlexorsFrontRight', 'foreamsFlexorsBackLeft', 'foreamsFlexorsBackRight']
+            name: 'forearmsFlexors',
+            areas: ['forearmsFlexorsFrontLeft', 'forearmsFlexorsFrontRight', 'forearmsFlexorsBackLeft', 'forearmsFlexorsBackRight']
           },
           {
             selected: false,
-            name: 'foreamsExtensors',
-            areas: ['foreamsExtensorsFrontLeft', 'foreamsExtensorsFrontRight', 'foreamsExtensorsBackLeft', 'foreamsExtensorsBackRight']
+            name: 'forearmsExtensors',
+            areas: ['forearmsExtensorsFrontLeft', 'forearmsExtensorsFrontRight', 'forearmsExtensorsBackLeft', 'forearmsExtensorsBackRight']
           },
           {
             selected: false,
@@ -302,35 +297,28 @@
         }
       })
         .data('plugin_mapify');
-
-      this.$nextTick(() => {
-        this.setSelected();
-      })
     },
     methods: {
-      setSelected() {
-        this.selectedMuscles.forEach((muscle) => {
-          this.switchSelectedRegion(muscle);
-        });
-      },
-
-      switchSelectedRegion(regionName) {
-        let regionToFind = _.find(this.regions, {name: regionName});
-        regionToFind.selected = !regionToFind.selected;
-        this.highlightSelectedAreas();
-
-        if (regionToFind.selected && (this.selectedMuscles.indexOf(regionToFind.name) < 0)) {
-          this.selectedMuscles.push(regionToFind.name);
-        } else if (!regionToFind.selected && this.selectedMuscles.indexOf(regionToFind.name) > -1) {
-          let index = this.selectedMuscles.indexOf(regionToFind.name);
-          this.selectedMuscles.splice(index, 1);
-        }
-      },
-
       getAreaRegion(areaName) {
         return _.find(this.regions, (region) => {
           return region.areas.indexOf(areaName) > -1;
         })
+      },
+
+      switchSelectedRegion(regionName) {
+        let region = _.find(this.regions, {name: regionName});
+        this.setRegion(regionName, !region.selected);
+      },
+
+      setRegion(regionName, value) {
+        let region = _.find(this.regions, {name: regionName});
+        region.selected = value;
+        if (value && (this.selectedMuscles.indexOf(regionName) < 0)) {
+          this.selectedMuscles.push(regionName);
+        } else if (!value && this.selectedMuscles.indexOf(regionName) > -1) {
+          let index = this.selectedMuscles.indexOf(regionName);
+          this.selectedMuscles.splice(index, 1);
+        }
       },
 
       highlightSelectedAreas() {
@@ -352,19 +340,25 @@
       },
 
     },
-    computed: {}
+    computed: {
+      updateSelected() {
+        let a = this.selectedMuscles;
+        this.$nextTick(() => {
+          this.selectedMuscles.forEach((muscleName) => {
+            this.setRegion(muscleName, true);
+          });
+
+          this.highlightSelectedAreas();
+        });
+      }
+    }
   }
 </script>
 
 <style>
 
 
-  img {
-    max-width: 100% !important;
-    height: auto;
-  }
-
-  svg {
+  .muscles-selector svg {
     margin-top: 4px !important;
   }
 
@@ -394,7 +388,7 @@
     fill: rgba(0, 0, 200, 0.3) !important;
   }
 
-  .selected[data-group-id="foreamsFlexors"] {
+  .selected[data-group-id="forearmsFlexors"] {
     fill: rgba(255, 100, 0, 0.4) !important;
   }
 
@@ -434,7 +428,7 @@
     fill: rgba(0, 200, 0, 0.3) !important;
   }
 
-  .selected[data-group-id="foreamsExtensors"] {
+  .selected[data-group-id="forearmsExtensors"] {
     fill: rgba(0, 200, 0, 0.3) !important;
   }
 

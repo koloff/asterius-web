@@ -5,7 +5,7 @@
     <exercises-slider-in-tweaker>
     </exercises-slider-in-tweaker>
 
-
+    
     <h4 class="ui header">Choose target muscles:</h4>
     <div class="ui segment secondary tweaker-muscles-container">
       <muscle-in-tweaker

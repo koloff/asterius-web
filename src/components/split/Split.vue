@@ -7,7 +7,7 @@
          v-for="(workout, type) in splitState.split"
          :class="{active: splitState.currentWorkout === type}"
          @click="viewWorkout(type)"
-      > Workout &nbsp;&nbsp; <strong> {{type}}</strong></a>
+      > Workout <strong> {{type}}</strong></a>
     </div>
 
     <tweaker></tweaker>

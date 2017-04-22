@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import * as http from '../http';
+import http from '../http/http';
 
 export default {
   state: {

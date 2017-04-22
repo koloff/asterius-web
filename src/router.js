@@ -13,27 +13,16 @@ export default new VueRouter({
       path: '/authenticate', component: require('./components/authenticate/AuthView.vue')
     },
     {
-      path: '/split', component: require('./components/profile/EditProfile.vue')
+      path: '/generate', component: require('./components/profile/UserParameters.vue')
     },
     {
-      path: '/parameters', component: require('./components/profile/EditProfile.vue')
+      path: '/split', component: require('./components/split/Split.vue')
     },
     {
-      path: '/muscles', component: require('./components/profile/EditProfile.vue')
-    },
-
-    {
-      path: '/program', component: require('./components/program/Program.vue')
+      path: '/train', component: require('./components/program/Program.vue')
     },
     {
       path: '/workout/:type', component: require('./components/workout/Workout.vue')
     },
-    // {
-    //   path: '/program/:week/:day', component: require('./components/workout/WorkoutDetails.vue')
-    // },
-    // {
-    //   path: '/experiment', component: require('./components/Experiment.vue')
-    // },
-
   ]
 });

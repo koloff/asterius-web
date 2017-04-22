@@ -11,19 +11,16 @@
         <!--PROGRESS-->
       <!--</a>-->
       <div class="ui dropdown item">
-        GENERATE
+        <i class="ui icon settings calendar"></i>
+        SPLIT
         <div class="menu">
-          <router-link to="/parameters" tag="a" class="item">
+          <router-link to="/generate" tag="a" class="item">
             <i class="ui icon child"></i>
-            PARAMETERS
+            GENERATE NEW
           </router-link>
-          <router-link to="/muscles" tag="a" class="item" :class="{disabled: !userParametersState.hasParameters}">
-            <i class="ui icon star"></i>
-            MUSCLES
-          </router-link>
-          <router-link to="/tweaker" tag="a" class="item" :class="{disabled: !userParametersState.hasParameters}">
+          <router-link to="/split" tag="a" class="item" :class="{disabled: !userParametersState.hasParameters}">
             <i class="ui icon options"></i>
-            TWEAKER
+            EDIT CURRENT
           </router-link>
         </div>
         <i class="dropdown icon"></i>

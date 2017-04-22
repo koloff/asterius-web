@@ -8,7 +8,7 @@ body {
     position: fixed;
     top: 0;
     z-index: 999;
-    border-bottom: 1px solid rgba(255,255,255, 0.5) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
     border-radius: 0 !important;
 }
 
@@ -18,7 +18,6 @@ body {
     padding-top: 55px;
     min-height: 100vh;
     flex-direction: column;
-
 }
 
 .app-content {
@@ -27,7 +26,7 @@ body {
 
 .bottom-footer {
     margin-top: 15px !important;
-    border-top: 1px solid rgba(255,255,255, 0.5) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.5) !important;
 }
 
 .divider.small {
@@ -61,7 +60,6 @@ body {
     text-align: center;
 }
 
-
 .exercises-slider-container {
     overflow: auto;
     padding: 10px;
@@ -72,6 +70,7 @@ body {
     display: inline-block;
     margin-right: 10px !important;
 }
+
 /*
 COMMENTED RESPONSIVE STEPS TODO FIX
 https://github.com/Semantic-Org/Semantic-UI/pull/3714

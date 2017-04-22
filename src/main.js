@@ -31,32 +31,27 @@ import router from './router';
 // import filters
 import './filters/index';
 
-// init stores
-import rootStore from './store/root';
+// init database
+import database from './database';
+database.init();
+
+//init auth store
 import authStore from './store/auth';
-import musclesStore from './store/muscles';
-import exercisesStore from './store/exercises';
+authStore.init();
 
-(async() => {
-  try {
-    await authStore.init();
-    // init the app
-    let vue = new Vue({
-      router,
-      el: '#app',
-      render: h => h(Root)
-    });
+// init the app
+let vue = new Vue({
+  router,
+  el: '#app',
+  render: h => h(Root)
+});
 
-    window.Vue = Vue;
-    window.vue = vue;
-  } catch (err) {
-    console.error(err);
-  }
-})();
+window.Vue = Vue;
+window.vue = vue;
 
-import firebase from 'firebase';
 
 // TEST DATA
+import firebase from 'firebase';
 function seedFirebase() {
   let db = firebase.database().ref();
 

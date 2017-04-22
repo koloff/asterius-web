@@ -83,7 +83,7 @@
       let ctx = document.getElementById(this.elementId);
       let chart = new Chart(ctx, {
         type: 'doughnut',
-        responsive: true,
+        responsive: false,
         data: {
           labels: labels,
           datasets: [

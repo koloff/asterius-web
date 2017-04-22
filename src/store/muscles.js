@@ -1,4 +1,4 @@
-import * as http from '../http';
+import http from '../http/http';
 
 export default {
   state: {
@@ -7,10 +7,10 @@ export default {
 
   async init() {
     if (!this.state.mc) {
-      (async () => {
+      (async() => {
         try {
           this.state.mc = await http.get('/muscles/collection');
-        } catch(err) {
+        } catch (err) {
           console.error(err);
         }
       })();

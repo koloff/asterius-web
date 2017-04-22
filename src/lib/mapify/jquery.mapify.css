@@ -40,7 +40,7 @@ SOFTWARE.
     -ms-user-select: none
 }
 
-.mapify-GPU, .mapify-holder * {
+.mapify-holder * {
     -ms-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0)
 }

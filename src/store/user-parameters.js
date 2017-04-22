@@ -1,79 +1,66 @@
 import _ from 'lodash';
-
+import database from '../database';
 import authStore from './auth';
-import firebase from 'firebase';
-
+import rootStore from './root';
 
 export default {
   state: {
     hasParameters: false,
     userParameters: {
       measuringUnit: 'metric',
+      age: null,
       weight: null,
       height: null,
       experience: '',
-      days: ''
-    }
+      days: '',
+      preferredMuscles: []
+    },
   },
 
   setDefaultState() {
     this.state = {
-      hasParameters: false,
+      hasUserParameters: false,
       userParameters: {
         measuringUnit: 'metric',
+        age: null,
         weight: null,
         height: null,
         experience: '',
-        days: ''
-      }
+        days: '',
+        preferredMuscles: []
+      },
     };
   },
 
-  async init() {
-    return new Promise((resolve, reject) => {
-      console.log(authStore.state.uid);
-      this.userParametersRef = firebase.database().ref().child(`userParameters`).child(authStore.state.uid);
+  init() {
+    database.watch(`/userParameters/${authStore.state.uid}`, (snap) => {
+      let val = snap.val();
+      console.log(val);
+      if (val) {
+        this.state.hasParameters = true;
 
-      this.userParametersRef.on('value', (snap) => {
-        let value = snap.val();
-        this.state.hasParameters = !!value;
-        console.log(this);
-        console.log(this.state.hasParameters);
-
-        if (this.state.hasParameters) {
-          // set the state
-          this.state.userParameters = value;
-        }
-
-        return resolve();
-      })
+        this.state.userParameters.measuringUnit = val.measuringUnit;
+        this.state.userParameters.age = val.age;
+        this.state.userParameters.weight = val.weight;
+        this.state.userParameters.height = val.height;
+        this.state.userParameters.experience = val.experience;
+        this.state.userParameters.days = val.days;
+        this.state.userParameters.preferredMuscles = val.preferredMuscles || [];
+      }
     });
   },
 
   async updateParameters() {
-    return new Promise((resolve, reject) => {
+    console.log('updating');
+    if (this.state.userParameters.weight === null ||
+      this.state.userParameters.height === null || !this.state.userParameters.days || !this.state.userParameters.experience) {
+      return Promise.reject(false);
+    }
+
+    this.state.userParameters.weight = parseFloat(this.state.userParameters.weight);
+    this.state.userParameters.height = parseFloat(this.state.userParameters.height);
 
 
-      if (this.state.userParameters.weight === null || this.state.userParameters.height === null || !this.state.userParameters.days || !this.state.userParameters.experience) {
-        return reject(false);
-      }
-
-      this.state.userParameters.weight = parseFloat(this.state.userParameters.weight);
-      this.state.userParameters.height = parseFloat(this.state.userParameters.height);
-
-
-      let options = _.clone(this.state.userParameters);
-      delete options.hasParameters;
-
-      this.userParametersRef.set(options)
-        .then(() => {
-          this.state.hasParameters = true;
-          return resolve(true);
-        })
-        .catch((err) => {
-          return reject(err);
-        })
-    })
-
+    return database.save(`/userParameters/${authStore.state.uid}`, this.state.userParameters);
   }
 }

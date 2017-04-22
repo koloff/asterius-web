@@ -1,7 +1,7 @@
 import request from 'superagent';
 import authStore from '../store/auth';
 
-export async function get(path, query) {
+async function get(path, query) {
   return new Promise((resolve, reject) => {
     request
       .get(`${apiUrl}/api${path}`)
@@ -16,7 +16,7 @@ export async function get(path, query) {
   });
 }
 
-export async function getAuthorized(path, query) {
+async function getAuthorized(path, query) {
   console.log('requestign');
   return new Promise((resolve, reject) => {
     let userIdToken = authStore.state.idToken;
@@ -37,3 +37,5 @@ export async function getAuthorized(path, query) {
       });
   })
 }
+
+export default {get, getAuthorized};

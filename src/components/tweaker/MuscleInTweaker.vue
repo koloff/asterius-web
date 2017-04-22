@@ -1,4 +1,3 @@
-<script src="../../store/split.js"></script>
 <template>
   <div class="ui segment muscle-in-tweaker"
        @click="switchMuscle()"

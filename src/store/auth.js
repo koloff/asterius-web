@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import firebase from 'firebase';
-
 import rootStore from './root';
 
 export default {
@@ -14,29 +13,18 @@ export default {
     this.state.idToken = '';
   },
 
-  async init(){
-    return new Promise((resolve, reject) => {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          firebase.auth().currentUser.getToken(/* forceRefresh */ true).then(async(idToken) => {
-            this.state.uid = user.uid;
-            this.state.idToken = idToken;
-            await Promise.all([
-              rootStore.initCollectionStores(),
-              rootStore.initProfileRelatedStores(),
-            ]);
-            return resolve();
-          }).catch((error) => {
-            console.log(error);
-            this.setDefaultState();
-            return reject(error);
-          });
-        } else {
-          this.setDefaultState();
-          return resolve();
-        }
-      });
-    })
+  init(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        firebase.auth().currentUser.getToken(/* forceRefresh */ true).then(async(idToken) => {
+          this.state.uid = user.uid;
+          this.state.idToken = idToken;
+
+          rootStore.initProfileRelatedStores();
+        }).catch((error) => {
+        });
+      }
+    });
   },
 
 
@@ -58,7 +46,7 @@ export default {
     });
   },
 
-  async  register(email, password){
+  async register(email, password){
     return new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((user) => {

@@ -1,8 +1,11 @@
 <template>
   <div>
-    <div :class="{active: rootState.loading}" class="ui dimmer page">
-      <div class="ui text loader">Loading</div>
+    <div class="ui page dimmer" :class="{active: rootState.loading}">
+      <div class="content">
+        <div class="ui text loader">Loading</div>
+      </div>
     </div>
+
     <div class="app">
       <header-menu></header-menu>
 
