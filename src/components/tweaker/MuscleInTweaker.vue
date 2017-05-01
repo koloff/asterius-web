@@ -1,31 +1,22 @@
 <template>
-  <div class="ui segment muscle-in-tweaker"
+  <div class="muscle-in-tweaker"
        @click="switchMuscle()"
-       :class="{secondary: !muscle.selected}"
+       :class=""
        :style="{border: getBorderStyle()}"
-       style="padding: 0 7px 0 0;"
   >
 
-    <div class="ui grid equal width">
+    <img class="ui image rounded left floated muscle-in-tweaker-image" :src="muscleImagesUrl + muscle.key +'.jpg'"/>
 
-      <div class="ui column" style="max-width:100px; padding-right: 0">
-        <img class="ui image rounded muscle-in-tweaker-image" :src="muscleImagesUrl + muscle.key +'.jpg'"/>
-      </div>
-
-      <div class="ui column middle aligned">
-
-        <div class="ui progress small" :class="barColor" :data-percent="mrvPercentage" style="margin-bottom: 0">
-          <div class="bar"></div>
-        </div>
-        <h4 class="ui header" style="margin-top: 2px">
-          <div class="content">
-            {{muscle.info.broName | uppercase}}
-            <div class="sub header"><i>{{muscle.info.name}}</i></div>
-          </div>
-        </h4>
-
-      </div>
+    <div class="ui progress small inverted" :class="barColor" :data-percent="mrvPercentage" style="margin: 0">
+      <div class="bar"></div>
     </div>
+    <h4 class="ui header inverted" style="margin-top: 2px">
+      <div class="content">
+        {{muscle.selected}}
+        {{muscle.info.broName | uppercase}}
+        <div class="sub header"><i>{{muscle.info.name}}</i></div>
+      </div>
+    </h4>
 
 
   </div>
@@ -34,15 +25,17 @@
 <script>
   import tweakerStore from '../../store/tweaker';
   export default {
-    name: 'SelectedVolumeBar',
+    name: 'MuscleInTweaker',
     props: ['muscle'],
     data() {
       return {
         barColor: '',
-        muscleImagesUrl: window.apiUrl + '/static/muscles-images/'
+        muscleImagesUrl: window.apiUrl + '/static/muscles-images/',
+        tweakerState: tweakerStore.state
       }
     },
     mounted() {
+      console.log(this.muscle);
       $(this.$el).find('.progress').progress({
         showActivity: false,
         limitValues: false
@@ -70,15 +63,13 @@
     },
     methods: {
       switchMuscle() {
-        console.log('switch muscle');
-        console.log(this.muscle);
-        this.muscle.selected = !this.muscle.selected;
+        tweakerStore.switchMuscle(this.muscle.key);
       },
       getBorderStyle() {
-        if (this.muscle.selected) {
-          return `3px solid ${this.muscle.info.color}`
+        if (this.tweakerState.selectedMuscles.indexOf(this.muscle.key) >= 0) {
+          return `2px solid ${this.muscle.info.color}`
         } else {
-          return ``;
+          return `2px solid #444`;
         }
       }
     }
@@ -87,12 +78,23 @@
 
 <style>
 
+  .muscle-in-tweaker {
+    position: relative;
+    margin: 23px 5px;
+    padding: 5px 5px 5px 80px !important;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
+  }
+
   .muscle-in-tweaker:hover {
     cursor: pointer;
   }
 
   .muscle-in-tweaker-image {
-    max-width: 100px;
-    max-height: 100px;
+    position: absolute !important;
+    left: -5px;
+    top: -7px;
+    width: 75px;
+    height: 75px;
   }
 </style>

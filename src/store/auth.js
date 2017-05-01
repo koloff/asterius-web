@@ -13,18 +13,24 @@ export default {
     this.state.idToken = '';
   },
 
-  init(){
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        firebase.auth().currentUser.getToken(/* forceRefresh */ true).then(async(idToken) => {
-          this.state.uid = user.uid;
-          this.state.idToken = idToken;
+  async init(){
+    return new Promise((resolve, reject) => {
+      firebase.auth().onAuthStateChanged(async (user) => {
+        if (user) {
+          await rootStore.initCollectionStores();
+          firebase.auth().currentUser.getToken(/* forceRefresh */ true).then((idToken) => {
+            this.state.uid = user.uid;
+            this.state.idToken = idToken;
+            return resolve(true);
+          }).catch((error) => {
+            return reject(false);
+          });
+        } else {
+          return resolve(false);
+        }
+      });
 
-          rootStore.initProfileRelatedStores();
-        }).catch((error) => {
-        });
-      }
-    });
+    })
   },
 
 

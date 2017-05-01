@@ -1,16 +1,16 @@
 import _ from 'lodash';
 import database from '../database';
 import authStore from './auth';
-import rootStore from './root';
 
 export default {
   state: {
     hasParameters: false,
     userParameters: {
+      gender: '',
       measuringUnit: 'metric',
-      age: null,
-      weight: null,
-      height: null,
+      age: 0,
+      weight: 0,
+      height: 0,
       experience: '',
       days: '',
       preferredMuscles: []
@@ -21,10 +21,11 @@ export default {
     this.state = {
       hasUserParameters: false,
       userParameters: {
+        gender: '',
         measuringUnit: 'metric',
-        age: null,
-        weight: null,
-        height: null,
+        age: 0,
+        weight: 0,
+        height: 0,
         experience: '',
         days: '',
         preferredMuscles: []
@@ -39,6 +40,7 @@ export default {
       if (val) {
         this.state.hasParameters = true;
 
+        this.state.userParameters.gender = val.gender;
         this.state.userParameters.measuringUnit = val.measuringUnit;
         this.state.userParameters.age = val.age;
         this.state.userParameters.weight = val.weight;
@@ -52,11 +54,12 @@ export default {
 
   async updateParameters() {
     console.log('updating');
-    if (this.state.userParameters.weight === null ||
-      this.state.userParameters.height === null || !this.state.userParameters.days || !this.state.userParameters.experience) {
+    if (!this.state.userParameters.gender
+      || !this.state.userParameters.weight || !this.state.userParameters.height
+      || !this.state.userParameters.days || !this.state.userParameters.experience) {
       return Promise.reject(false);
     }
-
+    this.state.userParameters.age = parseFloat(this.state.userParameters.age);
     this.state.userParameters.weight = parseFloat(this.state.userParameters.weight);
     this.state.userParameters.height = parseFloat(this.state.userParameters.height);
 

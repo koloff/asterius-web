@@ -8,7 +8,7 @@
       <div class="maps" style="margin-top: -40px">
 
 
-        <button class="ui button basic icon" style="position: relative; top: 83px; left: 100px; z-index: 999;">
+        <button class="ui button basic icon inverted" style="position: relative; top: 83px; left: 100px; z-index: 999;">
           <i class="ui refresh icon"></i>
           Rotate
         </button>
@@ -284,19 +284,28 @@
         onClick: (area) => {
           let region = this.getAreaRegion(area);
           this.switchSelectedRegion(region.name);
+        },
+        popOver: {
+          content: function(zone){
+            return "Members";
+          },
+          delay: 0.7,
+          margin: "15px",
+          height: "130px",
+          width: "260px"
         }
       })
         .data('plugin_mapify');
 
-      this.mapBack = $(`.map-back`).mapify({
-        hoverClass: "selected",
-        instantClickOnMobile: true,
-        onClick: (area) => {
-          let region = this.getAreaRegion(area);
-          this.switchSelectedRegion(region.name);
-        }
-      })
-        .data('plugin_mapify');
+//      this.mapBack = $(`.map-back`).mapify({
+//        hoverClass: "selected",
+//        instantClickOnMobile: true,
+//        onClick: (area) => {
+//          let region = this.getAreaRegion(area);
+//          this.switchSelectedRegion(region.name);
+//        }
+//      })
+//        .data('plugin_mapify');
     },
     methods: {
       getAreaRegion(areaName) {

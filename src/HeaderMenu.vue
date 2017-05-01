@@ -33,7 +33,7 @@
     </div>
 
     <div class="ui container" v-show="!authState.uid">
-      <router-link to="/authenticate" tag="a" class="item">
+      <router-link to="/login" tag="a" class="item">
         <i class="ui icon sign out"></i>
         LOGIN
       </router-link>
@@ -63,7 +63,7 @@
       logout() {
         authStore.logout();
 
-        this.$router.push('/authenticate');
+        this.$router.push('/login');
         notifier('success', 'You logged out!')
       }
     },

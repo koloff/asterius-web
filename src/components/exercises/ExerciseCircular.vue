@@ -21,11 +21,11 @@
 
 
             <div class="exercise-header">
-              <h5 class="ui header">{{exercise.info.name | uppercase}}</h5>
+              <h5 class="ui header inverted">{{exercise.info.name | uppercase}}</h5>
             </div>
 
             <div class="exercise-statistics">
-              <div class="ui statistic small">
+              <div class="ui statistic inverted small">
                 <div class="value">
                   {{setsCount}}
                 </div>
@@ -121,6 +121,7 @@
     display: inline-block;
     padding: 4px !important;
     margin: 0 !important;
+    background: none !important;
   }
 
   .exercise-canvas {
@@ -164,7 +165,7 @@
   }
 
   .exercise-statistics {
-    border-left: 1px solid rgba(0, 0, 0, 0.4);
+    border-left: 1px solid rgba(255, 255, 255, 0.9);
     padding-left: 5px;
     margin: auto;
   }

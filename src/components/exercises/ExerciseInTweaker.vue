@@ -1,22 +1,9 @@
 <template>
   <exercise-circular
     :exercise-key="exerciseKey"
-    :sets-count="setsCount"
+    :sets-count="0"
   >
-    <div class="ui mini basic icon buttons exercise-sets-buttons">
-      <button
-        class="ui button"
-        @click="increaseSets()"
-      >
-        <i class="plus icon"></i>
-      </button>
-      <button
-        class="ui button"
-        @click="reduceSets()">
-        <i class="minus icon"></i>
-      </button>
-    </div>
-
+    <button class="ui tiny inverted button exercise-add-button">Add</button>
 
   </exercise-circular>
 </template>
@@ -34,11 +21,7 @@
       }
     },
     components: {ExerciseCircular},
-    computed: {
-      setsCount() {
-        return tweakerStore.getExercise(this.exerciseKey).sets;
-      }
-    },
+    computed: {},
     methods: {
       increaseSets() {
         tweakerStore.increaseExerciseSets(this.exerciseKey);
@@ -51,14 +34,12 @@
 </script>
 
 <style>
-  .exercise-sets-buttons {
+  .exercise-add-button {
+    padding: 5px !important;
+    margin-bottom: 5px !important;
     position: absolute;
     z-index: 999;
     bottom: 17%;
   }
 
-  .exercise-sets-buttons .button {
-    text-align: center !important;
-    padding: 6px 6px 6px 6px !important;
-  }
 </style>

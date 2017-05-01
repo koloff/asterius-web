@@ -5,10 +5,10 @@
       <div class="bar"></div>
     </div>
     <h5 class="ui header" style="margin-top: 2px">
-      <img :src="muscle.image" />
+      <!--<img :src="muscle.image" />-->
       <div class="content">
-        {{muscle.broName}}
-        <div class="sub header"><i>{{muscle.name}}</i></div>
+        {{muscle.info.broName}}
+        <div class="sub header"><i>{{muscle.info.name}}</i></div>
       </div>
     </h5>
 

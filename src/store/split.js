@@ -1,6 +1,7 @@
 import _ from 'lodash';
+import database from '../database';
 import authStore from './auth';
-import firebase from 'firebase';
+import tweakerStore from './tweaker';
 
 
 export default {
@@ -19,31 +20,23 @@ export default {
 
   async init() {
     return new Promise((resolve, reject) => {
-      this.splitRef = firebase.database().ref().child(`split`).child(authStore.state.uid);
-      this.splitRef.on('value', (snap) => {
-        // set the state
-        this.state.split = snap.val();
-        return resolve();
-      })
-    })
-  },
-
-  async updateSplit() {
-    return new Promise((resolve, reject) => {
-
-      this.splitRef.set(this.state.split)
-        .then(() => {
+      database.watch(`/split/${authStore.state.uid}`, (snap) => {
+        let val = snap.val();
+        if (val) {
+          this.state.split = val;
+          tweakerStore.init(this.state.split[this.state.currentWorkout]);
           return resolve(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          return reject(err);
-        })
+        }
+      });
     })
   },
 
   setCurrentWorkout(type) {
     this.state.currentWorkout = type;
-  }
+  },
+
+  async updateSplit() {
+    return database.save(`/split/${authStore.state.uid}`, this.state.split);
+  },
 
 }

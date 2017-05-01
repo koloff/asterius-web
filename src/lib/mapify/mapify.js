@@ -359,7 +359,7 @@
     }
 
     this.scrollParent
-      // .addClass('mapify-GPU')
+      .addClass('mapify-GPU')
       .bind('scroll.mapify', function() { // on scrollStop
         if (isMobile) {
           _this.zones.removeClass('mapify-clickable mapify-hilightable');

@@ -5,10 +5,13 @@ import Root from './Root.vue';
 import 'semantic-ui-css/semantic.css';
 import 'semantic-ui-css/semantic';
 import 'animate.css';
+
 import './style/style.css';
 
 import './lib/mapify/mapify';
 import './lib/mapify/jquery.mapify.css';
+
+import './utils/scrollable';
 
 // env related
 if (process.env.NODE_ENV !== 'production') {
@@ -17,8 +20,6 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   window.apiUrl = 'https://asterius-a8808.appspot.com';
 }
-
-
 // load firebase
 require('./config/firebase');
 
@@ -37,17 +38,22 @@ database.init();
 
 //init auth store
 import authStore from './store/auth';
-authStore.init();
 
-// init the app
-let vue = new Vue({
-  router,
-  el: '#app',
-  render: h => h(Root)
-});
+(async() => {
+  await authStore.init();
+  // init the app
+  let vue = new Vue({
+    router,
+    el: '#app',
+    render: h => h(Root)
+  });
 
-window.Vue = Vue;
-window.vue = vue;
+  window.Vue = Vue;
+  window.vue = vue;
+
+  // load directives
+  require('./utils/sortable');
+})();
 
 
 // TEST DATA
