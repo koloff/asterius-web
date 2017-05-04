@@ -1,9 +1,14 @@
 <template>
   <exercise-circular
     :exercise-key="exerciseKey"
-    :sets-count="0"
+    :sets-count="workoutExercise ? workoutExercise.sets : 0"
   >
-    <button class="ui tiny inverted button exercise-add-button">Add</button>
+    <button class="ui tiny inverted button exercise-add-button"
+            @click="addExercise()"
+            :class="{disabled: workoutExercise}"
+    >
+      {{workoutExercise ? 'Added' : 'Add'}}
+    </button>
 
   </exercise-circular>
 </template>
@@ -21,13 +26,15 @@
       }
     },
     components: {ExerciseCircular},
-    computed: {},
+    computed: {
+      workoutExercise() {
+        console.log(this.tweakerState);
+        return tweakerStore.getWorkoutExercise(this.exerciseKey);
+      }
+    },
     methods: {
-      increaseSets() {
-        tweakerStore.increaseExerciseSets(this.exerciseKey);
-      },
-      reduceSets() {
-        tweakerStore.reduceExerciseSets(this.exerciseKey);
+      addExercise() {
+        tweakerStore.addExercise(this.exerciseKey);
       }
     }
   }

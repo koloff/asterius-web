@@ -33,23 +33,28 @@ export default {
     };
   },
 
-  init() {
-    database.watch(`/userParameters/${authStore.state.uid}`, (snap) => {
-      let val = snap.val();
-      console.log(val);
-      if (val) {
-        this.state.hasParameters = true;
+  async init() {
+    return new Promise((resolve, reject) => {
+      database.watch(`/userParameters/${authStore.state.uid}`, (snap) => {
+        let val = snap.val();
+        if (val) {
+          this.state.hasParameters = true;
 
-        this.state.userParameters.gender = val.gender;
-        this.state.userParameters.measuringUnit = val.measuringUnit;
-        this.state.userParameters.age = val.age;
-        this.state.userParameters.weight = val.weight;
-        this.state.userParameters.height = val.height;
-        this.state.userParameters.experience = val.experience;
-        this.state.userParameters.days = val.days;
-        this.state.userParameters.preferredMuscles = val.preferredMuscles || [];
-      }
-    });
+          this.state.userParameters.gender = val.gender;
+          this.state.userParameters.measuringUnit = val.measuringUnit;
+          this.state.userParameters.age = val.age;
+          this.state.userParameters.weight = val.weight;
+          this.state.userParameters.height = val.height;
+          this.state.userParameters.experience = val.experience;
+          this.state.userParameters.days = val.days;
+          this.state.userParameters.preferredMuscles = val.preferredMuscles || [];
+
+          return resolve(true);
+        } else {
+          return reject(false);
+        }
+      });
+    })
   },
 
   async updateParameters() {

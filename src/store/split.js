@@ -33,6 +33,7 @@ export default {
 
   setCurrentWorkout(type) {
     this.state.currentWorkout = type;
+    tweakerStore.init(this.state.split[this.state.currentWorkout]);
   },
 
   async updateSplit() {

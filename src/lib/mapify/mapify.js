@@ -256,7 +256,7 @@
         }
 
         if (_this.options.onClick) {
-          _this.options.onClick($(e.target).attr('data-title'));
+          _this.options.onClick($(e.target).attr('data-title'), $(e.target).attr('data-group-id'));
         }
       })
 

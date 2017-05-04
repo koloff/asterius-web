@@ -16,10 +16,6 @@ export default {
     ])
   },
 
-  initProfileRelatedStores(){
-    userParametersStore.init();
-    splitStore.init();
-  },
 
   // resetProfileRelatedStores() {
   //   userParametersStore.setDefaultState();

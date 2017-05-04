@@ -48,13 +48,30 @@ export default {
     }
   },
 
-  increaseExerciseSets(exKey) {
 
+  addExercise(exKey) {
+    if (!this.getWorkoutExercise(exKey)) {
+      this.state.workout.push({key: exKey, sets: 3});
+    }
+  },
+
+  getWorkoutExercise(exKey) {
+    return _.find(this.state.workout, {key: exKey});
   },
 
   reduceExerciseSets(exKey) {
-
+    if (this.getWorkoutExercise(exKey).sets <= 1) {
+      let index = this.state.workout.indexOf(this.getWorkoutExercise(exKey));
+      this.state.workout.splice(index, 1);
+    } else {
+      this.getWorkoutExercise(exKey).sets--;
+    }
   },
+
+  increaseExerciseSets(exKey) {
+    this.getWorkoutExercise(exKey).sets++;
+  },
+
 
   calculateMrvPercentage(muscle) {
     // get current volume from selected exercises and sets

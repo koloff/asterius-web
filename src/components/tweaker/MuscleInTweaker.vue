@@ -1,8 +1,8 @@
 <template>
   <div class="muscle-in-tweaker"
        @click="switchMuscle()"
-       :class=""
        :style="{border: getBorderStyle()}"
+       :data-key="muscle.key"
   >
 
     <img class="ui image rounded left floated muscle-in-tweaker-image" :src="muscleImagesUrl + muscle.key +'.jpg'"/>
@@ -23,7 +23,9 @@
 </template>
 
 <script>
+  import notifier from '../../utils/notifier';
   import tweakerStore from '../../store/tweaker';
+
   export default {
     name: 'MuscleInTweaker',
     props: ['muscle'],
@@ -35,7 +37,6 @@
       }
     },
     mounted() {
-      console.log(this.muscle);
       $(this.$el).find('.progress').progress({
         showActivity: false,
         limitValues: false
@@ -46,6 +47,7 @@
         let percentage = tweakerStore.calculateMrvPercentage(this.muscle);
         if (percentage >= 100) {
           $(this.$el).find('.progress').progress('set error');
+          notifier('warning', `You may overtrain the ${this.muscle.info.broName}`);
           return percentage;
         }
         if (percentage < 25) {
@@ -56,6 +58,7 @@
           this.barColor = 'green';
         } else if (percentage >= 90 && percentage < 100) {
           this.barColor = 'orange';
+          notifier('warning', `You may overtrain the ${this.muscle.info.broName}`);
         }
         $(this.$el).find('.progress').progress('set percent', percentage);
         return percentage;
