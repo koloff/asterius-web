@@ -61,7 +61,7 @@ SOFTWARE.
 
 .mapify-polygon {
     /*mod*/
-    transition: all .3s;
+    transition: fill .3s;
     fill: transparent;
     stroke: transparent;
     stroke-width: 0

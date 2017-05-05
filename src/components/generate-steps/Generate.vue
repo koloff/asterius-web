@@ -121,11 +121,6 @@
           PREFERRED MUSCLES
         </h4>
         <muscles-selector :selected-muscles="userParametersState.preferredMuscles"></muscles-selector>
-        <div v-if="selectedMuscles" style="margin-top: 5px" class="ui labels">
-          <div class="ui label" v-for="muscle in selectedMuscles">{{muscle.info.broName}}
-            <i class="delete icon" @click="labelMuscleRemoveClicked(muscle.key)"></i>
-          </div>
-        </div>
 
         <div class="ui divider hidden"></div>
         <button @click="save()" class="ui green big button fluid" style="margin-bottom: 10px">
@@ -143,7 +138,6 @@
   import http from '../../http/http';
   import notifier from '../../utils/notifier';
 
-  import musclesStore from '../../store/muscles';
   import rootStore from '../../store/root';
   import userParametersStore from '../../store/user-parameters';
   import MusclesSelector from '../muscles/MusclesSelector.vue';
@@ -165,6 +159,7 @@
     },
     methods: {
       async save() {
+        rootStore.setLoading(true);
         try {
           await userParametersStore.updateParameters();
           await http.getAuthorized('/algorithm/generate-split');
@@ -173,16 +168,7 @@
           console.log(err);
           notifier('error', 'Please provide valid data!');
         }
-      },
-      labelMuscleRemoveClicked(mKey) {
-        console.log(mKey);
-        let index = this.userParametersState.preferredMuscles.indexOf(mKey);
-        this.userParametersState.preferredMuscles.splice(index, 1);
-      }
-    },
-    computed: {
-      selectedMuscles() {
-        return this.userParametersState.preferredMuscles.map((mKey) => musclesStore.getMuscle(mKey));
+        rootStore.setLoading(false);
       }
     }
   }

@@ -37,7 +37,7 @@
           </h4>
           <div class="ui message inverted" v-show="!exercisesToShow.length">
 
-            <div v-if="selectedMuscles">
+            <div v-if="selectedMuscles.length">
               <h4 class="ui header inverted left aligned" style="margin-top: 10px">
                 Exercises that target the selected muscles at the same time are not available
               </h4>
@@ -141,7 +141,7 @@
         musclesState: musclesStore.state,
         exercisesState: exercisesStore.state,
         splitState: splitStore.state,
-        tweakerState: tweakerStore.state,
+        tweakerState: tweakerStore.state
       }
     },
     async beforeRouteEnter(to, from, next) {
@@ -155,6 +155,7 @@
       viewWorkout(type) {
         splitStore.setCurrentWorkout(type);
         console.log(type);
+        // todo fix for 1 and 2 workouts
         if (type === 'C' || type === 'B') {
           let $legsEl = $(`.muscle-in-tweaker[data-key='legsQuadriceps']`);
           $('.muscles-in-tweaker').scrollTo($legsEl, 300);

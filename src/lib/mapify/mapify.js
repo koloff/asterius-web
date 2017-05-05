@@ -49,10 +49,7 @@
       delay: 0.8,
       margin: '10px',
       width: false,
-      height: false,
-
-      //mod
-      onClick: null
+      height: false
     },
 
     onAreaHighlight: false,
@@ -63,7 +60,7 @@
 
   //region --- Internal Mapify Implementation ---
 
-  var iOS = /(iPad|iPhone|iPod|Android)/g.test(navigator.userAgent),
+  var iOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent),
     isMobile = iOS;
 
   Mapify.prototype._initPopOver = function() {
@@ -123,6 +120,7 @@
       this._mapWidth = parseInt($imageMap.attr('width'));
       this._mapHeight = parseInt($imageMap.attr('height'));
       if (!this._mapWidth || !this._mapHeight) {
+        window.alert('ERROR: The width and height attributes must be specified on your image.');
         return (false);
       }
 
@@ -174,12 +172,13 @@
     // store default pixel coordinates for later use
     $(zone).attr('data-coords-default', $(zone).attr('coords'));
 
-    //mod
-    // Prevent that little anoying bubble from
-    // poping up when the popover is activated
-    $(zone).removeAttr('alt')
-      .attr('data-title', $(zone).attr('title'))
-      .removeAttr('title');
+    if (this.isPopOverEnabled) {
+      // Prevent that little anoying bubble from
+      // poping up when the popover is activated
+      $(zone).removeAttr('alt')
+        .attr('data-title', $(zone).attr('title'))
+        .removeAttr('title');
+    }
 
     var coords = $(zone).attr('coords').split(',');
     for (var key in coords) { // convert the pixel coordinates to percentage
@@ -195,7 +194,7 @@
     polygon.className = 'mapify-polygon';
     polygon.setAttribute('fill', 'none');
 
-    //mod
+    // mod
     polygon.setAttribute('data-title', $(zone).attr('data-title'));
     polygon.setAttribute('data-group-id', $(zone).attr('data-group-id'));
 
@@ -240,7 +239,7 @@
           _this.isDragging = false;
           return;
         }
-        $(this).trigger('click');
+        // $(this).trigger('click');
         _this.zones.removeClass('mapify-clickable');
 
         _this.hasScrolled = false;
@@ -251,9 +250,9 @@
       .bind('click.mapify', function(e) {
         // Preventing the click event from being triggered by a human
         // The click event must be triggered on touchend for the fast-click
-        if (e.originalEvent && isMobile) {
-          return (false);
-        }
+        // if (e.originalEvent && isMobile) {
+        //   return (false);
+        // }
 
         if (_this.options.onClick) {
           _this.options.onClick($(e.target).attr('data-title'), $(e.target).attr('data-group-id'));
@@ -358,8 +357,8 @@
       this.scrollParent = $(window);
     }
 
+    // mod remove gpu
     this.scrollParent
-      .addClass('mapify-GPU')
       .bind('scroll.mapify', function() { // on scrollStop
         if (isMobile) {
           _this.zones.removeClass('mapify-clickable mapify-hilightable');
@@ -406,23 +405,21 @@
       });
   };
 
-  Mapify.prototype._drawHighlight = function(zone) {
+  Mapify.prototype._drawHighlight = function(zone, isRemap) {
     var _this = this,
-      groupIdValue = $(zone).data('group-id'),
-      hoverClass = $(zone).data('hover-class');
+      groupIdValue = $(zone).attr('data-group-id'),
+      hoverClass = $(zone).attr('data-hover-class'); // Use .attr instead of .data https://github.com/etienne-martin/Mapify/issues/27
 
-    // allow data setting to override hover class
-    hoverClass = hoverClass
-      ? hoverClass
-      : this.options.hoverClass;
+    // Combine hover classes
+    hoverClass = hoverClass ? this.options.hoverClass + " " + hoverClass : this.options.hoverClass;
 
     if (!groupIdValue) {
-      this._highlightSingleArea(zone, hoverClass);
+      this._highlightSingleArea(zone, hoverClass, isRemap);
     } else {
       // Highlight areas of the same map id which have the same groupId
-      //mod addback
+      // mod andSelf() -> addBack()
       $(zone).siblings('area[data-group-id=' + groupIdValue + ']').addBack().each(function() {
-        _this._highlightSingleArea(this, hoverClass);
+        _this._highlightSingleArea(this, hoverClass, isRemap);
       });
     }
 
@@ -432,7 +429,7 @@
     }
   };
 
-  Mapify.prototype._highlightSingleArea = function(zone, hoverClass) {
+  Mapify.prototype._highlightSingleArea = function(zone, hoverClass, isRemap) {
     var coords = $(zone).attr('data-coords').split(',');
     var zonePoints = '';
 
@@ -445,14 +442,12 @@
       }
     }
 
-
     var polygon = this.svgMap.find('polygon:eq(' + $(zone).index() + ')')[0];
     $(polygon)
       .attr('points', zonePoints)
       .attr('class', function(index, classNames) {
-
         var result = classNames;
-        if (!$(polygon).hasClass('mapify-hover')) {
+        if (!$(polygon).hasClass('mapify-hover') && !isRemap) {
           result += ' mapify-hover';
           if (hoverClass) {
             result += ' ' + hoverClass;
@@ -464,7 +459,7 @@
 
   Mapify.prototype._remapZones = function() {
     var _this = this;
-    this.zones.each(function() {
+    this.zones.each(function(index, zone) {
       var coords = $(this).attr('data-coords').split(',');
       for (var key in coords) { // Convert percentage coordinates back to pixel coordinates relative to the image size
         if (key % 2 == 0) {  // X
@@ -474,6 +469,9 @@
         }
       }
       $(this).attr('coords', coords.toString());
+
+      // mod
+      _this._drawHighlight(zone, true);
     });
   };
 
@@ -512,10 +510,10 @@
       $popOverArrow = this.popOverArrow;
 
     // remove current pop-over class if some specified
-    var currentCustomPopOverClass = $popOver.data('popOver-class');
+    var currentCustomPopOverClass = $popOver.attr('data-popOver-class');
     if (currentCustomPopOverClass != '') {
       $popOver.removeClass(currentCustomPopOverClass);
-      $popOver.data('popOver-class', '');
+      $popOver.attr('data-popOver-class', '');
     }
 
     // set popOver max-width based on the scrollparent width if it exceeds the scrollparent width
@@ -564,10 +562,10 @@
       var content = _this.options.popOver.content($(zone), _this.element);
 
       // allow for custom pop-over class specified in area element
-      var customPopOverClass = $(zone).data('pop-over-class');
+      var customPopOverClass = $(zone).attr('data-pop-over-class');
       if (customPopOverClass != '') {
         $popOver.addClass(customPopOverClass);
-        $popOver.data('popOver-class', customPopOverClass);
+        $popOver.attr('data-popOver-class', customPopOverClass);
       }
 
       $popOver.find('.mapify-popOver-content').html(content);
@@ -707,13 +705,15 @@
       }
     }
 
+    // mod
     // removeClass and addClass seems to fail on svg
-    this.svgMap.find('polygon')
-      .each((index, polygon) => {
-        if (!_this.selectedAreas[$(polygon).attr('data-title')]) {
-          $(polygon).attr('class', `mapify-polygon`)
-        }
-      });
+    this.svgMap.find('polygon').each((index, polygon) => {
+      let $polygon = $(polygon);
+
+      if (!$polygon.hasClass('selected')) {
+        $polygon.attr('class', 'mapify-polygon');
+      }
+    });
 
     // if event is assigned, call the handler
     if (this.options.onMapClear) {
@@ -721,57 +721,25 @@
     }
   };
 
-  Mapify.prototype._highlightSelected = function() {
-    //mod highlight selected
-
-    setTimeout(() => {
-      //
-      let $map = $(this.map);
-
-      this._clearMap();
-      $.each(this.selectedAreas, (key, value) => {
-        let el = $map.find(`[data-title=${key}]`)[0]
-        if (this.selectedAreas[key] && el) {
-          this._drawHighlight(el);
-        }
-      });
-
-
-    });
-
-  };
-
   function Mapify(element, options) {
     var _this = this;
 
     this.element = element;
     this.options = options;
-    this.selectedAreas = {};
 
     this.isPopOverEnabled = (this.options.popOver != false);
     this.isCustomPopOver = (this.options.popOver.customPopOver != false)
       && (this.options.popOver.customPopOver != undefined);
 
-
     this._initImageMap();
     this._initPopOver();
     this._bindEvents();
-    this._clearMap();
 
     this._remapZones();
     $(this.element).bind('load.mapify', function() {
       // We must wait for the image to load in safari
       _this._remapZones();
     });
-
-
-    return {
-      setSelectedAreas: (selectedAreas) => {
-        //mod
-        this.selectedAreas = selectedAreas;
-        _this._highlightSelected();
-      }
-    }
   }
 
   //endregion
@@ -779,7 +747,8 @@
   $.fn.mapify = function(options) {
     return this.each(function() {
       if (!$.data(this, 'plugin_mapify')) {
-        $.data(this, 'plugin_mapify', new Mapify(this, $.extend(true, {}, defaults, options)));
+        $.data(this, 'plugin_mapify',
+          new Mapify(this, $.extend(true, {}, defaults, options)));
       }
     });
   };
