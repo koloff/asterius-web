@@ -16,7 +16,7 @@ const router = new VueRouter({
   },
   routes: [
     {
-      path: '/', component: require('./components/Home.vue')
+      path: '/', component: require('./components/home/Home.vue')
     },
     {
       path: '/login', component: require('./components/authenticate/Login.vue')
@@ -28,13 +28,10 @@ const router = new VueRouter({
       path: '/register', component: require('./components/authenticate/Register.vue')
     },
     {
-      path: '/generate', component: require('./components/generate-steps/Generate.vue')
+      path: '/generate', component: require('./components/generate-parameters/Generate.vue')
     },
     {
       path: '/split', component: require('./components/split/Split.vue')
-    },
-    {
-      path: '/train', component: require('./components/program/Program.vue')
     },
     {
       path: '/workout/:type', component: require('./components/workout/Workout.vue')

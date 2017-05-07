@@ -22,15 +22,6 @@ body {
   }
 }
 
-.header-menu {
-  width: 100%;
-  position: fixed;
-  top: 0;
-  z-index: 999;
-  background: #000000 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
-  border-radius: 0 !important;
-}
 
 .app {
   margin-top: 1px;
@@ -42,12 +33,6 @@ body {
 
 .app-content {
   flex: 1;
-}
-
-.bottom-footer {
-  margin-top: 15px !important;
-  background: #000000 !important;
-  border-top: 0 !important;
 }
 
 .divider.small {

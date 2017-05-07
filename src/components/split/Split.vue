@@ -1,9 +1,10 @@
 <template>
   <div>
     <div
-      class="ui inverted secondary fluid three pointing menu centered"
+      class="ui inverted secondary pointing menu centered center aligned big"
       :class="{one: Object.keys(splitState.split).length === 1, two: Object.keys(splitState.split).length === 2, three: Object.keys(splitState.split).length === 3}"
     >
+
       <a class="item"
          v-for="(workout, type) in splitState.split"
          :class="{active: splitState.currentWorkout === type}"
@@ -11,6 +12,7 @@
       > Workout &nbsp; &nbsp; <strong> {{type}}</strong></a>
     </div>
 
+    <div class="ui divider inverted"></div>
 
     <div class="ui grid stackable mobile reversed">
 
@@ -19,12 +21,6 @@
         <div class="row">
 
 
-          <h4 class="ui header inverted centered">
-            FIND EXERCISES
-            <div class="sub header">
-              Find exercises that target the selected muscles.
-            </div>
-          </h4>
           <h4 v-if="selectedMuscles.length" class="ui header inverted" style="margin: 0 0 5px 0">
             SELECTED MUSCLES:
             <div style="margin-top: 5px" class="ui labels">
@@ -33,6 +29,10 @@
               >{{muscle.info.broName}}
                 <i class="delete icon" @click="switchMuscle(muscle.key)"></i>
               </div>
+            </div>
+
+            <div class="sub header">
+              Exercises that train the selected muscles:
             </div>
           </h4>
           <div class="ui message inverted" v-show="!exercisesToShow.length">
@@ -77,9 +77,10 @@
         </div>
 
         <h4 class="ui header inverted centered">
-          YOUR WORKOUT
+          THE WORKOUT
           <div class="sub header">
-            Add or remove sets. Reorder the exercises by dragging the hand.
+            This is how your wokrout will look like. <br> Reorder the exercises by dragging the hand. You can add or
+            remove sets.
           </div>
         </h4>
         <div class="row">
@@ -89,7 +90,6 @@
             </div>
           </div>
         </div>
-
       </div>
 
       <div class="ui column six wide">
@@ -112,11 +112,17 @@
             </muscle-in-tweaker>
           </template>
         </div>
-
       </div>
 
     </div>
 
+
+    <div class="ui segment basic center aligned">
+      <div class="ui divider inverted"></div>
+      <button class="ui button inverted big center aligned" @click="saveSplit()">
+        <i class="ui icon checkmark"></i>SAVE THE SPLIT
+      </button>
+    </div>
   </div>
 </template>
 
@@ -146,6 +152,7 @@
     },
     async beforeRouteEnter(to, from, next) {
       let res = await splitStore.init();
+      console.log(res);
       next();
     },
     mounted() {
@@ -154,14 +161,15 @@
     methods: {
       viewWorkout(type) {
         splitStore.setCurrentWorkout(type);
-        console.log(type);
-        // todo fix for 1 and 2 workouts
-        if (type === 'C' || type === 'B') {
-          let $legsEl = $(`.muscle-in-tweaker[data-key='legsQuadriceps']`);
-          $('.muscles-in-tweaker').scrollTo($legsEl, 300);
+        if (type === 'C' || (type === 'B' && !this.splitState.split.C)) {
+          let $el = $(`.muscle-in-tweaker[data-key='legsQuadriceps']`);
+          $('.muscles-in-tweaker').scrollTo($el, 300);
+        } else if (type === 'B' && this.splitState.split.C) {
+          let $el = $(`.muscle-in-tweaker[data-key='backUpperTrapezius']`);
+          $('.muscles-in-tweaker').scrollTo($el, 300);
         } else {
-          let $legsEl = $(`.muscle-in-tweaker[data-key='shouldersAnteriorHead']`);
-          $('.muscles-in-tweaker').scrollTo($legsEl, 300);
+          let $el = $(`.muscle-in-tweaker[data-key='shouldersAnteriorHead']`);
+          $('.muscles-in-tweaker').scrollTo($el, 300);
         }
       },
       getMuscles(mKey) {
@@ -169,6 +177,9 @@
       },
       switchMuscle(mKey) {
         tweakerStore.switchMuscle(mKey);
+      },
+      saveSplit() {
+        splitStore.updateSplit();
       }
     },
     computed: {
@@ -179,7 +190,7 @@
       },
       exercisesToShow() {
         let arr = [];
-        let a = this.tweakerState.selectedMuscles;
+        let selectedMuscles = this.tweakerState.selectedMuscles;
         this.exercisesState.ec.exercises.forEach((exercise) => {
           if (tweakerStore.shouldExerciseShow(exercise)) {
             arr.push(exercise)
@@ -220,7 +231,7 @@
   @media (min-height: 700px) {
     .muscles-in-tweaker {
       overflow: auto;
-      max-height: 80vh;
+      max-height: 57vh;
     }
 
     .exercises-slider-container {

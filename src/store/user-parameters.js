@@ -34,27 +34,18 @@ export default {
   },
 
   async init() {
-    return new Promise((resolve, reject) => {
-      database.watch(`/userParameters/${authStore.state.uid}`, (snap) => {
-        let val = snap.val();
-        if (val) {
-          this.state.hasParameters = true;
-
-          this.state.userParameters.gender = val.gender;
-          this.state.userParameters.measuringUnit = val.measuringUnit;
-          this.state.userParameters.age = val.age;
-          this.state.userParameters.weight = val.weight;
-          this.state.userParameters.height = val.height;
-          this.state.userParameters.experience = val.experience;
-          this.state.userParameters.days = val.days;
-          this.state.userParameters.preferredMuscles = val.preferredMuscles || [];
-
-          return resolve(true);
-        } else {
-          return reject(false);
-        }
-      });
-    })
+    let userParameters = await database.get(`/userParameters/${authStore.state.uid}`);
+    if (userParameters) {
+      this.state.hasParameters = true;
+      this.state.userParameters.gender = userParameters.gender;
+      this.state.userParameters.measuringUnit = userParameters.measuringUnit;
+      this.state.userParameters.age = userParameters.age;
+      this.state.userParameters.weight = userParameters.weight;
+      this.state.userParameters.height = userParameters.height;
+      this.state.userParameters.experience = userParameters.experience;
+      this.state.userParameters.days = userParameters.days;
+      this.state.userParameters.preferredMuscles = userParameters.preferredMuscles || [];
+    }
   },
 
   async updateParameters() {

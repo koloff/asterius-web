@@ -19,16 +19,15 @@ export default {
   },
 
   async init() {
-    return new Promise((resolve, reject) => {
-      database.watch(`/split/${authStore.state.uid}`, (snap) => {
-        let val = snap.val();
-        if (val) {
-          this.state.split = val;
-          tweakerStore.init(this.state.split[this.state.currentWorkout]);
-          return resolve(true);
-        }
-      });
-    })
+    let split = await database.get(`/split/${authStore.state.uid}`);
+    if (split) {
+      this.state.currentWorkout = 'A';
+      this.state.split = split;
+      tweakerStore.init(this.state.split[this.state.currentWorkout]);
+      return true;
+    } else {
+      return false;
+    }
   },
 
   setCurrentWorkout(type) {

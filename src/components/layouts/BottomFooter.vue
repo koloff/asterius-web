@@ -15,3 +15,11 @@
     name: 'BottomFooter'
   }
 </script>
+
+<style>
+  .bottom-footer {
+    margin-top: 15px !important;
+    background: #000000 !important;
+    border-top: 0 !important;
+  }
+</style>

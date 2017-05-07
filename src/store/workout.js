@@ -1,9 +1,6 @@
 import _ from 'lodash';
-import firebase from 'firebase';
-
-import splitStore from './split';
+import database from '../database';
 import authStore from './auth';
-
 
 export default {
   state: {
@@ -14,7 +11,7 @@ export default {
     },
     //firebase
     currentExerciseIndex: 0,
-    exercises: {}
+    exercises: []
   },
 
   setDefaultState() {
@@ -26,21 +23,17 @@ export default {
       },
       //firebase
       currentExerciseIndex: 0,
-      exercises: []
+      exercises: [] // todo may rename -> activities (for later)
     }
   },
 
+  // todo
+  async generateWorkoutForToday(exercises) {
 
-  // firebase related
-  loadWorkout(type) {
-    this.workoutRef.child('/exercises').set(exercises);
+  },
 
-    this.workoutRef.child('/exercises').on('value', (ref) => {
-      this.state.exercises = ref.val();
-    });
-    this.workoutRef.child('/currentExerciseIndex').once('value', (ref) => {
-      this.setCurrentExercise(0);
-    });
+  async init(workoutDate) {
+    // todo create abstraction
   },
 
   getCurrentExercise() {
@@ -48,13 +41,13 @@ export default {
   },
 
   getFirstNotPerformedStepIndex() {
-    let index = _.findIndex(this.getCurrentExercise().steps, (step) => !step.performedValue);
-    return index;
+    return _.findIndex(this.getCurrentExercise().steps, (step) => !step.performedValue);
   },
 
   setCurrentExercise(index) {
     this.state.currentExerciseIndex = index;
-    this.workoutRef.child('/currentExerciseIndex').set(index);
+    database.save(`/workouts/${authStore.state.uid}/${Date.yyyymmdd()}/currentExerciseIndex`, index);
+
 
     let firstNotPerformedStepIndex = this.getFirstNotPerformedStepIndex();
     if (firstNotPerformedStepIndex > -1) {
@@ -81,7 +74,6 @@ export default {
   isCurrentStepFinal() {
     return this.state.currentExerciseIndex >= this.state.exercises.length - 1
       && this.state.currentStepIndex >= this.getCurrentExercise().steps.length - 1;
-
   },
 
   nextStep() {
@@ -122,7 +114,7 @@ export default {
     let currentExerciseIndex = this.state.currentExerciseIndex;
     let currentStepIndex = this.state.currentStepIndex;
 
-    this.workoutRef.child(`/exercises/${currentExerciseIndex}/steps/${currentStepIndex}/performedValue`).set({
+    database.save(`/exercises/${currentExerciseIndex}/steps/${currentStepIndex}/performedValue`).set({
       reps, weight
     })
   },
@@ -131,7 +123,7 @@ export default {
     let currentExerciseIndex = this.state.currentExerciseIndex;
     let currentStepIndex = this.state.currentStepIndex;
 
-    this.workoutRef.child(`/exercises/${currentExerciseIndex}/steps/${currentStepIndex}/performedValue`).set({
+    this.workoutRef.child(`/workouts/${authStore.state.uid}/${Date.yyyymmdd()}/exercises/${currentExerciseIndex}/steps/${currentStepIndex}/performedValue`).set({
       seconds
     })
   },

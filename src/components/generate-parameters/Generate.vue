@@ -101,6 +101,7 @@
         <!--todo: check on mobile-->
         <h4 class="ui header inverted  centered">
           WEEKLY TRAININGS
+          <div class="sub header">How many times in a week can you train?</div>
         </h4>
         <div class="ui buttons three">
           <div class="ui button inverted"
@@ -119,6 +120,10 @@
 
         <h4 class="ui header inverted">
           PREFERRED MUSCLES
+          <div class="sub header">Specify what muscles you want to prioritize.
+            If you select priority muscles, they will be trained the most, even with less workouts per week.
+            You may skip this for training all muscles equally.
+          </div>
         </h4>
         <muscles-selector :selected-muscles="userParametersState.preferredMuscles"></muscles-selector>
 
@@ -166,7 +171,7 @@
           this.$router.push('/split');
         } catch (err) {
           console.log(err);
-          notifier('error', 'Please provide valid data!');
+          notifier('error', 'Please fill all fields and provide valid data!');
         }
         rootStore.setLoading(false);
       }

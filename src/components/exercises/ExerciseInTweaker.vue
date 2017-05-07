@@ -3,12 +3,20 @@
     :exercise-key="exerciseKey"
     :sets-count="workoutExercise ? workoutExercise.sets : 0"
   >
-    <button class="ui tiny inverted button exercise-add-button"
-            @click="addExercise()"
-            :class="{disabled: workoutExercise}"
-    >
-      {{workoutExercise ? 'Added' : 'Add'}}
-    </button>
+
+    <div class="ui mini basic icon buttons inverted edit-sets-buttons">
+      <button
+        class="ui button"
+        @click="reduceSets()">
+        <i class="minus icon"></i>
+      </button>
+      <button
+        class="ui button"
+        @click="increaseSets()"
+      >
+        <i class="plus icon"></i>
+      </button>
+    </div>
 
   </exercise-circular>
 </template>
@@ -28,25 +36,30 @@
     components: {ExerciseCircular},
     computed: {
       workoutExercise() {
-        console.log(this.tweakerState);
         return tweakerStore.getWorkoutExercise(this.exerciseKey);
       }
     },
     methods: {
-      addExercise() {
-        tweakerStore.addExercise(this.exerciseKey);
+      increaseSets() {
+        tweakerStore.increaseExerciseSets(this.exerciseKey);
+      },
+      reduceSets() {
+        tweakerStore.reduceExerciseSets(this.exerciseKey);
       }
     }
   }
 </script>
 
-<style>
-  .exercise-add-button {
-    padding: 5px !important;
+<style scoped>
+  .edit-sets-buttons {
     margin-bottom: 5px !important;
     position: absolute;
     z-index: 999;
     bottom: 17%;
+  }
+
+  .edit-sets-buttons button {
+    padding: 7px !important;
   }
 
 </style>

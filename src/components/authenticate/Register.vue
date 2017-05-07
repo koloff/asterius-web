@@ -48,7 +48,7 @@
           <div class="ui segment center aligned basic">
             <router-link :to="'/login'" class="white-link" href="" style="margin-right: 10px;">LOGIN
             </router-link>
-            <a href="#" class="white-link">Forgotten password?</a>
+            <!--<a href="#" class="white-link">Forgotten password?</a>-->
           </div>
 
         </div>
@@ -89,7 +89,7 @@
           notifier('success', 'Registered successfully!');
           this.$router.push('/generate');
         } catch (err) {
-
+          console.log(err);
           this.fields.email.error = '';
           this.fields.password.error = '';
 

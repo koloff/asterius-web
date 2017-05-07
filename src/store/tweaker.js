@@ -1,7 +1,5 @@
 import _ from 'lodash';
-import musclesStore from './muscles';
 import exercisesStore from './exercises';
-import splitStore from './split';
 
 export default {
 

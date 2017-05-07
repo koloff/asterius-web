@@ -17,11 +17,10 @@ export default {
   },
 
 
-  // resetProfileRelatedStores() {
-  //   userParametersStore.setDefaultState();
-  //   preferredMusclesStore.setDefaultState();
-  //   splitStore.setDefaultState()
-  // },
+  resetProfileRelatedStores() {
+    userParametersStore.setDefaultState();
+    splitStore.setDefaultState()
+  },
 
   setLoading(value){
     this.state.loading = value;

@@ -19,9 +19,9 @@
 </template>
 
 <script>
-  import HeaderMenu from './HeaderMenu.vue';
-  import BottomFooter from './BottomFooter.vue';
-  import rootStore from './store/root';
+  import HeaderMenu from './layouts/HeaderMenu.vue';
+  import BottomFooter from './layouts/BottomFooter.vue';
+  import rootStore from '../store/root';
 
   export default {
     name: 'App',

@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import Vue from 'vue';
-import Root from './Root.vue';
+import Root from './components/Root.vue';
 
 import 'semantic-ui-css/semantic.css';
 import 'semantic-ui-css/semantic';
@@ -10,8 +10,6 @@ import './style/style.css';
 
 import './lib/mapify/mapify';
 import './lib/mapify/jquery.mapify.css';
-
-import './utils/scrollable';
 
 // env related
 if (process.env.NODE_ENV !== 'production') {
@@ -36,11 +34,13 @@ import './filters/index';
 import database from './database';
 database.init();
 
-//init auth store
+//init stores
 import authStore from './store/auth';
+import rootStore from './store/root';
 
 (async() => {
   await authStore.init();
+  await rootStore.initCollectionStores();
   // init the app
   let vue = new Vue({
     router,

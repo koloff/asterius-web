@@ -13,7 +13,7 @@
         <div class="ui form error inverted">
           <div class="content ui inverted">
             <div v-if="wrongCredentials" class="ui error message">
-              <p>Wrong username/password!</p>
+              <p>Wrong e-mail/password!</p>
             </div>
 
             <div class="field">
@@ -36,7 +36,7 @@
             <div class="ui segment center aligned basic">
               <router-link :to="'/register'" class="white-link" href="" style="margin-right: 10px;">REGISTER
               </router-link>
-              <a href="#" class="white-link">Forgotten password?</a>
+              <!--<a href="#" class="white-link">Forgotten password?</a>-->
             </div>
 
           </div>

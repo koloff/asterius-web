@@ -48,9 +48,9 @@
   import exercisesStore from '../../store/exercises';
   import workoutStore from '../../store/workout';
 
-  import ExercisesSliderInWorkout from '../sliders/ExercisesSliderInWorkout.vue';
+  import ExercisesSliderInWorkout from './ExercisesSliderInWorkout.vue';
   import ExerciseSteps from './ExerciseSteps.vue';
-  import SetsSelector from '../grids/SetsSelector.vue';
+  import SetsSelector from './SetsSelector.vue';
   import Timer from './Timer.vue';
 
   export default {

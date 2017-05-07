@@ -15,14 +15,14 @@ export default {
 
   async init(){
     return new Promise((resolve, reject) => {
-      firebase.auth().onAuthStateChanged(async (user) => {
+      firebase.auth().onAuthStateChanged(async(user) => {
         if (user) {
-          await rootStore.initCollectionStores();
           firebase.auth().currentUser.getToken(/* forceRefresh */ true).then((idToken) => {
             this.state.uid = user.uid;
             this.state.idToken = idToken;
             return resolve(true);
           }).catch((error) => {
+            console.log(error);
             return reject(false);
           });
         } else {
@@ -41,6 +41,7 @@ export default {
           return resolve(user);
         })
         .catch((error) => {
+          console.log(error);
           return reject(error);
         });
     });
@@ -49,6 +50,7 @@ export default {
   logout() {
     firebase.auth().signOut().then(() => {
       this.setDefaultState();
+      rootStore.resetProfileRelatedStores();
     });
   },
 
