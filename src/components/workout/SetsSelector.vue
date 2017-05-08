@@ -1,7 +1,8 @@
 <template>
   <div class="ui segment secondary sets-selector">
 
-    <h2 class="ui header  centered" style="margin-bottom: 5px">SET
+    <h2 class="ui header  centered" style="margin-bottom: 5px">
+      SET {{currentWorkoutState.currentSetIndex + 1}}
       <div class="sub header">
         RECORD YOUR REPS AND WEIGHT:
       </div>
@@ -31,6 +32,7 @@
 
 <script>
   import 'jquery.scrollto';
+  import currentWorkoutStore from '../../store/current-workout';
   import workoutStore from '../../store/workout';
 
   export default {
@@ -38,6 +40,7 @@
     data() {
       return {
         grid: [],
+        currentWorkoutState: currentWorkoutStore.state,
         workoutState: workoutStore.state
       }
     },
@@ -67,29 +70,24 @@
     },
     computed: {
       estimatedValues() {
-        return workoutStore.getCurrentStepEstimatedValues();
+        this.focusOnTarget();
+        return currentWorkoutStore.getCurrentSet().estimatedValues;
       },
       performedValue() {
-        return workoutStore.getCurrentStepPerformedValue();
+        this.focusOnTarget();
+        return currentWorkoutStore.getCurrentSet().performedValue;
       },
     },
     methods: {
-
-      cellClicked(col) {
-        console.log(col);
-        workoutStore.recordSet(col.reps, col.weight)
-      },
 
       getCellType(col) {
         let cellType = '';
 
         if (this.estimatedValues) {
-          this.estimatedValues.forEach((estimatedValues) => {
-            estimatedValues.cells.forEach((estimatedValue) => {
-              if (estimatedValue.reps === col.reps && estimatedValue.weight === col.weight) {
-                cellType = estimatedValues.type;
-              }
-            })
+          this.estimatedValues.forEach((estimatedSet) => {
+            if (estimatedSet.reps === col.reps && estimatedSet.weight === col.weight) {
+              cellType = 'type-' + estimatedSet.type;
+            }
           });
         }
 
@@ -100,11 +98,15 @@
         return cellType;
       },
 
+      cellClicked(col) {
+        currentWorkoutStore.recordCurrentSet(col.reps, col.weight)
+      },
+
       focusOnTarget() {
         this.$nextTick(() => {
 
           let $container = $('.sets-selector-container');
-          let $el = $('.target');
+          let $el = $('.type-1');
 
 
           $container.scrollTo($el, 300, {
@@ -173,11 +175,11 @@
     border: 4px solid orange;
   }
 
-  .set-cell.target {
+  .set-cell.type-1 {
     background: rgb(9, 167, 7);
   }
 
-  .set-cell.good {
+  .set-cell.type-2 {
     background: rgba(47, 156, 0, 0.29);
   }
 </style>

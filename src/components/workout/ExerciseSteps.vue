@@ -1,15 +1,14 @@
 <template>
   <div class="set-steps">
     <div class="ui fluid steps tiny unstackable padless">
-
       <div
         class="link step"
-        v-for="(step, index) in currentExercise.steps"
-        :class="getClassNames(step, index)"
-        @click="setCurrentStep(index)"
+        v-for="(set, index) in sets"
+        :class="getClassNames(index)"
+        @click="setCurrentSet(index)"
       >
         <div class="content">
-          <div class="title">{{getStepText(step, index)}}</div>
+          <div class="title">{{getSetText(set, index)}}</div>
         </div>
       </div>
 
@@ -18,45 +17,42 @@
 </template>
 
 <script>
+  import currentWorkoutStore from '../../store/current-workout';
   import workoutStore from '../../store/workout';
 
   export default {
     name: 'ExerciseSteps',
+    props: ['exerciseIndex'],
     data() {
       return {
+        currentWorkoutState: currentWorkoutStore.state,
         workoutState: workoutStore.state
       }
     },
     methods: {
-      getClassNames(step, index) {
-        let firstNotPerformedStepIndex = workoutStore.getFirstNotPerformedStepIndex();
+      getClassNames(index) {
+        console.log(this.currentWorkoutState);
+        let firstNotPerformedSetIndex = currentWorkoutStore.getFirstNotPerformedSetIndex(this.exerciseIndex);
         return {
-          active: (index === this.workoutState.currentStepIndex),
-          disabled: (index > firstNotPerformedStepIndex && firstNotPerformedStepIndex >= 0)
+          active: (index === this.currentWorkoutState.currentSetIndex && this.exerciseIndex === this.currentWorkoutState.currentExerciseIndex),
+          disabled: (index > firstNotPerformedSetIndex && firstNotPerformedSetIndex >= 0)
         }
       },
-      setCurrentStep(index) {
-        workoutStore.setCurrentStep(index);
+      setCurrentSet(index) {
+        currentWorkoutStore.setCurrentExerciseIndex(this.exerciseIndex);
+        currentWorkoutStore.setCurrentSetIndex(index);
       },
-      getStepText(step, index) {
-        if (step.performedValue) {
-          if (step.performedValue.reps) {
-            return `${step.performedValue.reps}x${step.performedValue.weight}`
-          } else if (step.performedValue.seconds || step.performedValue.seconds === 0) {
-            return `${step.performedValue.seconds}S`
-          }
+      getSetText(set, index) {
+        if (set.performedValue && set.performedValue.reps) {
+          return `${set.performedValue.reps}x${set.performedValue.weight}`
         } else {
-          if (step.type === 'set') {
-            return 'SET'
-          } else if (step.type === 'rest') {
-            return 'REST';
-          }
+          return 'SET'
         }
       }
     },
     computed: {
-      currentExercise() {
-        return workoutStore.getCurrentExercise();
+      sets() {
+        return workoutStore.state.exercises[this.exerciseIndex].sets;
       },
 
     }
@@ -77,7 +73,6 @@
     padding: 14px 3px !important;
   }
 
-
   .ui.unstackable.steps {
     flex-direction: row;
   }
@@ -86,9 +81,4 @@
     width: auto !important;
   }
 
-  @media only screen and (max-width: (@largestMobileScreen)) {
-    .ui.unstackable.padless.steps .step {
-      padding: @verticalPadding 0 !important;
-    }
-  }
 </style>

@@ -25,16 +25,13 @@ const router = new VueRouter({
       path: '/register', component: require('./components/authenticate/Register.vue')
     },
     {
-      path: '/register', component: require('./components/authenticate/Register.vue')
-    },
-    {
       path: '/generate', component: require('./components/generate-parameters/Generate.vue')
     },
     {
       path: '/split', component: require('./components/split/Split.vue')
     },
     {
-      path: '/workout/:type', component: require('./components/workout/Workout.vue')
+      path: '/train', component: require('./components/workout/Workout.vue')
     },
   ]
 });

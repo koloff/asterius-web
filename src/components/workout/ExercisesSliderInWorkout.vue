@@ -28,7 +28,7 @@
 
 <script>
   import ExerciseInWorkout from '../exercises/ExerciseInWorkout.vue';
-  import workoutStore from '../../store/workout';
+  import workoutStore from '../../store/workout_old';
 
   export default {
     name: 'ExercisesSliderInWorkout',

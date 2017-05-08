@@ -57,183 +57,51 @@ import rootStore from './store/root';
 
 
 // TEST DATA
-import firebase from 'firebase';
-function seedFirebase() {
-  let db = firebase.database().ref();
+function seedDatabase() {
+  let currentWorkoutPath = `/currentWorkout/pesho`;
+  let exercisesPath = `/exercises/pesho`;
+  let workoutsPath = `/workouts/pesho/2017-05-08`;
 
-  db.set({
-    userParameters: {
-      'pesho': {}
+  // currentWorkout format
+  database.save(currentWorkoutPath, {
+    timer: {
+      start: Date.now(),
+      duration: 90
     },
-    weeklyExercises: {
-      'pesho': {
-        exercises: {
-          dumbbellBenchPress: 3
-        }
+    currentExerciseIndex: 0,
+    currentSetIndex: 0
+  });
+
+  database.save(workoutsPath, {
+    exercises: [
+      {
+        key: 'dumbbellBenchPress',
+        sets: [{
+          estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
+          performedValue: {weight: 10, reps: 11}
+        },{
+          estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
+          performedValue: {weight: 10, reps: 11}
+        },{
+          estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
+          performedValue: {weight: 10, reps: 11}
+        },{
+          estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
+          performedValue: {weight: 10, reps: 11}
+        },]
       }
-    },
-    weeklySplits: {
-      'pesho': {}
-    },
-    workouts: {
-      'pesho': {
-        workouts: {
-          'pesho': {
-            'id1': {
-              currentExerciseIndex: 0,
-              date: '03/07/2017',
-              exercises: [{
-                type: 'exercise',
-                key: 'dumbbellBenchPress',
-                steps: [{
-                  type: 'set',
-                  estimatedValues: [
-                    {
-                      type: 'target',
-                      cells: [
-                        {
-                          reps: 8,
-                          weight: 70
-                        }
-                      ]
-                    },
-                    {
-                      type: 'good',
-                      cells: [
-                        {
-                          reps: 7,
-                          weight: 72.5
-                        },
-                        {
-                          reps: 7,
-                          weight: 70
-                        }, {
-                          reps: 10,
-                          weight: 67.5
-                        },
-                      ]
-                    },
+    ]
+  });
 
-                  ],
-                }, {
-                  type: 'rest',
-                }, {
-                  type: 'set',
-                  estimatedValues: [
-                    {
-                      type: 'target',
-                      cells: [
-                        {
-                          reps: 8,
-                          weight: 70
-                        }
-                      ]
-                    },
-                    {
-                      type: 'good',
-                      cells: [
-                        {
-                          reps: 7,
-                          weight: 72.5
-                        },
-                        {
-                          reps: 7,
-                          weight: 70
-                        }, {
-                          reps: 10,
-                          weight: 67.5
-                        },
-                      ]
-                    },
-
-                  ],
-                }, {
-                  type: 'rest',
-                }, {
-                  type: 'set',
-                  estimatedValues: [
-                    {
-                      type: 'target',
-                      cells: [
-                        {
-                          reps: 8,
-                          weight: 70
-                        }
-                      ]
-                    },
-                    {
-                      type: 'good',
-                      cells: [
-                        {
-                          reps: 7,
-                          weight: 72.5
-                        },
-                        {
-                          reps: 7,
-                          weight: 70
-                        }, {
-                          reps: 10,
-                          weight: 67.5
-                        },
-                      ]
-                    },
-
-                  ],
-                }, {
-                  type: 'rest',
-                }]
-              },
-                {
-                  type: 'exercise',
-                  key: 'lateralRaise',
-                  steps: [{
-                    type: 'set'
-                  }, {
-                    type: 'rest'
-                  }, {
-                    type: 'set'
-                  }, {
-                    type: 'rest'
-                  },
-                  ]
-                },
-                {
-                  type: 'exercise',
-                  key: 'cableCrossover',
-                  steps: [{
-                    type: 'set'
-                  }, {
-                    type: 'rest'
-                  }, {
-                    type: 'set'
-                  }, {
-                    type: 'rest'
-                  }
-                  ]
-                },
-                {
-                  type: 'exercise',
-                  key: 'lateralRaise',
-                  steps: [{
-                    type: 'set'
-                  }
-                  ]
-                }
-              ]
-
-            }
-          }
-        }
+  database.save(exercisesPath, {
+    'dumbbellBenchPress': {
+      performedIn: {
+        '2017-05-08': 0
       }
-    },
-    users: {
-      'pesho': {}
-    },
-
-  }).then((err, res) => {
-    console.log(arguments);
+    }
   })
+
 
 }
 
-// seedFirebase();
+// seedDatabase();

@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import workoutStore from '../../store/workout';
+  import workoutStore from '../../store/workout_old';
 
   export default {
     name: 'Timer',

@@ -1,90 +1,45 @@
 <template>
   <div>
 
-    <h1 class="ui header">WORKOUT {{type}}</h1>
 
-    <exercises-slider-in-workout></exercises-slider-in-workout>
-    <h3 class="ui header">
-      {{currentExerciseName | uppercase}}
+    <h1 class="ui inverted header">WORKOUT</h1>
+
+    <h3 class="ui header inverted">
+      BENCH PRESS
       <div class="sub header">LAST SESSION: 26.03.17 <br>
-        7x70 &nbsp;&nbsp; 150S &nbsp;&nbsp; 9x65 &nbsp;&nbsp; 120S &nbsp;&nbsp; 12x60 &nbsp;&nbsp; 90S
+        7x70 9x65 12x60
       </div>
     </h3>
 
-
-    <exercise-steps></exercise-steps>
+    <exercise-steps
+      :exercise-index="0">
+    </exercise-steps>
 
     <sets-selector
-      v-if="currentStep.type === 'set'"
     ></sets-selector>
-    <timer
-      v-if="currentStep.type === 'rest'"
-    ></timer>
-
-    <button
-      v-if="!isCurrentStepFinal"
-      class="ui button big green fluid icon"
-      :class="{disabled: !currentStep.performedValue}"
-      @click="nextStep()"
-    >
-      <i class="ui icon angle double right"></i>
-      NEXT
-    </button>
-
-    <button
-      v-if="isCurrentStepFinal"
-      class="ui button big green fluid icon"
-      :class="{disabled: !currentStep.performedValue}"
-      @click="finishWorkout()"
-    >
-      <i class="ui icon flag checkered"></i>
-      FINISH
-    </button>
 
   </div>
 </template>
 
 <script>
-  import exercisesStore from '../../store/exercises';
-  import workoutStore from '../../store/workout';
-
-  import ExercisesSliderInWorkout from './ExercisesSliderInWorkout.vue';
-  import ExerciseSteps from './ExerciseSteps.vue';
   import SetsSelector from './SetsSelector.vue';
-  import Timer from './Timer.vue';
+  import ExerciseSteps from './ExerciseSteps.vue';
+
+  import currentWorkoutStore from '../../store/current-workout';
+  import workoutStore from '../../store/workout';
 
   export default {
     name: 'Workout',
-    components: {SetsSelector, ExerciseSteps, ExercisesSliderInWorkout, Timer},
+    components: {SetsSelector, ExerciseSteps},
     data() {
       return {
-        workoutState: workoutStore.state,
-        type: this.$route.params.type
+        currentWorkoutState: currentWorkoutStore.state,
+        workoutState: workoutStore.state
       }
     },
-    beforeCreate() {
-      workoutStore.loadWorkout(this.$route.params.type);
-    },
-    computed: {
-      currentExerciseName() {
-        return exercisesStore.getExercise(workoutStore.getCurrentExercise().key).info.name
-      },
-      currentStep() {
-        return workoutStore.getCurrentStep()
-      },
-      isCurrentStepFinal() {
-        return workoutStore.isCurrentStepFinal();
-      }
-    },
-    methods: {
-      nextStep() {
-        workoutStore.nextStep();
-      },
-
-      finishWorkout() {
-
-      }
+    async beforeRouteEnter(to, from, next) {
+      await currentWorkoutStore.init();
+      next();
     }
   }
 </script>
-
