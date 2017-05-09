@@ -60,13 +60,13 @@ import rootStore from './store/root';
 function seedDatabase() {
   let currentWorkoutPath = `/currentWorkout/pesho`;
   let exercisesPath = `/exercises/pesho`;
-  let workoutsPath = `/workouts/pesho/2017-05-08`;
+  let workoutsPath = `/workouts/pesho/2017-05-09`;
 
   // currentWorkout format
   database.save(currentWorkoutPath, {
     timer: {
-      start: Date.now(),
-      duration: 90
+      startMoment: Date.now(),
+      state: 'stopped'
     },
     currentExerciseIndex: 0,
     currentSetIndex: 0
@@ -78,16 +78,40 @@ function seedDatabase() {
         key: 'dumbbellBenchPress',
         sets: [{
           estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
-          performedValue: {weight: 10, reps: 11}
         },{
           estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
-          performedValue: {weight: 10, reps: 11}
+        },]
+      },
+      {
+        key: 'inclineDumbbellCurl',
+        sets: [{
+          estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
         },{
           estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
-          performedValue: {weight: 10, reps: 11}
+        },]
+      },
+      {
+        key: 'inclineDumbbellCurl',
+        sets: [{
+          estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
         },{
           estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
-          performedValue: {weight: 10, reps: 11}
+        },]
+      },
+      {
+        key: 'inclineDumbbellCurl',
+        sets: [{
+          estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
+        },{
+          estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
+        },]
+      },
+      {
+        key: 'inclineDumbbellCurl',
+        sets: [{
+          estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
+        },{
+          estimatedValues: [{type: 2, weight: 10, reps: 10}, {type: 1, weight: 10, reps: 11}],
         },]
       }
     ]
@@ -96,7 +120,7 @@ function seedDatabase() {
   database.save(exercisesPath, {
     'dumbbellBenchPress': {
       performedIn: {
-        '2017-05-08': 0
+        '2017-05-09': 0
       }
     }
   })

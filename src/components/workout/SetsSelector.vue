@@ -1,10 +1,14 @@
 <template>
   <div class="ui segment secondary sets-selector">
 
+    <timer-dimmer
+      v-if="!performedValue && (currentWorkoutState.timer.state === 'inited' || currentWorkoutState.timer.state === 'started')"
+    ></timer-dimmer>
+
     <h2 class="ui header  centered" style="margin-bottom: 5px">
       SET {{currentWorkoutState.currentSetIndex + 1}}
       <div class="sub header">
-        RECORD YOUR REPS AND WEIGHT:
+        RECORD REPS x WEIGHT
       </div>
     </h2>
 
@@ -27,16 +31,27 @@
       </div>
     </div>
 
+    <button class="ui button green fluid"
+            style="margin-top: 10px;"
+            :class="{disabled: !performedValue}"
+            @click="nextStep()"
+    >
+      <i class="ui icon checkmark box"></i>
+      NEXT SET
+    </button>
+
   </div>
 </template>
 
 <script>
-  import 'jquery.scrollto';
   import currentWorkoutStore from '../../store/current-workout';
   import workoutStore from '../../store/workout';
 
+  import TimerDimmer from './TimerDimmer.vue';
+
   export default {
     name: 'SetsSelector',
+    components: {TimerDimmer},
     data() {
       return {
         grid: [],
@@ -74,7 +89,6 @@
         return currentWorkoutStore.getCurrentSet().estimatedValues;
       },
       performedValue() {
-        this.focusOnTarget();
         return currentWorkoutStore.getCurrentSet().performedValue;
       },
     },
@@ -99,7 +113,7 @@
       },
 
       cellClicked(col) {
-        currentWorkoutStore.recordCurrentSet(col.reps, col.weight)
+        currentWorkoutStore.recordCurrentSet(col.reps, col.weight);
       },
 
       focusOnTarget() {
@@ -118,6 +132,10 @@
             }
           });
         })
+      },
+
+      nextStep() {
+        currentWorkoutStore.nextCurrentStep();
       }
 
     }

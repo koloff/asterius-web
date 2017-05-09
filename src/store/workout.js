@@ -9,9 +9,12 @@ export default {
   },
 
   async init(yyyymmdd) {
-    console.log(yyyymmdd);
     this.state.exercises = await database.get(`/workouts/${'pesho'}/${yyyymmdd}/exercises`);
-    console.log(this.state.exercises);
+  },
+
+
+  setTodaysWorkout(exercises) {
+
   },
 
   getExercise(key) {

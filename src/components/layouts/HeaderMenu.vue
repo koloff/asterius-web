@@ -66,9 +66,9 @@
 
     </div>
 
-    <div class="ui container" v-show="!authState.uid">
+    <div class="ui container header-menu-container" v-show="!authState.uid">
       <router-link to="/login" tag="a" class="item">
-        <i class="ui icon sign out"></i>
+        <i class="ui icon sign out menu-icon"></i>
         LOGIN
       </router-link>
     </div>

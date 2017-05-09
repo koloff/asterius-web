@@ -31,7 +31,6 @@
     },
     methods: {
       getClassNames(index) {
-        console.log(this.currentWorkoutState);
         let firstNotPerformedSetIndex = currentWorkoutStore.getFirstNotPerformedSetIndex(this.exerciseIndex);
         return {
           active: (index === this.currentWorkoutState.currentSetIndex && this.exerciseIndex === this.currentWorkoutState.currentExerciseIndex),
