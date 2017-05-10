@@ -22,7 +22,7 @@ export default {
     let split = await database.get(`/split/${authStore.state.uid}`);
     if (split) {
       this.state.currentWorkout = 'A';
-      this.state.split = split;
+      Vue.set(this.state, 'split', split);
       tweakerStore.init(this.state.split[this.state.currentWorkout]);
       return true;
     } else {

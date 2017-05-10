@@ -62,7 +62,6 @@
     mounted() {
       let beginningReps = 1;
       let endReps = 20;
-
       let weightStep = 2.5;
       let beginningWeight = 2.5;
       let endWeight = 130;
@@ -78,10 +77,7 @@
 
         this.grid.push(rowToAdd);
       }
-
-
       this.focusOnTarget();
-
     },
     computed: {
       estimatedValues() {
@@ -90,13 +86,12 @@
       },
       performedValue() {
         return currentWorkoutStore.getCurrentSet().performedValue;
-      },
+      }
     },
     methods: {
 
       getCellType(col) {
         let cellType = '';
-
         if (this.estimatedValues) {
           this.estimatedValues.forEach((estimatedSet) => {
             if (estimatedSet.reps === col.reps && estimatedSet.weight === col.weight) {
@@ -108,7 +103,6 @@
         if (this.performedValue && this.performedValue.reps === col.reps && this.performedValue.weight === col.weight) {
           cellType += ' performed';
         }
-
         return cellType;
       },
 
@@ -118,11 +112,8 @@
 
       focusOnTarget() {
         this.$nextTick(() => {
-
           let $container = $('.sets-selector-container');
           let $el = $('.type-1');
-
-
           $container.scrollTo($el, 300, {
             offset: function() {
               return {

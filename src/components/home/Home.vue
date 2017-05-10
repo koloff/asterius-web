@@ -6,17 +6,12 @@
 
         {{Date.now() | date | uppercase}}
         <div class="ui inverted sub header">
-          CHOOSE WORKOUT FOR TODAY:
+          {{currentWorkoutState.currentlyTraining ? 'CURRENT WORKOUT:' : 'TRAIN TODAY:'}}
         </div>
       </h2>
 
-      <div class="ui large buttons inverted">
-        <button class="ui button primary">A</button>
-        <button class="ui button primary">B</button>
-        <button class="ui button primary">C</button>
-        <div class="or inverted basic"></div>
-        <button class="ui button green">CUSTOM</button>
-      </div>
+    <new-workout-buttons></new-workout-buttons>
+      
     </div>
 
 
@@ -24,13 +19,15 @@
 </template>
 
 <script>
-  import splitStore from '../../store/split';
+  import NewWorkoutButtons from '../workout/NewWorkoutButtons.vue';
+  import currentWorkoutStore from '../../store/current-workout';
 
   export default {
     name: 'Program',
+    components: {NewWorkoutButtons},
     data() {
       return {
-        splitState: splitStore.state
+        currentWorkoutState: currentWorkoutStore.state
       }
     }
   }

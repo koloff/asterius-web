@@ -1,7 +1,8 @@
 import _ from 'lodash';
-
+import moment from 'moment';
 import database from '../database';
 import authStore from './auth';
+import tweakerStore from './tweaker';
 
 export default {
   state: {
@@ -9,12 +10,9 @@ export default {
   },
 
   async init(yyyymmdd) {
-    this.state.exercises = await database.get(`/workouts/${'pesho'}/${yyyymmdd}/exercises`);
-  },
-
-
-  setTodaysWorkout(exercises) {
-
+    database.watch(`/workouts/${authStore.state.uid}/${yyyymmdd}/exercises`, (snap) => {
+      Vue.set(this.state, 'exercises', snap.val());
+    });
   },
 
   getExercise(key) {

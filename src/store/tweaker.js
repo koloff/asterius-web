@@ -17,7 +17,7 @@ export default {
 
   init(workout) {
     // load exercises
-    this.state.workout = workout;
+    Vue.set(this.state, 'workout', workout);
   },
 
   shouldExerciseShow(exercise) {
@@ -58,6 +58,10 @@ export default {
   },
 
   reduceExerciseSets(exKey) {
+    if (!this.getWorkoutExercise(exKey)) {
+      return;
+    }
+
     if (this.getWorkoutExercise(exKey).sets <= 1) {
       let index = this.state.workout.indexOf(this.getWorkoutExercise(exKey));
       this.state.workout.splice(index, 1);
@@ -67,7 +71,15 @@ export default {
   },
 
   increaseExerciseSets(exKey) {
-    this.getWorkoutExercise(exKey).sets++;
+    let exercise = this.getWorkoutExercise(exKey);
+    if (!exercise) {
+      this.state.workout.push({
+        key: exKey,
+        sets: 1
+      })
+    } else {
+      exercise.sets++;
+    }
   },
 
 

@@ -5,54 +5,88 @@ import database from '../database';
 import authStore from './auth';
 import workoutStore from './workout';
 
+import http from '../http/http';
+
 export default {
   state: {
     currentExerciseIndex: 0,
     currentSetIndex: 0,
-    isFinished: false,
-    timer: {
-      state: 'stopped',
-      startMoment: null
-    }
+    currentlyTraining: false,
+    timer: {}
+  },
+
+  getCurrentDayString() {
+    return moment().format('YYYY-MM-DD');
   },
 
   async init(yyyymmdd) {
-    let todayYyyymmdd = moment().format('YYYY-MM-DD');
-    this.currentWorkoutPath = `/currentWorkout/${'pesho'}`;
-    this.currentInWorkoutsPath = `/workouts/${'pesho'}/${yyyymmdd}`;
+    this.currentWorkoutPath = `/currentWorkout/${authStore.state.uid}`;
+    // the exercises are stored in that path (for easier fetching from other modules)
+    this.currentInWorkoutsPath = `/workouts/${authStore.state.uid}/${moment().format('YYYY-MM-DD')}`;
 
-    if (yyyymmdd !== todayYyyymmdd) {
+    await workoutStore.init(yyyymmdd);
+
+    if (yyyymmdd !== this.getCurrentDayString() || !workoutStore.state.exercises /*next day has come*/) {
       // not today -> probably finished todo: fix for 00:00
-      database.save(`/workouts/${'pesho'}/${yyyymmdd}/isFinished`, true);
-      this.state.isFinished = true;
+      this.deleteWorkoutForToday();
     }
 
+    //watchers
     database.watch(`/${this.currentWorkoutPath}/currentExerciseIndex`, (snap) => {
-      this.setCurrentExerciseIndex(snap.val());
+      Vue.set(this.state, 'currentExerciseIndex', snap.val());
     });
     database.watch(`/${this.currentWorkoutPath}/currentSetIndex`, (snap) => {
-      this.setCurrentSetIndex(snap.val());
+      Vue.set(this.state, 'currentSetIndex', snap.val());
+    });
+    database.watch(`/${this.currentWorkoutPath}/currentlyTraining`, (snap) => {
+      this.state.currentlyTraining = snap.val();
     });
     database.watch(`/${this.currentWorkoutPath}/timer`, (snap) => {
       Vue.set(this.state, 'timer', snap.val());
     });
-
-    await workoutStore.init(yyyymmdd);
   },
 
-  setWorkoutFinished() {
-    database.save(`${this.currentWorkoutPath}/isFinished`, true);
-    this.state.isFinished = true;
+  async deleteWorkoutForToday() {
+    database.save(this.currentInWorkoutsPath, null);
+    database.save(this.currentWorkoutPath,  {
+      currentExerciseIndex: 0,
+      currentSetIndex: 0,
+      currentlyTraining: false,
+      timer: {
+        state: 'stopped'
+      }
+    });
+  },
+  async createWorkoutForToday(exercises) {
+    console.log(exercises);
+    exercises.forEach(exercise => {
+      let sets = [];
+      for (let i = 0; i < exercise.sets; i++) {
+        sets.push({isEstimated: false});
+      }
+      exercise.sets = sets;
+    });
+    database.save(this.currentInWorkoutsPath + '/exercises', exercises);
+    console.log(this.currentInWorkoutsPath);
+    database.save(this.currentWorkoutPath, {
+      currentExerciseIndex: 0,
+      currentSetIndex: 0,
+      currentlyTraining: true,
+      timer: {
+        state: 'stopped'
+      }
+    });
+    await this.init(this.getCurrentDayString());
   },
 
   setCurrentExerciseIndex(index) {
+    console.log(index);
     database.save(`${this.currentWorkoutPath}/currentExerciseIndex`, index);
-    this.state.currentExerciseIndex = index;
   },
 
   setCurrentSetIndex(index) {
+    console.log(index);
     database.save(`${this.currentWorkoutPath}/currentSetIndex`, index);
-    this.state.currentSetIndex = index;
   },
 
   getCurrentExercise() {
@@ -60,6 +94,10 @@ export default {
   },
 
   getCurrentSet() {
+    let set = this.getCurrentExercise().sets[this.state.currentSetIndex];
+    if (set && !set.estimatedValues) {
+      http.getAuthorized(`/algorithm/estimated-values/${this.getCurrentDayString()}/${this.state.currentExerciseIndex}/${this.state.currentSetIndex}`);
+    }
     return this.getCurrentExercise().sets[this.state.currentSetIndex];
   },
 
@@ -74,7 +112,6 @@ export default {
     });
 
     this.initTimer();
-    Vue.set(this.getCurrentSet(), 'performedValue', {reps, weight});
   },
 
   isCurrentStepFinal() {
@@ -83,7 +120,6 @@ export default {
   },
 
   nextCurrentStep() {
-
     // not last step
     if (!this.isCurrentStepFinal()) {
       if (this.state.currentSetIndex < this.getCurrentExercise().sets.length - 1) {
@@ -94,26 +130,21 @@ export default {
       }
       this.startTimer();
     } else {
-
+      // todo
     }
-
   },
-
 
   initTimer() {
     if (this.state.timer.state === 'stopped') {
       database.save(`${this.currentWorkoutPath}/timer/startMoment`, '');
       database.save(`${this.currentWorkoutPath}/timer/state`, 'inited');
-      this.state.timer.state = 'inited';
     }
   },
-
 
   startTimer() {
     if (this.state.timer.state === 'inited') {
       database.save(`${this.currentWorkoutPath}/timer/startMoment`, moment());
       database.save(`${this.currentWorkoutPath}/timer/state`, 'started');
-      this.state.timer.state = 'started';
     }
   },
 
@@ -121,7 +152,6 @@ export default {
     console.log(this.state.timer.state);
     if (this.state.timer.state === 'started') {
       database.save(`${this.currentWorkoutPath}/timer/state`, 'stopped');
-      this.state.timer.state = 'stopped';
     }
   },
 

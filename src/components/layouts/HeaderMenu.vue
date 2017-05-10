@@ -6,14 +6,7 @@
         TRAIN
         <div class="menu">
           <div class="ui item">
-            <div class="ui sub header">NEXT SPLIT WORKOUT:</div>
-            <div class="ui buttons">
-              <button class="ui button green">A</button>
-              <button class="ui button ">B</button>
-              <button class="ui button ">C</button>
-              <div class="or inverted basic"></div>
-              <button class="ui button blue">CREATE CUSTOM</button>
-            </div>
+            <new-workout-buttons></new-workout-buttons>
           </div>
         </div>
         <i class="dropdown icon"></i>
@@ -79,20 +72,22 @@
 <script>
   import notifier from '../../utils/notifier';
   import authStore from '../../store/auth';
+  
+  import NewWorkoutButtons from '../workout/NewWorkoutButtons.vue';
 
   import splitStore from '../../store/split';
-
   export default {
     name: 'HeaderMenu',
+    components: {NewWorkoutButtons},
     data() {
       return {
         authState: authStore.state,
-        splitState: splitStore.state
+        splitState: splitStore.state,
       }
     },
-    async mounted() {
+    mounted() {
       $('.dropdown').dropdown();
-      await splitStore.init();
+      splitStore.init();
     },
     methods: {
       logout() {
@@ -100,6 +95,10 @@
 
         this.$router.push('/login');
         notifier('success', 'You logged out!')
+      },
+
+      createCurrentWorkout() {
+
       }
     },
     computed: {
@@ -115,7 +114,7 @@
     width: 100%;
     position: fixed;
     top: 0;
-    z-index: 999;
+    z-index: 9999;
     background: #000000 !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
     border-radius: 0 !important;

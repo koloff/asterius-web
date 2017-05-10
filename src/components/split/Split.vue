@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="ui inverted secondary pointing menu centered center aligned big"
+      class="ui inverted secondary pointing menu centered center aligned"
       :class="{one: Object.keys(splitState.split).length === 1, two: Object.keys(splitState.split).length === 2, three: Object.keys(splitState.split).length === 3}"
     >
 
