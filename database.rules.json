@@ -1,6 +1,57 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "false"
+    //     ".read": "auth !== null",
+    //     ".write": "auth !== null",
+    "userParameters": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid",
+        "gender": {
+          ".validate": "newData.val() === 'male' || newData.val() === 'female'"
+        },
+        "measuringUnit":{
+          ".validate": "newData.val() === 'metric' || newData.val() === 'imperial'"
+        },
+        "age": {
+          ".validate": "newData.isNumber() && newData.val() > 9 && newData.val() < 100"
+        },
+        "weight": {
+          ".validate": "newData.isNumber() && newData.val() > 39 && newData.val() < 300"
+        },
+        "height": {
+          ".validate": "newData.isNumber() && newData.val() > 39 && newData.val() < 230"
+        },
+        "experience": {
+          ".validate": "newData.val() === 'untrained' || newData.val() === 'beginner' || newData.val() === 'advanced' || newData.val() === 'expert'"
+        },
+        "days": {
+          ".validate": "newData.val() === '1-2' || newData.val() === '3-4' ||newData.val() === '5-6'"
+        }
+      }
+    },
+    "split": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "workouts": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "currentWorkout": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "exercises": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    }
   }
 }

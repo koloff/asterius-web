@@ -40,7 +40,6 @@
 
 <script>
   import _ from 'lodash';
-  import Sortable from 'sortablejs';
 
   import exercisesStore from '../../store/exercises';
   import tweakerStore from '../../store/tweaker';

@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="ui basic modal center middle centered aligned new-workout-confirm-modal">
       <div class="ui icon header">
         <i class="delete calendar icon"></i>
@@ -23,13 +22,14 @@
 
     <div v-if="!currentWorkoutState.currentlyTraining">
       <div class="ui sub header">WORKOUT FOR TODAY:</div>
-      <div class="ui buttons">
+      <div class="ui buttons" v-if="splitState.split.A">
         <button class="ui button blue"
-          v-for="(workout, key) in splitState.split"
-          @click="splitWorkoutClicked(key)"
-        >{{key}}</button>
+                v-for="(workout, key) in splitState.split"
+                @click="splitWorkoutClicked(key)"
+        >{{key}}
+        </button>
         <div class="or inverted basic"></div>
-        <button class="ui button green">CUSTOM</button>
+        <button class="ui button green" @click="customWorkoutClicked()">CUSTOM</button>
       </div>
     </div>
 
@@ -38,7 +38,7 @@
       <div class="ui buttons">
         <button class="ui button green" @click="openClicked()">OPEN</button>
         <div class="or inverted basic"></div>
-        <button class="ui button blue" @click=createNewWorkoutClicked()>CREATE NEW</button>
+        <button class="ui button blue" @click=createNewWorkoutClicked()>START NEW</button>
       </div>
     </div>
   </div>
@@ -47,12 +47,16 @@
 <script>
   import _ from 'lodash';
   import moment from 'moment';
+  
+  import CreateCustomWorkout from './CreateCustomWorkout.vue';
+  
   import workoutStore from '../../store/workout';
   import currentWorkoutStore from '../../store/current-workout';
   import splitStore from '../../store/split';
 
   export default {
     name: 'NewWorkoutButtons',
+    components: {CreateCustomWorkout},
     data() {
       return {
         currentWorkoutState: currentWorkoutStore.state,
@@ -64,11 +68,14 @@
       currentWorkoutStore.init(moment().format('YYYY-MM-DD'));
     },
     methods: {
-      splitWorkoutClicked(type) {
-        console.log(type);
-        let exercises = _.clone(splitStore.state.split[type]);
+      async splitWorkoutClicked(type) {
+        console.log(splitStore.state.split[type]);
+        let exercises = _.cloneDeep(splitStore.state.split[type]);
         currentWorkoutStore.createWorkoutForToday(exercises);
         this.$router.push('/train');
+      },
+      customWorkoutClicked() {
+        this.$router.push('/custom-workout');
       },
       openClicked() {
         this.$router.push('/train');

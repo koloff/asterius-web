@@ -33,6 +33,18 @@ const router = new VueRouter({
     {
       path: '/train', component: require('./components/workout/Workout.vue')
     },
+    {
+      path: '/exercises', component: require('./components/exercises/Exercises.vue')
+    },
+    {
+      path: '/workouts', component: require('./components/workout/PreviousWorkouts.vue')
+    },
+    {
+      path: '/custom-workout', component: require('./components/workout/CreateCustomWorkout.vue')
+    },
+    {
+      path: '/edit-custom-workout', component: require('./components/workout/CustomWorkoutTweaker.vue')
+    },
   ]
 });
 

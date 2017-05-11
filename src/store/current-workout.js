@@ -111,6 +111,9 @@ export default {
       reps, weight
     });
 
+    // save that the exercise was performed in this workout <workoutDate>: <exerciseIndex>
+    database.save(`/exercises/${authStore.state.uid}/${this.getCurrentExercise().key}/${this.getCurrentDayString()}`, this.state.currentExerciseIndex);
+
     this.initTimer();
   },
 

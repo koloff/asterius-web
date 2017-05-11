@@ -1,7 +1,7 @@
 <template>
   <div class="ui inverted menu compact header-menu">
     <div class="ui container header-menu-container" v-show="loggedIn">
-      <div class="ui dropdown item">
+      <div class="ui dropdown item" v-show="!(Object.keys(splitState.split).length === 0 && splitState.split.constructor === Object)">
         <i class="ui icon checkmark box calendar menu-icon"></i>
         TRAIN
         <div class="menu">
@@ -33,14 +33,14 @@
         <i class="ui icon signal menu-icon"></i>
         PROGRESS
         <div class="menu">
-          <router-link to="/generate" tag="a" class="item">
-            <i class="ui icon child"></i>
-            GENERATE NEW
+          <router-link to="/workouts" tag="a" class="item">
+            <i class="ui icon checked calendar"></i>
+            WORKOUTS
           </router-link>
-          <router-link to="/split" tag="a" class="item"
+          <router-link to="/exercises" tag="a" class="item"
                        :class="{disabled: Object.keys(splitState.split).length === 0 && splitState.split.constructor === Object}">
-            <i class="ui icon options"></i>
-            EDIT CURRENT
+            <i class="ui icon line chart"></i>
+            EXERCISES
           </router-link>
         </div>
         <i class="dropdown icon"></i>

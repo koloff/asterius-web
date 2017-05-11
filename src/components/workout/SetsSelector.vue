@@ -31,13 +31,13 @@
       </div>
     </div>
 
-    <button class="ui button green fluid"
+    <button v-if="!isFinalStep" class="ui button green fluid"
             style="margin-top: 10px;"
             :class="{disabled: !performedValue}"
             @click="nextStep()"
     >
       <i class="ui icon checkmark box"></i>
-      NEXT SET
+      START REST
     </button>
 
   </div>
@@ -86,6 +86,9 @@
       },
       performedValue() {
         return currentWorkoutStore.getCurrentSet().performedValue;
+      },
+      isFinalStep() {
+        return currentWorkoutStore.isCurrentStepFinal();
       }
     },
     methods: {

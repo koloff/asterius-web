@@ -15,6 +15,10 @@ export default {
     });
   },
 
+  async getPreviousWorkouts() {
+    return database.get(`/workouts/${authStore.state.uid}`);
+  },
+
   getExercise(key) {
     return _.find(this.state.exercises, {key});
   }
